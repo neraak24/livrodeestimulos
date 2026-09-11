@@ -10,13 +10,12 @@
   :root{
     --bg:#3a2b3f;
     --cover:#241521;
-    --cover-hi:#3a2436;
+    --cover-dark:#170d16;
     --gold:#c9a24b;
-    --gold-lt:#e6c878;
+    --gold-dark:#8f7431;
     --page-l:#ecdcab;
     --page-r:#e2cd94;
     --ink:#3a2a1e;
-    --ribbon:#8c2f39;
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -41,7 +40,7 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:1.4dvh;
+    gap:1.6dvh;
     padding:2dvh 2vw;
   }
 
@@ -54,6 +53,7 @@
     flex:0 0 auto;
   }
 
+  /* pixel-cut corners, reusable */
   .pixel-corner{
     --step:8px;
     clip-path: polygon(
@@ -67,91 +67,80 @@
   .pixel-corner.md{ --step:9px; }
   .pixel-corner.sm{ --step:6px; }
 
+  /* ---------- book shell with stacked-page depth ---------- */
+
   .book{
+    position:relative;
     flex:1 1 auto;
     min-height:0;
     width:min(96vw, 1180px);
     display:flex;
-    filter:
-      drop-shadow(7px 7px 0 rgba(0,0,0,0.45))
-      drop-shadow(0 16px 20px rgba(0,0,0,0.4));
+  }
+
+  .book::before,
+  .book::after{
+    content:"";
+    position:absolute;
+    z-index:0;
+  }
+  .book::before{
+    top:10px; left:10px; right:-12px; bottom:-12px;
+    background:var(--cover-dark);
+  }
+  .book::after{
+    top:5px; left:5px; right:-6px; bottom:-6px;
+    background:#0f080e;
   }
 
   .cover{
     position:relative;
+    z-index:1;
     flex:1;
     min-height:0;
-    background:var(--cover);
+    background:
+      linear-gradient(180deg, #2c1a29 0%, #2c1a29 45%, var(--cover) 45%, var(--cover) 100%);
     border:4px solid var(--gold);
+    padding:1.4dvh 1.2vw;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.4);
   }
 
-  /* top light bevel / bottom dark bevel for volume */
-  .cover::before, .cover::after{
-    content:"";
+  /* corner metal caps */
+  .cap{
     position:absolute;
-    left:20px; right:20px;
-    height:5px;
-    pointer-events:none;
-  }
-  .cover::before{ top:4px; background:var(--cover-hi); }
-  .cover::after{ bottom:4px; background:rgba(0,0,0,0.5); }
-
-  /* corner rivets */
-  .rivet{
-    position:absolute;
-    width:9px; height:9px;
-    background:var(--gold-lt);
-    border:2px solid #6e5220;
-    z-index:3;
-  }
-  .rivet.tl{ top:9px; left:9px; }
-  .rivet.tr{ top:9px; right:9px; }
-  .rivet.bl{ bottom:9px; left:9px; }
-  .rivet.br{ bottom:9px; right:9px; }
-
-  /* clasp bridging the two pages */
-  .clasp{
-    position:absolute;
-    left:50%;
-    bottom:-6px;
-    width:38px;
-    height:16px;
-    transform:translateX(-50%);
+    width:16px; height:16px;
     background:var(--gold);
-    border:2px solid #6e5220;
-    z-index:4;
-  }
-  .clasp::before{
-    content:"";
-    position:absolute;
-    inset:4px;
-    background:var(--cover);
-  }
-
-  /* ribbon bookmark peeking from the top */
-  .ribbon{
-    position:absolute;
-    top:-16px;
-    right:16%;
-    width:16px;
-    height:46px;
-    background:var(--ribbon);
-    border-left:2px solid rgba(0,0,0,0.3);
-    border-right:2px solid rgba(255,255,255,0.15);
-    clip-path:polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
+    box-shadow:inset -3px -3px 0 var(--gold-dark), inset 2px 2px 0 #f1dfa8;
     z-index:2;
   }
+  .cap.tl{ top:-4px; left:-4px; }
+  .cap.tr{ top:-4px; right:-4px; }
+  .cap.bl{ bottom:-4px; left:-4px; }
+  .cap.br{ bottom:-4px; right:-4px; }
 
   .pages{
     position:relative;
     height:100%;
-    padding:10px 8px;
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:6px;
-    background:
-      repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 3px, transparent 3px 7px),
-      var(--cover);
+    grid-template-columns:1fr minmax(14px, 1.6vw) 1fr;
+    background:var(--cover);
+  }
+
+  .spine{
+    position:relative;
+    background:repeating-linear-gradient(
+      180deg,
+      #170d16 0px, #170d16 9px,
+      #1f1220 9px, #1f1220 18px
+    );
+    box-shadow:inset 3px 0 6px rgba(0,0,0,0.5), inset -3px 0 6px rgba(0,0,0,0.5);
+  }
+  .spine::before{
+    content:"";
+    position:absolute;
+    top:6%; bottom:6%; left:50%;
+    width:0;
+    border-left:2px dashed var(--gold-dark);
+    opacity:0.8;
   }
 
   .page{
@@ -160,23 +149,49 @@
     min-width:0;
     display:flex;
     flex-direction:column;
-    padding:1.5dvh 1.3vw;
+    padding:1.6dvh 1.4vw;
     border:3px solid rgba(0,0,0,0.35);
     overflow:hidden;
   }
   .page.left{ background:var(--page-l); }
   .page.right{ background:var(--page-r); }
 
-  /* shadow near the spine for depth */
-  .page.left::after, .page.right::before{
+  /* shadow near the spine to suggest the page curving inward */
+  .page.left::before{
     content:"";
     position:absolute;
-    top:0; bottom:0;
-    width:16px;
+    top:0; bottom:0; right:0;
+    width:22px;
+    background:linear-gradient(90deg, transparent, rgba(0,0,0,0.16));
     pointer-events:none;
   }
-  .page.left::after{ right:0; background:linear-gradient(90deg, transparent, rgba(0,0,0,0.22)); }
-  .page.right::before{ left:0; background:linear-gradient(270deg, transparent, rgba(0,0,0,0.22)); }
+  .page.right::before{
+    content:"";
+    position:absolute;
+    top:0; bottom:0; left:0;
+    width:22px;
+    background:linear-gradient(270deg, transparent, rgba(0,0,0,0.16));
+    pointer-events:none;
+  }
+
+  /* folded corner, bottom-right of the right page */
+  .dogear{
+    position:absolute;
+    right:0; bottom:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 0 34px 34px;
+    border-color:transparent transparent rgba(0,0,0,0.22) transparent;
+  }
+  .dogear::before{
+    content:"";
+    position:absolute;
+    right:2px; bottom:2px;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 0 26px 26px;
+    border-color:transparent transparent #cdb27c transparent;
+  }
 
   .plate{
     font-family:'Press Start 2P', monospace;
@@ -184,30 +199,30 @@
     color:var(--ink);
     margin-bottom:1.4dvh;
     flex:0 0 auto;
+    position:relative;
+    z-index:1;
   }
 
   .seal-field{
+    position:relative;
+    z-index:1;
     flex:1;
     min-height:0;
     display:grid;
-    gap:0.9dvh;
+    grid-template-columns:repeat(4, 1fr);
+    grid-template-rows:repeat(2, 1fr);
+    gap:1.1dvh;
   }
 
   .seal-field.left-grid{
-    grid-template-columns:repeat(4, 1fr);
-    grid-template-rows:repeat(3, 1fr);
     grid-template-areas:
       "a a b b"
-      "a a c d"
-      "e e c d";
+      "c c d e";
   }
   .seal-field.right-grid{
-    grid-template-columns:repeat(3, 1fr);
-    grid-template-rows:repeat(3, 1fr);
     grid-template-areas:
-      "a a b"
-      "a a b"
-      "c c b";
+      "a a a a"
+      "b b c c";
   }
 
   .seal{
@@ -227,8 +242,6 @@
       inset 4px 4px 0 rgba(255,255,255,0.22);
     transition:transform 100ms ease, filter 100ms ease;
     cursor:pointer;
-    padding:4%;
-    overflow:hidden;
   }
 
   .seal:hover{ transform:translateY(-2px); filter:brightness(1.08); }
@@ -236,9 +249,10 @@
   .seal:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
 
   .seal .pixel-icon{
-    width:32%;
-    height:32%;
-    flex:0 0 auto;
+    width:26%;
+    height:26%;
+    min-width:14px;
+    min-height:14px;
     color:#fbf1da;
     shape-rendering:crispEdges;
   }
@@ -246,13 +260,11 @@
 
   .seal span{
     font-family:'Press Start 2P', monospace;
-    font-size:clamp(7px, 13cqw, 12px);
+    font-size:clamp(8px, 11cqw, 13px);
     text-align:center;
     line-height:1.35;
     text-shadow:2px 2px 0 rgba(0,0,0,0.35);
-    overflow-wrap:break-word;
-    hyphens:auto;
-    max-width:100%;
+    padding:0 8%;
   }
 
   .c-crimson{ background:#a8404a; }
@@ -275,16 +287,18 @@
     color:rgba(58,42,30,0.55);
     clip-path:none;
   }
-  .seal.add .pixel-icon{ color:rgba(58,42,30,0.55); width:22%; height:22%; }
-  .seal.add span{ font-family:'Press Start 2P', monospace; font-size:clamp(6px,10cqw,9px); text-shadow:none; color:rgba(58,42,30,0.6); }
+  .seal.add .pixel-icon{ color:rgba(58,42,30,0.55); }
+  .seal.add span{ text-shadow:none; color:rgba(58,42,30,0.6); }
+
+  .seal-field.right-grid .seal.add{ grid-area:c; }
 
   @media (max-width:680px), (max-height:520px){
     html,body{ height:auto; overflow:auto; }
     .stage{ height:auto; padding:20px 14px; }
     .book{ height:auto; }
     .pages{ grid-template-columns:1fr; }
+    .spine{ display:none; }
     .page{ min-height:280px; }
-    .ribbon{ display:none; }
   }
 </style>
 </head>
@@ -295,12 +309,10 @@
 
   <div class="book">
     <div class="cover pixel-corner lg">
-      <span class="rivet tl"></span>
-      <span class="rivet tr"></span>
-      <span class="rivet bl"></span>
-      <span class="rivet br"></span>
-      <span class="ribbon"></span>
-
+      <span class="cap tl"></span>
+      <span class="cap tr"></span>
+      <span class="cap bl"></span>
+      <span class="cap br"></span>
       <div class="pages">
 
         <!-- LEFT PAGE -->
@@ -330,6 +342,8 @@
           </div>
         </div>
 
+        <div class="spine"></div>
+
         <!-- RIGHT PAGE -->
         <div class="page right pixel-corner md">
           <p class="plate">Índice</p>
@@ -342,11 +356,12 @@
               <svg class="pixel-icon" data-pattern="01010|11111|11111|01110|00100"></svg>
               <span>Memória</span>
             </a>
-            <a class="seal add seal-c" href="#" title="Adicionar nova categoria">
+            <a class="seal add" href="#" title="Adicionar nova categoria">
               <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
               <span>+ nova</span>
             </a>
           </div>
+          <div class="dogear"></div>
         </div>
 
       </div>
