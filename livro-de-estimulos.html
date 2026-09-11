@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livro de Estímulos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#3a2b3f;
+    --cover:#241521;
+    --cover-hi:#3a2436;
+    --gold:#c9a24b;
+    --gold-lt:#e6c878;
+    --page-l:#ecdcab;
+    --page-r:#e2cd94;
+    --ink:#3a2a1e;
+    --ribbon:#8c2f39;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:0.01ms !important;}
+  }
+
+  html,body{
+    height:100dvh;
+    width:100vw;
+    overflow:hidden;
+    background:var(--bg);
+    font-family:'VT323', monospace;
+    color:var(--ink);
+  }
+
+  .stage{
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:1.4dvh;
+    padding:2dvh 2vw;
+  }
+
+  .stage-title{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(13px, 2.6dvh, 26px);
+    color:#f4e9c8;
+    text-shadow:3px 3px 0 rgba(0,0,0,0.5);
+    letter-spacing:0.02em;
+    flex:0 0 auto;
+  }
+
+  .pixel-corner{
+    --step:8px;
+    clip-path: polygon(
+      0 var(--step), var(--step) var(--step), var(--step) 0,
+      calc(100% - var(--step)) 0, calc(100% - var(--step)) var(--step), 100% var(--step),
+      100% calc(100% - var(--step)), calc(100% - var(--step)) calc(100% - var(--step)), calc(100% - var(--step)) 100%,
+      var(--step) 100%, var(--step) calc(100% - var(--step)), 0 calc(100% - var(--step))
+    );
+  }
+  .pixel-corner.lg{ --step:14px; }
+  .pixel-corner.md{ --step:9px; }
+  .pixel-corner.sm{ --step:6px; }
+
+  .book{
+    flex:1 1 auto;
+    min-height:0;
+    width:min(96vw, 1180px);
+    display:flex;
+    filter:
+      drop-shadow(7px 7px 0 rgba(0,0,0,0.45))
+      drop-shadow(0 16px 20px rgba(0,0,0,0.4));
+  }
+
+  .cover{
+    position:relative;
+    flex:1;
+    min-height:0;
+    background:var(--cover);
+    border:4px solid var(--gold);
+  }
+
+  /* top light bevel / bottom dark bevel for volume */
+  .cover::before, .cover::after{
+    content:"";
+    position:absolute;
+    left:20px; right:20px;
+    height:5px;
+    pointer-events:none;
+  }
+  .cover::before{ top:4px; background:var(--cover-hi); }
+  .cover::after{ bottom:4px; background:rgba(0,0,0,0.5); }
+
+  /* corner rivets */
+  .rivet{
+    position:absolute;
+    width:9px; height:9px;
+    background:var(--gold-lt);
+    border:2px solid #6e5220;
+    z-index:3;
+  }
+  .rivet.tl{ top:9px; left:9px; }
+  .rivet.tr{ top:9px; right:9px; }
+  .rivet.bl{ bottom:9px; left:9px; }
+  .rivet.br{ bottom:9px; right:9px; }
+
+  /* clasp bridging the two pages */
+  .clasp{
+    position:absolute;
+    left:50%;
+    bottom:-6px;
+    width:38px;
+    height:16px;
+    transform:translateX(-50%);
+    background:var(--gold);
+    border:2px solid #6e5220;
+    z-index:4;
+  }
+  .clasp::before{
+    content:"";
+    position:absolute;
+    inset:4px;
+    background:var(--cover);
+  }
+
+  /* ribbon bookmark peeking from the top */
+  .ribbon{
+    position:absolute;
+    top:-16px;
+    right:16%;
+    width:16px;
+    height:46px;
+    background:var(--ribbon);
+    border-left:2px solid rgba(0,0,0,0.3);
+    border-right:2px solid rgba(255,255,255,0.15);
+    clip-path:polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
+    z-index:2;
+  }
+
+  .pages{
+    position:relative;
+    height:100%;
+    padding:10px 8px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    background:
+      repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 3px, transparent 3px 7px),
+      var(--cover);
+  }
+
+  .page{
+    position:relative;
+    min-height:0;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    padding:1.5dvh 1.3vw;
+    border:3px solid rgba(0,0,0,0.35);
+    overflow:hidden;
+  }
+  .page.left{ background:var(--page-l); }
+  .page.right{ background:var(--page-r); }
+
+  /* shadow near the spine for depth */
+  .page.left::after, .page.right::before{
+    content:"";
+    position:absolute;
+    top:0; bottom:0;
+    width:16px;
+    pointer-events:none;
+  }
+  .page.left::after{ right:0; background:linear-gradient(90deg, transparent, rgba(0,0,0,0.22)); }
+  .page.right::before{ left:0; background:linear-gradient(270deg, transparent, rgba(0,0,0,0.22)); }
+
+  .plate{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(9px, 1.6dvh, 15px);
+    color:var(--ink);
+    margin-bottom:1.4dvh;
+    flex:0 0 auto;
+  }
+
+  .seal-field{
+    flex:1;
+    min-height:0;
+    display:grid;
+    gap:0.9dvh;
+  }
+
+  .seal-field.left-grid{
+    grid-template-columns:repeat(4, 1fr);
+    grid-template-rows:repeat(3, 1fr);
+    grid-template-areas:
+      "a a b b"
+      "a a c d"
+      "e e c d";
+  }
+  .seal-field.right-grid{
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows:repeat(3, 1fr);
+    grid-template-areas:
+      "a a b"
+      "a a b"
+      "c c b";
+  }
+
+  .seal{
+    container-type:inline-size;
+    min-height:0;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6%;
+    text-decoration:none;
+    color:#fbf1da;
+    border:none;
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,0.28),
+      inset 4px 4px 0 rgba(255,255,255,0.22);
+    transition:transform 100ms ease, filter 100ms ease;
+    cursor:pointer;
+    padding:4%;
+    overflow:hidden;
+  }
+
+  .seal:hover{ transform:translateY(-2px); filter:brightness(1.08); }
+  .seal:active{ transform:translateY(1px); filter:brightness(0.96); }
+  .seal:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
+
+  .seal .pixel-icon{
+    width:32%;
+    height:32%;
+    flex:0 0 auto;
+    color:#fbf1da;
+    shape-rendering:crispEdges;
+  }
+  .seal .pixel-icon rect{ fill:currentColor; }
+
+  .seal span{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(7px, 13cqw, 12px);
+    text-align:center;
+    line-height:1.35;
+    text-shadow:2px 2px 0 rgba(0,0,0,0.35);
+    overflow-wrap:break-word;
+    hyphens:auto;
+    max-width:100%;
+  }
+
+  .c-crimson{ background:#a8404a; }
+  .c-navy{    background:#33526e; }
+  .c-forest{  background:#436b47; }
+  .c-amber{   background:#bd8138; }
+  .c-plum{    background:#7d5488; }
+  .c-teal{    background:#357a75; }
+
+  .seal-a{ grid-area:a; }
+  .seal-b{ grid-area:b; }
+  .seal-c{ grid-area:c; }
+  .seal-d{ grid-area:d; }
+
+  .seal.add{
+    grid-area:e;
+    background:transparent;
+    box-shadow:none;
+    border:3px dashed rgba(58,42,30,0.35);
+    color:rgba(58,42,30,0.55);
+    clip-path:none;
+  }
+  .seal.add .pixel-icon{ color:rgba(58,42,30,0.55); width:22%; height:22%; }
+  .seal.add span{ font-family:'Press Start 2P', monospace; font-size:clamp(6px,10cqw,9px); text-shadow:none; color:rgba(58,42,30,0.6); }
+
+  @media (max-width:680px), (max-height:520px){
+    html,body{ height:auto; overflow:auto; }
+    .stage{ height:auto; padding:20px 14px; }
+    .book{ height:auto; }
+    .pages{ grid-template-columns:1fr; }
+    .page{ min-height:280px; }
+    .ribbon{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <h1 class="stage-title">LIVRO DE ESTÍMULOS</h1>
+
+  <div class="book">
+    <div class="cover pixel-corner lg">
+      <span class="rivet tl"></span>
+      <span class="rivet tr"></span>
+      <span class="rivet bl"></span>
+      <span class="rivet br"></span>
+      <span class="ribbon"></span>
+
+      <div class="pages">
+
+        <!-- LEFT PAGE -->
+        <div class="page left pixel-corner md">
+          <p class="plate">Coleção</p>
+          <div class="seal-field left-grid">
+            <a class="seal c-crimson seal-a pixel-corner sm" href="#" title="Editar link">
+              <svg class="pixel-icon" data-pattern="01110|10001|11111|10101|01110"></svg>
+              <span>Rostos</span>
+            </a>
+            <a class="seal c-navy seal-b pixel-corner sm" href="#" title="Editar link">
+              <svg class="pixel-icon" data-pattern="11111|10001|10101|10001|11111"></svg>
+              <span>Formas</span>
+            </a>
+            <a class="seal c-forest seal-c pixel-corner sm" href="#" title="Editar link">
+              <svg class="pixel-icon" data-pattern="00100|01110|11111|11111|10101"></svg>
+              <span>Objetos</span>
+            </a>
+            <a class="seal c-amber seal-d pixel-corner sm" href="#" title="Editar link">
+              <svg class="pixel-icon" data-pattern="11111|00000|11111|00000|11111"></svg>
+              <span>Palavras</span>
+            </a>
+            <a class="seal add" href="#" title="Adicionar nova categoria">
+              <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
+              <span>+ nova</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT PAGE -->
+        <div class="page right pixel-corner md">
+          <p class="plate">Índice</p>
+          <div class="seal-field right-grid">
+            <a class="seal c-plum seal-a pixel-corner sm" href="#" title="Editar link">
+              <svg class="pixel-icon" data-pattern="10000|11000|11100|11000|10000"></svg>
+              <span>Sons</span>
+            </a>
+            <a class="seal c-teal seal-b pixel-corner sm" href="#" title="Editar link">
+              <svg class="pixel-icon" data-pattern="01010|11111|11111|01110|00100"></svg>
+              <span>Memória</span>
+            </a>
+            <a class="seal add seal-c" href="#" title="Adicionar nova categoria">
+              <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
+              <span>+ nova</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.pixel-icon[data-pattern]').forEach(function(svg){
+    var rows = svg.dataset.pattern.split('|');
+    var size = rows.length;
+    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+    rows.forEach(function(row, y){
+      for (var x = 0; x < row.length; x++){
+        if (row[x] === '1'){
+          var r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+          r.setAttribute('x', x);
+          r.setAttribute('y', y);
+          r.setAttribute('width', 1);
+          r.setAttribute('height', 1);
+          svg.appendChild(r);
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
