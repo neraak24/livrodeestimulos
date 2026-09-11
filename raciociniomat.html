@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WISC — RACIOCÍNIO MATRICIAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#6d4d5e; --bg-dark:#4d3345;
+    --page-l:#ecdcab; --ink:#3a2a1e; --gold:#c9a24b; --gold-dark:#8f7431;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html,body{
+    height:100dvh;
+    overflow:hidden;
+    background:radial-gradient(ellipse at 50% 15%, var(--bg), var(--bg-dark) 85%);
+    font-family:'VT323', monospace;
+    color:var(--ink);
+  }
+
+  .screen{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    padding:2dvh 3vw;
+    gap:1.6dvh;
+  }
+
+  .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex:0 0 auto;
+  }
+  .back{
+    font-family:'Press Start 2P', monospace;
+    font-size:11px;
+    color:#f4e9c8;
+    text-decoration:none;
+    background:var(--bg-dark);
+    border:2px solid var(--gold-dark);
+    padding:8px 12px;
+  }
+  .back:hover{ filter:brightness(1.15); }
+  .title{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(12px,2dvh,18px);
+    color:#f4e9c8;
+    text-shadow:3px 3px 0 rgba(0,0,0,0.5);
+    text-align:center;
+  }
+  .counter{
+    font-family:'Press Start 2P', monospace;
+    font-size:11px;
+    color:#f4e9c8;
+    min-width:70px;
+    text-align:right;
+  }
+
+  .frame{
+    flex:1;
+    min-height:0;
+    background:var(--page-l);
+    border:3px solid #1a0f1a;
+    box-shadow:8px 8px 0 rgba(0,0,0,0.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:2dvh;
+  }
+  .frame img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    border:3px solid #1a0f1a;
+    background:#fff;
+  }
+
+  .nav{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+  }
+  .nav button{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(11px,1.6dvh,15px);
+    color:#fbf1da;
+    background:#436b47;
+    border:none;
+    padding:1.4dvh 2.2vw;
+    cursor:pointer;
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,0.28),
+      inset 4px 4px 0 rgba(255,255,255,0.22);
+  }
+  .nav button:hover{ filter:brightness(1.08); }
+  .nav button:active{ transform:translateY(1px); }
+  .nav button:disabled{ opacity:0.4; cursor:default; }
+  .nav button.prev{ background:#33526e; }
+</style>
+</head>
+<body>
+
+  <div class="screen">
+    <div class="top">
+      <a class="back" href="livro-de-estimulos.html">‹ voltar</a>
+      <h1 class="title">WISC — RACIOCÍNIO MATRICIAL</h1>
+      <span class="counter" id="counter">1 / 1</span>
+    </div>
+
+    <div class="frame">
+      <img id="stimulus-img" src="" alt="Estímulo">
+    </div>
+
+    <div class="nav">
+      <button class="prev" id="prev-btn">◀ anterior</button>
+      <button class="next" id="next-btn">próxima ▶</button>
+    </div>
+  </div>
+
+<script>
+  const images = [
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_61.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_62.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_63.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_64.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_65.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_66.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_67.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_68.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_69.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_70.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_71.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_72.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_73.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_74.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_75.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_76.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_77.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_78.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_79.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_80.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_81.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_82.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_83.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_84.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_85.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_86.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_87.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_88.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_89.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_90.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_91.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_92.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_93.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_94.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_95.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_96.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_97.png",
+    "WISC%20Racioc%C3%ADnio%20matricial/pagina_98.png"
+  ];
+
+  let current = 0;
+  const img = document.getElementById('stimulus-img');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  function render(){
+    img.src = images[current];
+    counter.textContent = (current + 1) + " / " + images.length;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === images.length - 1;
+  }
+
+  prevBtn.addEventListener('click', function(){
+    if (current > 0){ current--; render(); }
+  });
+  nextBtn.addEventListener('click', function(){
+    if (current < images.length - 1){ current++; render(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight') nextBtn.click();
+    if (e.key === 'ArrowLeft') prevBtn.click();
+  });
+
+  render();
+</script>
+
+</body>
+</html>
