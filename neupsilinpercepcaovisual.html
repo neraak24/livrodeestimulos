@@ -52,13 +52,6 @@
     text-shadow:3px 3px 0 rgba(0,0,0,0.5);
     text-align:center;
   }
-  .counter{
-    font-family:'Press Start 2P', monospace;
-    font-size:11px;
-    color:#f4e9c8;
-    min-width:70px;
-    text-align:right;
-  }
 
   .frame{
     flex:1;
@@ -110,7 +103,6 @@
     <div class="top">
       <a class="back" href="index.html">‹ voltar</a>
       <h1 class="title">NEUPSILIN — PERCEPÇÃO VISUAL</h1>
-      <span class="counter" id="counter">1 / 1</span>
     </div>
 
     <div class="frame">
@@ -133,13 +125,11 @@
 
   let current = 0;
   const img = document.getElementById('stimulus-img');
-  const counter = document.getElementById('counter');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
 
   function render(){
     img.src = images[current];
-    counter.textContent = (current + 1) + " / " + images.length;
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === images.length - 1;
   }
