@@ -14,7 +14,7 @@
     --cover-dark:#291828;
     --cover-ink:#1a0f1a;
     --tab:#d98c3f;
-    --tab-dark:#a15f24;
+    --tab-dark:#a3701f;
     --page-l:#ecdcab;
     --page-r:#e2cd94;
     --page-torn:#d8c393;
@@ -43,26 +43,17 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:0.8dvh;
+    gap:0.6dvh;
     padding:2dvh 2vw;
   }
 
   .stage-title{
     font-family:'Press Start 2P', monospace;
-    font-size:clamp(13px, 2.4dvh, 24px);
+    font-size:clamp(13px, 2.2dvh, 22px);
     color:#f4e9c8;
     text-shadow:3px 3px 0 rgba(0,0,0,0.5);
     letter-spacing:0.02em;
     flex:0 0 auto;
-  }
-
-  .spread-label{
-    font-family:'Press Start 2P', monospace;
-    font-size:clamp(10px, 1.5dvh, 14px);
-    color:var(--tab);
-    text-shadow:2px 2px 0 rgba(0,0,0,0.4);
-    flex:0 0 auto;
-    margin-bottom:0.6dvh;
   }
 
   .book-row{
@@ -96,7 +87,7 @@
     min-height:0;
     height:100%;
     display:flex;
-    padding-top:1.6dvh;
+    padding-top:4.2dvh; /* room for the domain tabs */
   }
 
   .book::before,
@@ -106,13 +97,48 @@
     z-index:0;
   }
   .book::before{
-    top:16px; left:10px; right:-12px; bottom:-12px;
+    top:44px; left:10px; right:-12px; bottom:-12px;
     background:var(--cover-dark);
   }
   .book::after{
-    top:11px; left:5px; right:-6px; bottom:-6px;
+    top:39px; left:5px; right:-6px; bottom:-6px;
     background:#0f080e;
   }
+
+  /* ---------- domain tabs ---------- */
+
+  .domain-tabs{
+    position:absolute;
+    top:0; left:0; right:0;
+    display:flex;
+    justify-content:flex-start;
+    padding-left:1vw;
+    gap:10px;
+    z-index:3;
+  }
+
+  .domain-tab{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(8px, 1.3dvh, 11px);
+    color:var(--cover-ink);
+    background:var(--tab-dark);
+    border:2px solid var(--cover-ink);
+    border-bottom:none;
+    padding:0.9dvh 1.4vw 0.7dvh;
+    cursor:pointer;
+    clip-path:polygon(
+      0 100%, 0 7px, 7px 7px, 7px 0,
+      calc(100% - 7px) 0, calc(100% - 7px) 7px, 100% 7px, 100% 100%
+    );
+    transition:transform 120ms ease, background 120ms ease;
+  }
+  .domain-tab:hover{ filter:brightness(1.1); }
+  .domain-tab.active{
+    background:var(--tab);
+    transform:translateY(-4px);
+    box-shadow:0 -2px 0 rgba(255,255,255,0.25) inset;
+  }
+  .domain-tab:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
 
   .cover{
     position:relative;
@@ -139,26 +165,6 @@
       93% 85%, 97% 15%, 100% 70%, 100% 100%
     );
   }
-
-  .tab-accent{
-    position:absolute;
-    top:-1.4dvh;
-    width:34px;
-    height:2.6dvh;
-    background:var(--tab);
-    border:2px solid var(--cover-ink);
-    border-bottom:none;
-    z-index:2;
-  }
-  .tab-accent::after{
-    content:"";
-    position:absolute;
-    inset:3px 3px auto 3px;
-    height:3px;
-    background:var(--tab-dark);
-  }
-  .tab-accent.left{ left:6%; transform:rotate(-3deg); }
-  .tab-accent.right{ right:9%; transform:rotate(4deg); }
 
   .pages-viewport{
     position:relative;
@@ -388,6 +394,7 @@
     .page{ min-height:280px; }
     .compass-note{ display:none; }
     .pager-btn{ width:52px; height:52px; }
+    .domain-tab{ font-size:8px; padding:6px 8px 5px; }
   }
 </style>
 </head>
@@ -406,14 +413,16 @@
 
 <div class="stage">
   <h1 class="stage-title">LIVRO DE ESTÍMULOS</h1>
-  <p class="spread-label" id="spreadLabel">WISC</p>
 
   <div class="book-row">
     <button class="pager-btn" id="prevSpread" disabled>◀</button>
 
     <div class="book">
-      <span class="tab-accent left"></span>
-      <span class="tab-accent right"></span>
+      <div class="domain-tabs" id="domainTabs">
+        <button class="domain-tab" data-index="0">WISC</button>
+        <button class="domain-tab" data-index="1">NEPSY</button>
+        <button class="domain-tab" data-index="2">NEUPSILIN</button>
+      </div>
       <div class="cover">
         <div class="pages-viewport">
       <div class="spread active" data-spread="0">
@@ -653,10 +662,9 @@
     });
   });
 
-  var spreadNames = ["WISC", "NEPSY", "NEUPSILIN"];
   var spreads = document.querySelectorAll('.spread');
+  var tabs = document.querySelectorAll('.domain-tab');
   var current = 0;
-  var label = document.getElementById('spreadLabel');
   var prevBtn = document.getElementById('prevSpread');
   var nextBtn = document.getElementById('nextSpread');
 
@@ -664,7 +672,9 @@
     spreads.forEach(function(s, i){
       s.classList.toggle('active', i === current);
     });
-    label.textContent = spreadNames[current];
+    tabs.forEach(function(t, i){
+      t.classList.toggle('active', i === current);
+    });
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === spreads.length - 1;
   }
@@ -674,6 +684,12 @@
   });
   nextBtn.addEventListener('click', function(){
     if (current < spreads.length - 1){ current++; render(); }
+  });
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      current = parseInt(t.dataset.index, 10);
+      render();
+    });
   });
 
   document.addEventListener('keydown', function(e){
