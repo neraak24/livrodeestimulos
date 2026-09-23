@@ -3,667 +3,968 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Livro de Estímulos</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<title>Livro de Estímulos — Pixel Art</title>
+
 <style>
-  :root{
-    --bg-top:#a9cdb2;
-    --bg-mid:#7fae8c;
-    --bg-floor:#4f8296;
-    --bg-floor-dk:#3a6577;
-    --cover:#4a3540;
-    --cover-dark:#33232c;
-    --cover-ink:#1f151c;
-    --tab:#d9a24b;
-    --tab-dark:#a3701f;
-    --page-l:#f1e0b8;
-    --page-r:#e8d5a3;
-    --page-torn:#ddc48f;
-    --card-bg:#fdf6ea;
-    --ink:#3a2a1e;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
-  *{box-sizing:border-box; margin:0; padding:0;}
+:root{
+  --ink:#25202c;
+  --ink-soft:#3b3040;
 
-  @media (prefers-reduced-motion: reduce){
-    *{transition-duration:0.01ms !important;}
-  }
+  --bg1:#3f9a91;
+  --bg2:#62b19f;
+  --floor:#4b91ad;
+  --floor-dark:#356d86;
 
-  html,body{
-    height:100dvh;
-    width:100vw;
-    overflow:hidden;
-    font-family:'VT323', monospace;
-    color:var(--ink);
-  }
+  --cover:#8fc65b;
+  --cover-dark:#56884c;
 
-  body{
-    background:
-      repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0 10px, rgba(0,0,0,0.04) 10px 20px),
-      linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 78%, var(--bg-floor) 78%, var(--bg-floor-dk) 100%);
-  }
+  --paper:#fff3bd;
+  --paper-r:#f5dfa0;
+  --paper-shadow:#d6bd6c;
 
-  .stage{
-    height:100%;
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:1dvh;
-    padding:2dvh 2vw;
-  }
+  --pink:#ef718f;
+  --pink-dark:#b94e69;
+  --blue:#55a6dc;
+  --blue-dark:#326f9f;
+  --yellow:#f1c457;
+  --green:#5b965b;
 
-  .stage-title{
-    font-family:'Press Start 2P', monospace;
-    font-size:clamp(13px, 2.2dvh, 22px);
-    color:#3a2a1e;
-    text-shadow:3px 3px 0 rgba(255,255,255,0.35);
-    letter-spacing:0.02em;
-    flex:0 0 auto;
-  }
+  --dash:#c7b884;
+}
 
-  .book-row{
-    display:flex;
-    align-items:center;
-    gap:1.2vw;
-    flex:1 1 auto;
-    min-height:0;
-    width:min(96vw, 1320px);
-  }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-  .pager-btn{
-    flex:0 0 auto;
-    width:40px;
-    height:40px;
-    border:2px solid var(--cover-ink);
-    background:var(--tab);
-    color:var(--cover-ink);
-    font-family:'Press Start 2P', monospace;
-    font-size:14px;
-    cursor:pointer;
-    box-shadow:3px 3px 0 rgba(0,0,0,0.3);
-  }
-  .pager-btn:hover{ filter:brightness(1.1); }
-  .pager-btn:active{ transform:translateY(1px); }
-  .pager-btn:disabled{ opacity:0.35; cursor:default; }
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
 
+body{
+  background:
+    /* large pixel mosaic */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.035) 0 12px,
+      rgba(0,0,0,.025) 12px 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 0 12px,
+      rgba(0,0,0,.025) 12px 24px
+    ),
+    linear-gradient(180deg,var(--bg2),var(--bg1));
+
+  font-family:'VT323',monospace;
+  color:var(--ink);
+  image-rendering:pixelated;
+}
+
+/* Pixel-art background decoration */
+.background-cross{
+  position:fixed;
+  width:18px;
+  height:18px;
+  background:#b8ddd1;
+  box-shadow:
+    0 -18px #b8ddd1,
+    0 18px #b8ddd1,
+    -18px 0 #b8ddd1,
+    18px 0 #b8ddd1;
+  opacity:.7;
+}
+
+.cross1{left:8%;top:13%}
+.cross2{left:27%;top:8%}
+.cross3{right:17%;top:15%}
+.cross4{right:7%;top:38%}
+.cross5{left:12%;top:50%}
+.cross6{right:27%;top:47%}
+
+.floor{
+  position:fixed;
+  z-index:0;
+  left:0;
+  right:0;
+  bottom:0;
+  height:21%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 58px,
+      rgba(34,82,104,.35) 58px 64px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 32px,
+      rgba(34,82,104,.35) 32px 38px
+    ),
+    linear-gradient(var(--floor),var(--floor-dark));
+  border-top:5px solid #315e76;
+}
+
+/* =========================================================
+   STAGE
+========================================================= */
+
+.stage{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding-top:2vh;
+}
+
+/* =========================================================
+   BOOK
+   Important: no clip-path on the book container.
+   Everything that sticks out remains visible.
+========================================================= */
+
+.book{
+  position:relative;
+  width:min(74vw,1080px);
+  height:min(62vh,620px);
+  min-height:470px;
+  filter:drop-shadow(10px 13px 0 rgba(28,25,35,.48));
+}
+
+/* black pixel shadow behind book */
+.book-shadow{
+  position:absolute;
+  inset:8px -10px -10px 8px;
+  background:var(--ink);
+  z-index:0;
+
+  /* only the shadow itself is stepped */
+  clip-path:polygon(
+    0 3%,2% 3%,2% 0,98% 0,98% 2%,100% 2%,
+    100% 97%,98% 97%,98% 100%,2% 100%,2% 98%,0 98%
+  );
+}
+
+/* Green cover — rectangular, no clipping */
+.cover{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:var(--cover);
+  border:7px solid var(--ink);
+  box-shadow:
+    inset 0 0 0 5px #6fae53,
+    inset 0 0 0 9px #a4d46a,
+    inset 0 -10px 0 #75a94e;
+  overflow:visible;
+}
+
+/* Clean continuous cover frame: no external corner blocks. */
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tabs{
+  position:absolute;
+  z-index:1000;
+  top:-36px;
+  overflow:visible;
+  left:28px;
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+}
+
+.tab{
+  height:36px;
+  min-width:92px;
+  padding:0 10px;
+
+  border:5px solid var(--ink);
+
+  font-family:'Press Start 2P',monospace;
+  font-size:8px;
+
+  cursor:pointer;
+  color:#4b4246;
+
+  /* inactive tabs look like old pixel-game UI */
+  background:#8f8178 !important;
+  filter:saturate(.45) brightness(.82);
+  opacity:.92;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:visible;
+
+  box-shadow:4px 0 0 var(--ink);
+}
+
+.tab:nth-child(1){background:#c88786}
+.tab:nth-child(2){background:#b99d65}
+.tab:nth-child(3){background:#7895a5}
+
+.tab.active{
+  transform:none;
+  filter:none;
+  opacity:1;
+  color:var(--ink);
+  box-shadow:5px 0 0 var(--ink);
+}
+.tab:nth-child(1).active{background:var(--pink) !important}
+.tab:nth-child(2).active{background:var(--yellow) !important}
+.tab:nth-child(3).active{background:var(--blue) !important}
+
+
+/* Tabs are deliberately lifted above the book frame. */
+.tabs{
+  pointer-events:auto;
+}
+
+/* Small stepped highlight on inactive tabs */
+.tab:not(.active)::before{
+  content:"";
+  position:absolute;
+  left:7px;
+  top:6px;
+  width:10px;
+  height:5px;
+  background:rgba(255,255,255,.18);
+  box-shadow:7px 0 rgba(255,255,255,.12);
+}
+
+/* =========================================================
+   SIDE CONTROLS
+========================================================= */
+
+.side-menu{
+  position:absolute;
+  z-index:100;
+  left:-58px;
+  top:125px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.side-button{
+  width:48px;
+  height:48px;
+  border:5px solid var(--ink);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Press Start 2P';
+  font-size:17px;
+  box-shadow:4px 0 0 var(--ink);
+}
+
+.side-button:nth-child(1){background:var(--pink)}
+.side-button:nth-child(2){background:var(--blue)}
+.side-button:nth-child(3){background:#58a18c}
+
+/* arrows */
+.page-arrow{
+  position:absolute;
+  z-index:110;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:48px;
+  height:48px;
+
+  border:5px solid var(--ink);
+  background:var(--yellow);
+  color:var(--ink);
+
+  font-family:'Press Start 2P';
+  font-size:14px;
+
+  cursor:pointer;
+
+  box-shadow:5px 0 0 var(--ink);
+}
+
+.page-arrow:hover{
+  filter:brightness(1.08);
+}
+
+.page-arrow:active{
+  transform:translateY(calc(-50% + 3px));
+  box-shadow:2px 2px 0 var(--ink);
+}
+
+.page-arrow.left{left:-29px}
+.page-arrow.right{right:-29px}
+
+/* =========================================================
+   OPEN BOOK / SPREAD
+========================================================= */
+
+.spread{
+  position:absolute;
+  z-index:3;
+
+  left:14px;
+  right:14px;
+  top:14px;
+  bottom:14px;
+
+  display:none;
+
+  grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);
+
+  border:6px solid var(--ink);
+  background:var(--paper);
+
+  box-shadow:
+    inset 0 0 0 4px var(--paper-shadow),
+    inset 0 0 0 8px rgba(255,255,255,.22);
+  overflow:visible;
+}
+
+.spread.active{
+  display:grid;
+}
+
+.page{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  overflow:hidden;
+  padding:35px 30px 25px;
+}
+
+.page.left{
+  background:var(--paper);
+}
+
+.page.right{
+  background:var(--paper-r);
+}
+
+/* little corner pixel stars */
+.page:before{
+  content:"✦";
+  position:absolute;
+  top:10px;
+  right:14px;
+  color:#d7af4b;
+  font-size:22px;
+  font-family:monospace;
+}
+
+.page:after{
+  content:"✦";
+  position:absolute;
+  bottom:8px;
+  left:14px;
+  color:#d7af4b;
+  font-size:20px;
+  font-family:monospace;
+}
+
+/* =========================================================
+   SPINE
+========================================================= */
+
+.spine{
+  position:relative;
+  z-index:20;
+  overflow:visible;
+  background:
+    linear-gradient(
+      90deg,
+      #56884c 0 6px,
+      var(--ink) 6px 10px,
+      #91c85e 10px 20px,
+      var(--ink) 20px 24px,
+      #56884c 24px 30px
+    );
+}
+
+.ring{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:52px;
+  height:21px;
+  z-index:30;
+
+  background:var(--pink);
+  border:5px solid var(--ink);
+  box-shadow:4px 0 0 var(--ink);
+}
+
+.ring.r1{top:12%}
+.ring.r2{top:35%}
+.ring.r3{top:58%}
+.ring.r4{top:81%}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  column-gap:18px;
+  row-gap:25px;
+  align-content:start;
+}
+
+.card{
+  min-width:0;
+  text-decoration:none;
+  color:var(--ink);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  cursor:pointer;
+}
+
+.icon-box{
+  width:100%;
+  max-width:125px;
+  aspect-ratio:1;
+
+  background:#fff9e7;
+  border:5px solid var(--ink);
+
+  box-shadow:
+    6px 6px 0 #c5aa61,
+    2px 2px 0 #fff9e7;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+}
+
+.icon-box:after{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:3px solid #ead8a0;
+}
+
+/* pixel symbols */
+.pixel-symbol{
+  position:relative;
+  width:54%;
+  height:54%;
+}
+
+.symbol-red{
+  background:var(--pink-dark);
+  clip-path:polygon(
+    25% 0,75% 0,75% 16%,91% 16%,91% 34%,
+    100% 34%,100% 82%,82% 82%,82% 100%,
+    18% 100%,18% 82%,0 82%,0 34%,9% 34%,
+    9% 16%,25% 16%
+  );
+}
+
+.symbol-blue{
+  background:var(--blue-dark);
+  box-shadow:
+    inset 0 0 0 12px #fff9e7,
+    inset 0 0 0 22px var(--blue-dark);
+}
+
+.symbol-green{
+  background:#4e8854;
+  clip-path:polygon(
+    30% 0,70% 0,70% 15%,86% 15%,86% 30%,
+    100% 30%,100% 70%,86% 70%,86% 86%,
+    70% 86%,70% 100%,30% 100%,30% 86%,
+    14% 86%,14% 70%,0 70%,0 30%,14% 30%,
+    14% 15%,30% 15%
+  );
+}
+
+/* labels */
+.label{
+  width:100%;
+  max-width:142px;
+  min-height:50px;
+
+  margin-top:8px;
+  padding:8px 5px;
+
+  border:5px solid var(--ink);
+
+  font-family:'Press Start 2P',monospace;
+  font-size:8px;
+  line-height:1.45;
+
+  text-align:center;
+  color:#fff9e7;
+  text-shadow:2px 2px 0 var(--ink);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:5px 0 0 var(--ink);
+}
+
+.card.red .label{background:var(--pink-dark)}
+.card.blue .label{background:var(--blue-dark)}
+.card.green .label{background:#4f8151}
+
+/* add cards */
+.card.add .icon-box{
+  background:transparent;
+  border:4px dashed var(--dash);
+  box-shadow:none;
+}
+
+.card.add .icon-box:after{
+  display:none;
+}
+
+.plus{
+  position:relative;
+  width:48%;
+  height:48%;
+}
+
+.plus:before,
+.plus:after{
+  content:"";
+  position:absolute;
+  background:#bcae80;
+}
+
+.plus:before{
+  width:100%;
+  height:20%;
+  left:0;
+  top:40%;
+}
+
+.plus:after{
+  height:100%;
+  width:20%;
+  top:0;
+  left:40%;
+}
+
+.card.add .label{
+  min-height:37px;
+  border:4px dashed var(--dash);
+  background:transparent;
+  color:#8e7c55;
+  text-shadow:none;
+  box-shadow:none;
+  font-size:7px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
   .book{
-    position:relative;
-    flex:1 1 auto;
-    min-height:0;
-    width:100%;
-    aspect-ratio:16 / 9;
-    max-height:80dvh;
-    display:flex;
-    padding-top:1.4dvh;
-    margin:0 auto;
+    width:82vw;
+    height:62vh;
+    min-height:400px;
   }
 
-  .book::before,
-  .book::after{
-    content:"";
-    position:absolute;
-    z-index:0;
-  }
-  .book::before{
-    top:15px; left:10px; right:-12px; bottom:-12px;
-    background:var(--cover-dark);
-  }
-  .book::after{
-    top:11px; left:5px; right:-6px; bottom:-6px;
-    background:#160e14;
-  }
-
-  .cover{
-    position:relative;
-    z-index:1;
-    flex:1;
-    min-height:0;
-    background:var(--cover);
-    border:3px solid var(--cover-ink);
-    padding:1.6dvh 1.2vw 1.4dvh;
-    box-shadow:10px 10px 0 rgba(0,0,0,0.35);
-  }
-
-  .cover::before{
-    content:"";
-    position:absolute;
-    top:-9px; left:-3px; right:-3px;
-    height:14px;
-    background:var(--cover);
-    border-top:3px solid var(--cover-ink);
-    clip-path:polygon(
-      0% 100%, 2% 30%, 5% 90%, 9% 15%, 13% 80%, 17% 25%, 21% 95%, 25% 40%,
-      29% 100%, 33% 20%, 37% 85%, 41% 10%, 45% 70%, 49% 30%, 53% 100%, 57% 35%,
-      61% 90%, 65% 15%, 69% 80%, 73% 25%, 77% 95%, 81% 40%, 85% 100%, 89% 20%,
-      93% 85%, 97% 15%, 100% 70%, 100% 100%
-    );
-  }
-
-  /* ---------- domain tabs: attached directly to the cover's top edge ---------- */
-
-  .domain-tabs{
-    position:absolute;
-    top:-2.9dvh; left:0.2vw;
-    display:flex;
-    justify-content:flex-start;
-    gap:8px;
-    z-index:3;
-  }
-
-  .domain-tab{
-    font-family:'Press Start 2P', monospace;
-    font-size:clamp(8px, 1.2dvh, 11px);
-    color:var(--cover-ink);
-    background:var(--tab-dark);
-    border:2px solid var(--cover-ink);
-    border-bottom:none;
-    padding:0.55dvh 1.1vw 0.45dvh;
-    cursor:pointer;
-    clip-path:polygon(
-      0 100%, 0 6px, 6px 6px, 6px 0,
-      calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px, 100% 100%
-    );
-    transition:transform 120ms ease, background 120ms ease;
-  }
-  .domain-tab:hover{ filter:brightness(1.1); }
-  .domain-tab.active{
-    background:var(--tab);
-    transform:translateY(-3px);
-    box-shadow:0 -2px 0 rgba(255,255,255,0.25) inset;
-  }
-  .domain-tab:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
-
-  .spine-rings{
-    position:absolute;
-    left:50%;
-    top:0; bottom:0;
-    width:0;
-    z-index:4;
-    pointer-events:none;
-  }
-  .spine-ring{
-    position:absolute;
-    left:50%;
-    width:18px; height:18px;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    background:var(--tab-dark);
-    border:3px solid var(--cover-ink);
-    box-shadow:0 2px 0 rgba(0,0,0,0.4), inset 0 0 0 3px rgba(255,255,255,0.12);
-  }
-  .spine-ring::after{
-    content:"";
-    position:absolute;
-    inset:5px;
-    border-radius:50%;
-    background:var(--cover-ink);
-  }
-  .spine-ring.r1{ top:16%; }
-  .spine-ring.r2{ top:50%; }
-  .spine-ring.r3{ top:84%; }
-
-  .pages-viewport{
-    position:relative;
-    height:100%;
-  }
-
-  .spread{
-    display:none;
-    position:absolute;
-    inset:0;
-    grid-template-columns:1fr minmax(14px, 1.8vw) 1fr;
-    background:var(--cover);
-  }
-  .spread.active{ display:grid; }
-
-  .spine{
-    position:relative;
-    background:linear-gradient(180deg, #170d16, #1f1220);
-    box-shadow:inset 3px 0 6px rgba(0,0,0,0.5), inset -3px 0 6px rgba(0,0,0,0.5);
+  .side-menu{
+    left:-48px;
   }
 
   .page{
+    padding-left:18px;
+    padding-right:18px;
+  }
+
+  .card-grid{
+    gap:15px;
+  }
+
+  .icon-box{
+    max-width:100px;
+  }
+
+  .label{
+    font-size:6px;
+  }
+}
+
+@media(max-width:650px){
+  body{overflow:auto}
+  .stage{
+    min-height:100vh;
+    height:auto;
+    padding:70px 10px 90px;
+  }
+
+  .book{
+    width:94vw;
+    height:auto;
+    min-height:520px;
+    aspect-ratio:auto;
+  }
+
+  .spread{
     position:relative;
-    min-height:0;
-    min-width:0;
-    display:flex;
-    flex-direction:column;
-    padding:2dvh 1.4vw;
-    overflow:hidden;
-  }
-  .page.left{ background:var(--page-l); }
-  .page.right{ background:var(--page-r); }
-
-  .page::before{
-    content:"";
-    position:absolute;
-    top:-6px; left:0; right:0;
-    height:10px;
-    background:inherit;
-    background-color:var(--page-torn);
-    clip-path:polygon(
-      0% 100%, 4% 40%, 8% 90%, 12% 20%, 16% 100%, 20% 45%, 24% 95%, 28% 15%,
-      32% 100%, 36% 35%, 40% 90%, 44% 25%, 48% 100%, 52% 30%, 56% 95%, 60% 20%,
-      64% 100%, 68% 40%, 72% 90%, 76% 15%, 80% 100%, 84% 30%, 88% 95%, 92% 20%,
-      96% 100%, 100% 35%, 100% 100%
-    );
+    inset:auto;
+    min-height:500px;
+    grid-template-columns:1fr;
   }
 
-  .page.left::after{
-    content:"";
-    position:absolute;
-    top:0; bottom:0; right:0;
-    width:22px;
-    background:linear-gradient(90deg, transparent, rgba(0,0,0,0.14));
-    pointer-events:none;
-  }
-  .page.right::after{
-    content:"";
-    position:absolute;
-    top:0; bottom:0; left:0;
-    width:22px;
-    background:linear-gradient(270deg, transparent, rgba(0,0,0,0.14));
-    pointer-events:none;
+  .spine{
+    display:none;
   }
 
-  .seal-field{
-    position:relative;
-    z-index:1;
-    flex:1;
-    min-height:0;
+  .page{
+    min-height:250px;
   }
 
-  .seal-field.uniform-grid{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    grid-template-rows:repeat(2, 1fr);
-    gap:1.4dvh 1vw;
+  .side-menu{
+    display:none;
   }
 
-  /* ---------- figurinha-style seal cards: square image on top, title below ---------- */
-
-  .seal-card{
-    container-type:inline-size;
-    position:relative;
-    min-height:0;
-    min-width:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:8%;
-    text-decoration:none;
-    cursor:pointer;
-    transition:transform 100ms ease, filter 100ms ease;
-  }
-  .seal-card:hover{ transform:translateY(-2px); filter:brightness(1.04); }
-  .seal-card:active{ transform:translateY(1px); }
-  .seal-card:focus-visible{ outline:3px solid var(--cover-ink); outline-offset:2px; }
-
-  .seal-icon-box{
-    width:60%;
-    aspect-ratio:1/1;
-    max-width:120px;
-    background:var(--card-bg);
-    border:3px solid var(--cover-ink);
-    border-radius:18%;
-    box-shadow:3px 4px 0 rgba(0,0,0,0.25);
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  .page-arrow{
+    display:none;
   }
 
-  .seal-icon-box .pixel-icon{
-    width:48%;
-    height:48%;
-    shape-rendering:crispEdges;
-  }
-  .seal-icon-box .pixel-icon rect{ fill:currentColor; }
-
-  .seal-pill{
-    max-width:94%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:999px;
-    border:2px solid var(--cover-ink);
-    box-shadow:2px 3px 0 rgba(0,0,0,0.2);
-    padding:5% 9%;
-    font-family:'Press Start 2P', monospace;
-    font-size:clamp(7px, 9cqw, 12px);
-    color:#fff8ea;
-    text-align:center;
-    text-shadow:1px 1px 0 rgba(0,0,0,0.3);
-    line-height:1.3;
+  .tabs{
+    left:5px;
   }
 
-  .c-crimson{ color:#a8404a; }
-  .c-navy{    color:#33526e; }
-  .c-forest{  color:#436b47; }
-  .c-amber{   color:#bd8138; }
-  .c-plum{    color:#7d5488; }
-  .c-teal{    color:#357a75; }
-
-  .c-crimson .seal-pill{ background:#a8404a; }
-  .c-navy    .seal-pill{ background:#33526e; }
-  .c-forest  .seal-pill{ background:#436b47; }
-  .c-amber   .seal-pill{ background:#bd8138; }
-  .c-plum    .seal-pill{ background:#7d5488; }
-  .c-teal    .seal-pill{ background:#357a75; }
-
-  .seal-card.add .seal-icon-box{
-    background:transparent;
-    border:3px dashed rgba(58,42,30,0.4);
-    box-shadow:none;
-    color:rgba(58,42,30,0.5);
+  .tab{
+    min-width:80px;
+    font-size:7px;
   }
-  .seal-card.add .seal-pill{
-    background:transparent;
-    border:2px dashed rgba(58,42,30,0.4);
-    color:rgba(58,42,30,0.65);
-    text-shadow:none;
-    box-shadow:none;
-  }
-  .seal-card.add.full{ grid-column:1 / -1; grid-row:1 / -1; }
-  .seal-card.add.full .seal-icon-box{ max-width:150px; }
-
-  .compass-note{
-    position:absolute;
-    right:-1.6vw;
-    bottom:-1.6dvh;
-    width:56px;
-    height:56px;
-    background:var(--page-torn);
-    border:2px solid var(--cover-ink);
-    transform:rotate(14deg);
-    z-index:3;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:3px 3px 0 rgba(0,0,0,0.3);
-  }
-  .compass-note::before{
-    content:"";
-    position:absolute;
-    top:0; right:0;
-    width:0; height:0;
-    border-style:solid;
-    border-width:0 14px 14px 0;
-    border-color:transparent var(--bg-floor-dk) transparent transparent;
-  }
-  .compass-note .pixel-icon{
-    width:55%;
-    height:55%;
-    color:var(--ink);
-  }
-
-  @media (max-width:760px), (max-height:560px){
-    html,body{ height:auto; overflow:auto; }
-    .stage{ height:auto; padding:20px 14px; }
-    .book-row{ flex-direction:column; }
-    .book{ height:auto; aspect-ratio:auto; width:100%; max-height:none; }
-    .spread{ position:static; grid-template-columns:1fr; }
-    .spread.active{ display:none; }
-    .spread.active.mobile-show{ display:flex; flex-direction:column; }
-    .spine{ display:none; }
-    .spine-rings{ display:none; }
-    .page{ min-height:320px; }
-    .compass-note{ display:none; }
-    .pager-btn{ width:52px; height:52px; }
-    .domain-tab{ font-size:8px; padding:6px 8px 5px; }
-    .domain-tabs{ position:static; margin-bottom:10px; }
-  }
+}
 </style>
 </head>
+
 <body>
 
-<div class="stage">
-  <h1 class="stage-title">LIVRO DE ESTÍMULOS</h1>
+<div class="background-cross cross1"></div>
+<div class="background-cross cross2"></div>
+<div class="background-cross cross3"></div>
+<div class="background-cross cross4"></div>
+<div class="background-cross cross5"></div>
+<div class="background-cross cross6"></div>
 
-  <div class="book-row">
-    <button class="pager-btn" id="prevSpread" disabled>◀</button>
+<div class="floor"></div>
 
-    <div class="book">
-      <div class="cover">
-        <div class="domain-tabs" id="domainTabs">
-          <button class="domain-tab" data-index="0">WISC</button>
-          <button class="domain-tab" data-index="1">NEPSY</button>
-          <button class="domain-tab" data-index="2">NEUPSILIN</button>
-        </div>
-        <div class="spine-rings">
-          <span class="spine-ring r1"></span>
-          <span class="spine-ring r2"></span>
-          <span class="spine-ring r3"></span>
-        </div>
-        <div class="pages-viewport">
-      <div class="spread active" data-spread="0">
+<main class="stage">
+
+  <div class="book">
+
+    <div class="book-shadow"></div>
+
+    <div class="cover">
+
+      <!-- Tabs -->
+      <nav class="tabs">
+        <button class="tab active" data-index="0">WISC</button>
+        <button class="tab" data-index="1">NEPSY</button>
+        <button class="tab" data-index="2">NEUPSILIN</button>
+      </nav>
+
+      <!-- Side menu -->
+      <div class="side-menu">
+        <div class="side-button">♧</div>
+        <div class="side-button">▣</div>
+        <div class="side-button">⚙</div>
+      </div>
+
+      <!-- Navigation -->
+      <button class="page-arrow left" id="prev">◀</button>
+      <button class="page-arrow right" id="next">▶</button>
+
+      <!-- ===================================================
+           WISC
+      ==================================================== -->
+      <section class="spread active">
+
         <div class="page left">
-          <div class="seal-field uniform-grid">
-            <a class="seal-card c-crimson" href="completarfiguras.html" title="Abrir Completar Figuras">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="01110|10001|11111|10101|01110"></svg>
-              </span>
-              <span class="seal-pill">Completar Figuras</span>
+          <div class="card-grid">
+
+            <a class="card red" href="completarfiguras.html">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-red"></div>
+              </div>
+              <div class="label">COMPLETAR<br>FIGURAS</div>
             </a>
-            <a class="seal-card c-navy" href="raciociniomat.html" title="Abrir Raciocínio Matricial">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="11111|10001|10101|10001|11111"></svg>
-              </span>
-              <span class="seal-pill">Raciocínio Matricial</span>
+
+            <a class="card blue" href="raciociniomat.html">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-blue"></div>
+              </div>
+              <div class="label">RACIOCÍNIO<br>MATRICIAL</div>
             </a>
-            <a class="seal-card c-forest" href="conceitosfig.html" title="Abrir Conceitos Figurativos">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|01110|11111|11111|10101"></svg>
-              </span>
-              <span class="seal-pill">Conceitos Figurativos</span>
+
+            <a class="card green" href="conceitosfig.html">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-green"></div>
+              </div>
+              <div class="label">CONCEITOS<br>FIGURATIVOS</div>
             </a>
-            <a class="seal-card add" href="#" title="Adicionar nova categoria">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
-              </span>
-              <span class="seal-pill">+ nova</span>
+
+            <a class="card add" href="#">
+              <div class="icon-box">
+                <div class="plus"></div>
+              </div>
+              <div class="label">+ NOVA</div>
             </a>
+
           </div>
         </div>
-        <div class="spine"></div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
         <div class="page right">
-          <div class="seal-field uniform-grid">
-            <a class="seal-card add full" href="#" title="Adicionar nova categoria">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
-              </span>
-              <span class="seal-pill">+ nova</span>
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
             </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
           </div>
         </div>
-      </div>
-      <div class="spread" data-spread="1">
+
+      </section>
+
+      <!-- ===================================================
+           NEPSY
+      ==================================================== -->
+      <section class="spread">
+
         <div class="page left">
-          <div class="seal-field uniform-grid">
-            <a class="seal-card c-amber" href="nepsyqcgeometrico.html" title="Abrir QC Geométrico">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="11111|00000|11111|00000|11111"></svg>
-              </span>
-              <span class="seal-pill">QC Geométrico</span>
+          <div class="card-grid">
+
+            <a class="card red" href="nepsyqcgeometrico.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">QC<br>GEOMÉTRICO</div>
             </a>
-            <a class="seal-card c-plum" href="nepsyrecemocoes.html" title="Abrir Rec. Emoções">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="10000|11000|11100|11000|10000"></svg>
-              </span>
-              <span class="seal-pill">Rec. Emoções</span>
+
+            <a class="card blue" href="nepsyrecemocoes.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">REC.<br>EMOÇÕES</div>
             </a>
-            <a class="seal-card c-teal" href="nepsyteoriadamente.html" title="Abrir Teoria da Mente">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="01010|11111|11111|01110|00100"></svg>
-              </span>
-              <span class="seal-pill">Teoria da Mente</span>
+
+            <a class="card green" href="nepsyteoriadamente.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">TEORIA<br>DA MENTE</div>
             </a>
-            <a class="seal-card add" href="#" title="Adicionar nova categoria">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
-              </span>
-              <span class="seal-pill">+ nova</span>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
             </a>
+
           </div>
         </div>
-        <div class="spine"></div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
         <div class="page right">
-          <div class="seal-field uniform-grid">
-            <a class="seal-card c-crimson" href="nepsyinibindorespostas.html" title="Abrir Inibindo Respostas">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="01110|10001|11111|10101|01110"></svg>
-              </span>
-              <span class="seal-pill">Inibindo Respostas</span>
+          <div class="card-grid">
+
+            <a class="card red" href="nepsyinibindorespostas.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">INIBINDO<br>RESPOSTAS</div>
             </a>
-            <a class="seal-card c-navy" href="nepsymemfaces.html" title="Abrir Mem. Faces">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="11111|10001|10101|10001|11111"></svg>
-              </span>
-              <span class="seal-pill">Mem. Faces</span>
+
+            <a class="card blue" href="nepsymemfaces.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">MEM.<br>FACES</div>
             </a>
-            <a class="seal-card c-forest" href="nepsymemfacestardio.html" title="Abrir Mem. Faces Tardio">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|01110|11111|11111|10101"></svg>
-              </span>
-              <span class="seal-pill">Mem. Faces Tardio</span>
+
+            <a class="card green" href="nepsymemfacestardio.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">MEM. FACES<br>TARDIO</div>
             </a>
-            <a class="seal-card add" href="#" title="Adicionar nova categoria">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
-              </span>
-              <span class="seal-pill">+ nova</span>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
             </a>
+
           </div>
         </div>
-      </div>
-      <div class="spread" data-spread="2">
+
+      </section>
+
+      <!-- ===================================================
+           NEUPSILIN
+      ==================================================== -->
+      <section class="spread">
+
         <div class="page left">
-          <div class="seal-field uniform-grid">
-            <a class="seal-card c-amber" href="neupsilincopiafiguras.html" title="Abrir Cópia de Figuras">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="11111|00000|11111|00000|11111"></svg>
-              </span>
-              <span class="seal-pill">Cópia de Figuras</span>
+          <div class="card-grid">
+
+            <a class="card red" href="neupsilincopiafiguras.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">CÓPIA DE<br>FIGURAS</div>
             </a>
-            <a class="seal-card c-plum" href="neupsilincompreensaooral.html" title="Abrir Compreensão Oral">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="10000|11000|11100|11000|10000"></svg>
-              </span>
-              <span class="seal-pill">Compreensão Oral</span>
+
+            <a class="card blue" href="neupsilincompreensaooral.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">COMPREENSÃO<br>ORAL</div>
             </a>
-            <a class="seal-card c-teal" href="neupsilincompreensaoescrita.html" title="Abrir Compreensão Escrita">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="01010|11111|11111|01110|00100"></svg>
-              </span>
-              <span class="seal-pill">Compreensão Escrita</span>
+
+            <a class="card green" href="neupsilincompreensaoescrita.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">COMPREENSÃO<br>ESCRITA</div>
             </a>
-            <a class="seal-card add" href="#" title="Adicionar nova categoria">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
-              </span>
-              <span class="seal-pill">+ nova</span>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
             </a>
+
           </div>
         </div>
-        <div class="spine"></div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
         <div class="page right">
-          <div class="seal-field uniform-grid">
-            <a class="seal-card c-crimson" href="neupsilinescritacopiada.html" title="Abrir Escrita Copiada">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="01110|10001|11111|10101|01110"></svg>
-              </span>
-              <span class="seal-pill">Escrita Copiada</span>
+          <div class="card-grid">
+
+            <a class="card red" href="neupsilinescritacopiada.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">ESCRITA<br>COPIADA</div>
             </a>
-            <a class="seal-card c-navy" href="neupsilinmemoriavisuoverbal.html" title="Abrir Memória Visuoverbal">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="11111|10001|10101|10001|11111"></svg>
-              </span>
-              <span class="seal-pill">Memória Visuoverbal</span>
+
+            <a class="card blue" href="neupsilinmemoriavisuoverbal.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">MEMÓRIA<br>VISUOVERBAL</div>
             </a>
-            <a class="seal-card c-forest" href="neupsilinpercepcaovisual.html" title="Abrir Percepção Visual">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|01110|11111|11111|10101"></svg>
-              </span>
-              <span class="seal-pill">Percepção Visual</span>
+
+            <a class="card green" href="neupsilinpercepcaovisual.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">PERCEPÇÃO<br>VISUAL</div>
             </a>
-            <a class="seal-card add" href="#" title="Adicionar nova categoria">
-              <span class="seal-icon-box">
-                <svg class="pixel-icon" data-pattern="00100|00100|11111|00100|00100"></svg>
-              </span>
-              <span class="seal-pill">+ nova</span>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
             </a>
+
           </div>
         </div>
-      </div>
-        </div>
-      </div>
-      <div class="compass-note">
-        <svg class="pixel-icon" data-pattern="00100|01110|11111|01110|00100"></svg>
-      </div>
+
+      </section>
+
     </div>
-
-    <button class="pager-btn" id="nextSpread">▶</button>
   </div>
-</div>
+
+</main>
 
 <script>
-  document.querySelectorAll('.pixel-icon[data-pattern]').forEach(function(svg){
-    var rows = svg.dataset.pattern.split('|');
-    var size = rows.length;
-    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
-    rows.forEach(function(row, y){
-      for (var x = 0; x < row.length; x++){
-        if (row[x] === '1'){
-          var r = document.createElementNS('http://www.w3.org/2000/svg','rect');
-          r.setAttribute('x', x);
-          r.setAttribute('y', y);
-          r.setAttribute('width', 1);
-          r.setAttribute('height', 1);
-          svg.appendChild(r);
-        }
-      }
-    });
+const spreads = [...document.querySelectorAll('.spread')];
+const tabs = [...document.querySelectorAll('.tab')];
+
+let current = 0;
+
+function render(){
+  spreads.forEach((spread,index)=>{
+    spread.classList.toggle('active',index === current);
   });
 
-  var spreads = document.querySelectorAll('.spread');
-  var tabs = document.querySelectorAll('.domain-tab');
-  var current = 0;
-  var prevBtn = document.getElementById('prevSpread');
-  var nextBtn = document.getElementById('nextSpread');
+  tabs.forEach((tab,index)=>{
+    tab.classList.toggle('active',index === current);
+  });
+}
 
-  function render(){
-    spreads.forEach(function(s, i){
-      s.classList.toggle('active', i === current);
-    });
-    tabs.forEach(function(t, i){
-      t.classList.toggle('active', i === current);
-    });
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === spreads.length - 1;
+document.getElementById('prev').addEventListener('click',()=>{
+  if(current > 0){
+    current--;
+    render();
+  }
+});
+
+document.getElementById('next').addEventListener('click',()=>{
+  if(current < spreads.length - 1){
+    current++;
+    render();
+  }
+});
+
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    current = Number(tab.dataset.index);
+    render();
+  });
+});
+
+document.addEventListener('keydown',event=>{
+  if(event.key === 'ArrowLeft'){
+    document.getElementById('prev').click();
   }
 
-  prevBtn.addEventListener('click', function(){
-    if (current > 0){ current--; render(); }
-  });
-  nextBtn.addEventListener('click', function(){
-    if (current < spreads.length - 1){ current++; render(); }
-  });
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(){
-      current = parseInt(t.dataset.index, 10);
-      render();
-    });
-  });
+  if(event.key === 'ArrowRight'){
+    document.getElementById('next').click();
+  }
+});
 
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'ArrowRight') nextBtn.click();
-    if (e.key === 'ArrowLeft') prevBtn.click();
-  });
-
-  render();
+render();
 </script>
 
 </body>
