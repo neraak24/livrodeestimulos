@@ -147,7 +147,7 @@ body{
     <h1 class="title">WISC — RACIOCÍNIO MATRICIAL</h1>
     <button class="btn" id="extra-btn" hidden></button>
     <input class="pagenum" id="pagenum" type="number" min="1" inputmode="numeric" title="Digite o número da página e aperte Enter">
-    <button class="btn on hide-sm" id="crop-btn" title="Cortar a margem branca (tecla Z)">zoom</button>
+    <button class="btn hide-sm" id="crop-btn" title="Cortar a margem branca (tecla Z)">zoom</button>
     <button class="btn hide-sm" id="full-btn" title="Tela cheia (tecla F)">tela cheia</button>
   </div>
 
@@ -206,7 +206,7 @@ body{
   const ROTATE = null;    // null | {left: "all" | [páginas], right: [páginas]} — gira 90° p/ a esquerda ou direita
 
   let current = 0;
-  let crop = true;                      // corta a margem branca do PNG ao exibir
+  let crop = false;                     // zoom: corta a margem branca do PNG (começa desligado)
   const canvas  = document.getElementById('stage');
   const ctx     = canvas.getContext('2d');
   const prevBtn = document.getElementById('prev-btn');
