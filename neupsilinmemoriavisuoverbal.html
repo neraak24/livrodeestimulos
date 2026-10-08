@@ -4,151 +4,338 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEUPSILIN — MEMÓRIA VISUOVERBAL</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#6d4d5e; --bg-dark:#4d3345;
-    --page-l:#ecdcab; --ink:#3a2a1e; --gold:#c9a24b; --gold-dark:#8f7431;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
+:root{
+  --bg:#e6e5e1;
+  --btn:#d3d1cb;
+  --btn-hover:#c6c4bd;
+  --btn-on:#8b8880;
+  --line:#bdbab2;
+  --text:#5d5a54;
+}
+*{box-sizing:border-box;margin:0;padding:0}
 
-  html,body{
-    height:100dvh;
-    overflow:hidden;
-    background:radial-gradient(ellipse at 50% 15%, var(--bg), var(--bg-dark) 85%);
-    font-family:'VT323', monospace;
-    color:var(--ink);
-  }
+html,body{width:100%;height:100dvh;overflow:hidden}
 
-  .screen{
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    padding:2dvh 3vw;
-    gap:1.6dvh;
-  }
+body{
+  background:var(--bg);
+  font-family:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  color:var(--text);
+}
 
-  .top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex:0 0 auto;
-  }
-  .back{
-    font-family:'Press Start 2P', monospace;
-    font-size:11px;
-    color:#f4e9c8;
-    text-decoration:none;
-    background:var(--bg-dark);
-    border:2px solid var(--gold-dark);
-    padding:8px 12px;
-  }
-  .back:hover{ filter:brightness(1.15); }
-  .title{
-    font-family:'Press Start 2P', monospace;
-    font-size:clamp(11px,1.9dvh,17px);
-    color:#f4e9c8;
-    text-shadow:3px 3px 0 rgba(0,0,0,0.5);
-    text-align:center;
-  }
+.screen{
+  position:absolute;
+  inset:.8dvh .8vw;
+  display:flex;
+  flex-direction:column;
+  gap:.8dvh;
+}
 
-  .frame{
-    flex:1;
-    min-height:0;
-    background:var(--page-l);
-    border:3px solid #1a0f1a;
-    box-shadow:8px 8px 0 rgba(0,0,0,0.35);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:2dvh;
-  }
-  .frame img{
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
-    border:3px solid #1a0f1a;
-    background:#fff;
-  }
+/* barra superior discreta */
+.top{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  opacity:.85;
+}
+.top:hover{opacity:1}
 
-  .nav{
-    flex:0 0 auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:16px;
-  }
-  .nav button{
-    font-family:'Press Start 2P', monospace;
-    font-size:clamp(11px,1.6dvh,15px);
-    color:#fbf1da;
-    background:#436b47;
-    border:none;
-    padding:1.4dvh 2.2vw;
-    cursor:pointer;
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,0.28),
-      inset 4px 4px 0 rgba(255,255,255,0.22);
-  }
-  .nav button:hover{ filter:brightness(1.08); }
-  .nav button:active{ transform:translateY(1px); }
-  .nav button:disabled{ opacity:0.4; cursor:default; }
-  .nav button.prev{ background:#33526e; }
+.btn{
+  font:inherit;
+  font-size:clamp(12px,1.7dvh,14px);
+  color:var(--text);
+  background:var(--btn);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:.7dvh 12px;
+  cursor:pointer;
+  text-decoration:none;
+  white-space:nowrap;
+  line-height:1.2;
+}
+.btn:hover{background:var(--btn-hover)}
+.btn.on{background:var(--btn-on);color:#fff;border-color:var(--btn-on)}
+.btn[hidden]{display:none}
+.btn.sm{font-size:clamp(11px,1.5dvh,13px);padding:.7dvh 9px}
+
+.jumps{display:flex;gap:6px;flex:0 0 auto}
+.jumps:empty{display:none}
+
+.title{
+  flex:1;
+  min-width:0;
+  text-align:center;
+  font-size:clamp(11px,1.7dvh,14px);
+  font-weight:500;
+  letter-spacing:.04em;
+  color:var(--text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* número da página (sem total) — dá para digitar um número e dar Enter */
+.pagenum{
+  width:54px;
+  font:inherit;
+  font-size:clamp(12px,1.7dvh,14px);
+  text-align:center;
+  color:var(--text);
+  background:#f3f2ef;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:.7dvh 4px;
+  -moz-appearance:textfield;
+}
+.pagenum::-webkit-outer-spin-button,
+.pagenum::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.pagenum:focus{outline:2px solid var(--btn-on);background:#fff}
+
+/* miolo: seta | folha | seta */
+.row{
+  flex:1;
+  min-height:0;
+  display:flex;
+  align-items:stretch;
+  gap:.6vw;
+}
+.arrow{
+  flex:0 0 auto;
+  align-self:center;
+  width:clamp(30px,3vw,44px);
+  height:clamp(64px,12dvh,110px);
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--btn);
+  color:var(--text);
+  font-size:clamp(14px,2dvh,20px);
+  cursor:pointer;
+}
+.arrow:hover{background:var(--btn-hover)}
+.arrow:disabled{opacity:.3;cursor:default;background:var(--btn)}
+
+.paper{
+  flex:1;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+#stage{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#fff;
+}
+
+@media(max-width:650px){
+  .btn.hide-sm{display:none}
+}
 </style>
 </head>
 <body>
 
-  <div class="screen">
-    <div class="top">
-      <a class="back" href="index.html">‹ voltar</a>
-      <h1 class="title">NEUPSILIN — MEMÓRIA VISUOVERBAL</h1>
-    </div>
-
-    <div class="frame">
-      <img id="stimulus-img" src="" alt="Estímulo">
-    </div>
-
-    <div class="nav">
-      <button class="prev" id="prev-btn">◀ anterior</button>
-      <button class="next" id="next-btn">próxima ▶</button>
-    </div>
+<div class="screen">
+  <div class="top">
+    <a class="btn" href="index.html">‹ voltar</a>
+    <div class="jumps" id="jumps"></div>
+    <h1 class="title">NEUPSILIN — MEMÓRIA VISUOVERBAL</h1>
+    <button class="btn" id="extra-btn" hidden></button>
+    <input class="pagenum" id="pagenum" type="number" min="1" inputmode="numeric" title="Digite o número da página e aperte Enter">
+    <button class="btn on hide-sm" id="crop-btn" title="Cortar a margem branca (tecla Z)">zoom</button>
+    <button class="btn hide-sm" id="full-btn" title="Tela cheia (tecla F)">tela cheia</button>
   </div>
+
+  <div class="row">
+    <button class="arrow" id="prev-btn" aria-label="anterior">◀</button>
+    <div class="paper"><canvas id="stage"></canvas></div>
+    <button class="arrow" id="next-btn" aria-label="próxima">▶</button>
+  </div>
+</div>
 
 <script>
   const images = [
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_16.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_17.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_18.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_19.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_20.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_21.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_22.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_23.png",
-    "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_24.png"
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_16.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_17.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_18.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_19.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_20.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_21.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_22.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_23.png",
+      "Neupsilin%20Mem%C3%B3ria%20Visuoverbal/pagina_24.png"
   ];
 
+  // Atalhos para pular direto a uma página (ex.: exemplo, faixa etária)
+  const JUMPS  = [];     // [{label, page}]  (page: 1, 2, 3…)
+  const EXTRA  = null;     // botão que só aparece a partir de uma página: {label, page, from}
+  const ROTATE = null;    // null | {left: "all" | [páginas], right: [páginas]} — gira 90° p/ a esquerda ou direita
+
   let current = 0;
-  const img = document.getElementById('stimulus-img');
+  let crop = true;                      // corta a margem branca do PNG ao exibir
+  const canvas  = document.getElementById('stage');
+  const ctx     = canvas.getContext('2d');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
+  const pageNum = document.getElementById('pagenum');
+  const cropBtn = document.getElementById('crop-btn');
+  const fullBtn = document.getElementById('full-btn');
+  const jumpsEl = document.getElementById('jumps');
+  const extraBtn = document.getElementById('extra-btn');
 
-  function render(){
-    img.src = images[current];
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === images.length - 1;
+  JUMPS.forEach(function(j){
+    if(j.page < 1 || j.page > images.length) return;
+    const b = document.createElement('button');
+    b.className = 'btn sm';
+    b.textContent = j.label;
+    b.title = 'Ir para a página ' + j.page;
+    b.addEventListener('click', function(){ go(j.page - 1); });
+    jumpsEl.appendChild(b);
+  });
+  if(EXTRA){
+    extraBtn.textContent = EXTRA.label;
+    extraBtn.classList.add('sm');
+    extraBtn.title = 'Ir para a página ' + EXTRA.page;
+    extraBtn.addEventListener('click', function(){ go(EXTRA.page - 1); });
   }
 
-  prevBtn.addEventListener('click', function(){
-    if (current > 0){ current--; render(); }
+  function rotFor(idx){
+    if(!ROTATE) return null;
+    const p = idx + 1;
+    if(ROTATE.left === 'all' || (Array.isArray(ROTATE.left) && ROTATE.left.indexOf(p) !== -1)) return 'left';
+    if(ROTATE.right === 'all' || (Array.isArray(ROTATE.right) && ROTATE.right.indexOf(p) !== -1)) return 'right';
+    return null;
+  }
+  // gira 90° (esquerda = anti-horário, direita = horário) e devolve um canvas
+  function rotate90(img, dir){
+    const w = img.naturalWidth, h = img.naturalHeight;
+    const c = document.createElement('canvas');
+    c.width = h; c.height = w;
+    const x = c.getContext('2d');
+    if(dir === 'left'){ x.translate(0, w); x.rotate(-Math.PI / 2); }
+    else               { x.translate(h, 0); x.rotate(Math.PI / 2); }
+    x.drawImage(img, 0, 0);
+    return c;
+  }
+
+  const cache = {};                     // src -> {img, box}
+
+  // acha o retângulo com conteúdo; ignora pontinhos/ruído de escaneamento
+  function findBox(img, skipTop){
+    const w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+    try{
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      const x = c.getContext('2d', {willReadFrequently:true});
+      x.drawImage(img, 0, 0);
+      const d = x.getImageData(0, 0, w, h).data;
+      const rows = new Uint16Array(h), cols = new Uint16Array(w);
+      const y0 = Math.round(h * (skipTop || 0));   // ignora a faixa dos furos do espiral
+      for(let y=y0; y<h; y++){
+        for(let xx=0; xx<w; xx++){
+          const i = (y*w + xx) * 4;
+          if(d[i+3] > 0 && (d[i] < 170 || d[i+1] < 170 || d[i+2] < 170)){
+            rows[y]++; cols[xx]++;
+          }
+        }
+      }
+      const MIN = 20;
+      let t=y0, b=h-1, l=0, r=w-1;
+      while(t<h && rows[t]<MIN) t++;
+      while(b>t && rows[b]<MIN) b--;
+      while(l<w && cols[l]<MIN) l++;
+      while(r>l && cols[r]<MIN) r--;
+      if(r<=l || b<=t) return {x:0,y:0,w:w,h:h};
+      const pad = Math.round(Math.max(r-l, b-t) * 0.03);
+      l = Math.max(0, l-pad); t = Math.max(y0, t-pad);
+      r = Math.min(w-1, r+pad); b = Math.min(h-1, b+pad);
+      return {x:l, y:t, w:r-l+1, h:b-t+1};
+    }catch(e){
+      return {x:0,y:0,w:w,h:h};         // sem acesso aos pixels: mostra inteira
+    }
+  }
+
+  function load(src){
+    if(cache[src]) return Promise.resolve(cache[src]);
+    return new Promise(function(resolve){
+      const img = new Image();
+      img.onload = function(){
+        const dir = rotFor(images.indexOf(src));
+        const s = dir ? rotate90(img, dir) : img;
+        const w = s.naturalWidth || s.width, h = s.naturalHeight || s.height;
+        cache[src] = {img:s, w:w, h:h, box:findBox(s, dir === 'left' ? 0.07 : 0)};
+        resolve(cache[src]);
+      };
+      img.onerror = function(){ resolve(null); };
+      img.src = src;
+    });
+  }
+
+  async function render(){
+    const idx = current;
+    pageNum.value = current + 1;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === images.length - 1;
+    extraBtn.hidden = !(EXTRA && current + 1 >= EXTRA.from);
+
+    const item = await load(images[idx]);
+    if(idx !== current || !item) return;     // usuário já mudou de página
+
+    const b = crop ? item.box : {x:0,y:0,w:item.w,h:item.h};
+    canvas.width = b.w; canvas.height = b.h;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, b.w, b.h);
+    ctx.drawImage(item.img, b.x, b.y, b.w, b.h, 0, 0, b.w, b.h);
+
+    // pré-carrega vizinhas
+    if(images[idx+1]) load(images[idx+1]);
+    if(images[idx-1]) load(images[idx-1]);
+  }
+
+  function go(n){
+    if(n < 0 || n >= images.length) { pageNum.value = current + 1; return; }
+    current = n;
+    render();
+  }
+
+  function toggleCrop(){
+    crop = !crop;
+    cropBtn.classList.toggle('on', crop);
+    render();
+  }
+
+  function toggleFull(){
+    if(document.fullscreenElement){ document.exitFullscreen(); }
+    else if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen(); }
+  }
+
+  prevBtn.addEventListener('click', function(){ go(current-1); });
+  nextBtn.addEventListener('click', function(){ go(current+1); });
+  cropBtn.addEventListener('click', toggleCrop);
+  fullBtn.addEventListener('click', toggleFull);
+
+  pageNum.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      const n = parseInt(pageNum.value, 10);
+      if(!isNaN(n)) go(n - 1); else pageNum.value = current + 1;
+      pageNum.blur();
+    }
+    if(e.key === 'Escape'){ pageNum.value = current + 1; pageNum.blur(); }
   });
-  nextBtn.addEventListener('click', function(){
-    if (current < images.length - 1){ current++; render(); }
-  });
+  pageNum.addEventListener('focus', function(){ pageNum.select(); });
+  pageNum.addEventListener('blur',  function(){ pageNum.value = current + 1; });
 
   document.addEventListener('keydown', function(e){
-    if (e.key === 'ArrowRight') nextBtn.click();
-    if (e.key === 'ArrowLeft') prevBtn.click();
+    if(e.target === pageNum) return;          // digitando o número da página
+    if(e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(current+1); }
+    if(e.key === 'ArrowLeft')  go(current-1);
+    if(e.key === 'z' || e.key === 'Z') toggleCrop();
+    if(e.key === 'f' || e.key === 'F') toggleFull();
   });
 
   render();

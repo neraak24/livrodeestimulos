@@ -224,6 +224,9 @@ body{
 .tab:nth-child(1).active{background:var(--pink) !important}
 .tab:nth-child(2).active{background:var(--yellow) !important}
 .tab:nth-child(3).active{background:var(--blue) !important}
+.tab:nth-child(4).active{background:#8fc65b !important}
+.tab:nth-child(5).active{background:#e58f5a !important}
+.tab:nth-child(6).active{background:#a78bd0 !important}
 
 
 /* Tabs are deliberately lifted above the book frame. */
@@ -652,8 +655,9 @@ body{
   }
 
   .tab{
-    min-width:80px;
-    font-size:7px;
+    min-width:0;
+    padding:0 6px;
+    font-size:6px;
   }
 }
 </style>
@@ -683,6 +687,9 @@ body{
         <button class="tab active" data-index="0">WISC</button>
         <button class="tab" data-index="1">NEPSY</button>
         <button class="tab" data-index="2">NEUPSILIN</button>
+        <button class="tab" data-index="3">ANELE</button>
+        <button class="tab" data-index="4">THCP</button>
+        <button class="tab" data-index="5">OUTROS</button>
       </nav>
 
       <!-- Side menu -->
@@ -901,6 +908,154 @@ body{
               <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
               <div class="label">PERCEPÇÃO<br>VISUAL</div>
             </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           ANELE
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="anelelpi.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">LPI</div>
+            </a>
+
+            <a class="card blue" href="anelelpp.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">TLPP</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           THCP
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="thcppercepto.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">PERCEPTO-<br>MOTORAS</div>
+            </a>
+
+            <a class="card blue" href="thcplinguagem.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">LINGUAGEM</div>
+            </a>
+
+            <a class="card green" href="thcpmemoria.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">MEMÓRIA</div>
+            </a>
+
+            <a class="card red" href="thcpquantitativo.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">PENSAMENTO<br>QUANTITATIVO</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           OUTROS
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="fdt.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">FDT</div>
+            </a>
+
+            <a class="card blue" href="hooper.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">HOOPER</div>
+            </a>
+
+            <a class="card green" href="boston.html">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">NOMEAÇÃO<br>DE BOSTON</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
 
             <a class="card add" href="#">
               <div class="icon-box"><div class="plus"></div></div>
