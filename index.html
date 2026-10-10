@@ -1081,8 +1081,8 @@ body{
       </nav>
 
       <!-- Navigation -->
-      <button class="page-arrow left" id="prev">◀</button>
-      <button class="page-arrow right" id="next">▶</button>
+      <button class="page-arrow left" id="prev" aria-label="Categoria anterior">◀</button>
+      <button class="page-arrow right" id="next" aria-label="Próxima categoria">▶</button>
 
       <!-- ===================================================
            WISC
@@ -1788,3 +1788,87 @@ render();
 .leaf-k{left:calc(50% - 5vw);bottom:-1%;transform:rotate(5deg) scale(.92)}
 
 </style>
+
+<style id="final-polish-v17">
+/* Acabamento final: leitura, foco e navegação */
+.card-grid{column-gap:clamp(8px,1.15vw,18px);row-gap:clamp(14px,1.8vh,25px)}
+.card .label{max-width:100%;min-height:2.5em;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.55;overflow-wrap:anywhere;padding:7px 5px;font-size:clamp(6px,.55vw,9px)}
+.card:focus-visible,.tab:focus-visible,.page-arrow:focus-visible{outline:3px solid #fff4a8;outline-offset:4px;z-index:120}
+.page-arrow:disabled{opacity:.38;cursor:default;filter:grayscale(.65)}
+.page-arrow:disabled:hover{filter:grayscale(.65)}
+.card.add:hover .icon-box{filter:brightness(1.04)}
+@media(max-width:900px){.card .label{font-size:7px}.card-grid{column-gap:9px;row-gap:15px}}
+@media(max-width:650px){.card-grid{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:8px;row-gap:14px}.card .label{font-size:7px;min-height:2.8em}.icon-box{border-width:3px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+<script id="final-polish-js-v17">
+(() => {
+  const spreads = [...document.querySelectorAll('.spread')];
+  const tabs = [...document.querySelectorAll('.tab')];
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  if (!spreads.length || !prev || !next) return;
+
+  // Atualiza os estados acessíveis dos controles de navegação.
+  const updateNavigation = () => {
+    prev.disabled = current === 0;
+    next.disabled = current === spreads.length - 1;
+    prev.setAttribute('aria-label', 'Categoria anterior');
+    next.setAttribute('aria-label', 'Próxima categoria');
+    tabs.forEach((tab, index) => {
+      tab.setAttribute('aria-current', index === current ? 'page' : 'false');
+      tab.setAttribute('role', 'button');
+      tab.setAttribute('tabindex', '0');
+    });
+  };
+  // O render original continua responsável pela troca de páginas.
+  const originalRender = window.render;
+  // Funções globais do HTML original não são expostas; sincronizamos após os cliques.
+  prev.addEventListener('click', () => requestAnimationFrame(updateNavigation));
+  next.addEventListener('click', () => requestAnimationFrame(updateNavigation));
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => requestAnimationFrame(updateNavigation));
+    tab.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault(); tab.click();
+      }
+    });
+  });
+
+  // Os cartões “+ NOVA” permitem incluir um atalho durante a sessão atual.
+  // O usuário informa o título e o destino; nenhum dado é enviado para fora.
+  const colors = ['red', 'blue', 'green'];
+  document.querySelectorAll('.card.add').forEach(addCard => {
+    addCard.setAttribute('href', '#');
+    addCard.setAttribute('aria-label', 'Adicionar atalho para um teste');
+    addCard.addEventListener('click', event => {
+      event.preventDefault();
+      const title = window.prompt('Nome do teste ou estímulo:');
+      if (!title || !title.trim()) return;
+      const destination = window.prompt('Arquivo ou endereço do teste (ex.: teste.html):');
+      if (!destination || !destination.trim()) return;
+      const href = destination.trim();
+      if (/^\s*javascript:/i.test(href) || /^data:/i.test(href)) {
+        window.alert('Esse tipo de endereço não é permitido. Informe um arquivo ou link válido.');
+        return;
+      }
+      const card = document.createElement('a');
+      card.className = 'card ' + colors[addCard.parentElement.querySelectorAll('.card:not(.add)').length % colors.length];
+      card.href = href;
+      card.title = title.trim();
+      const box = document.createElement('div');
+      box.className = 'icon-box';
+      const symbol = document.createElement('div');
+      symbol.className = 'pixel-symbol symbol-' + colors[addCard.parentElement.querySelectorAll('.card:not(.add)').length % colors.length];
+      box.appendChild(symbol);
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.textContent = title.trim().toUpperCase();
+      card.append(box, label);
+      addCard.parentElement.insertBefore(card, addCard);
+      card.focus();
+    });
+  });
+  updateNavigation();
+})();
+</script>
