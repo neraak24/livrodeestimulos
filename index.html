@@ -501,6 +501,30 @@ body{
   );
 }
 
+
+
+/* Selos pixelados variados: cada teste recebe uma silhueta e acabamento próprios */
+.icon-box.seal-v1 .pixel-symbol{clip-path:polygon(30% 0,70% 0,70% 10%,90% 10%,90% 30%,100% 30%,100% 70%,90% 70%,90% 90%,70% 90%,70% 100%,30% 100%,30% 90%,10% 90%,10% 70%,0 70%,0 30%,10% 30%,10% 10%,30% 10%);box-shadow:none!important}
+.icon-box.seal-v2 .pixel-symbol{clip-path:polygon(50% 0,62% 16%,82% 8%,84% 28%,100% 38%,86% 52%,96% 72%,74% 76%,66% 100%,50% 84%,32% 100%,26% 78%,4% 70%,16% 52%,0 36%,20% 28%,22% 8%,42% 16%);box-shadow:none!important}
+.icon-box.seal-v3 .pixel-symbol{clip-path:polygon(25% 0,75% 0,75% 12%,88% 12%,88% 25%,100% 25%,100% 75%,88% 75%,88% 88%,75% 88%,75% 100%,25% 100%,25% 88%,12% 88%,12% 75%,0 75%,0 25%,12% 25%,12% 12%,25% 12%);box-shadow:none!important}
+.icon-box.seal-v4 .pixel-symbol{clip-path:polygon(50% 0,62% 18%,82% 18%,82% 36%,100% 50%,82% 64%,82% 82%,62% 82%,50% 100%,38% 82%,18% 82%,18% 64%,0 50%,18% 36%,18% 18%,38% 18%);box-shadow:none!important}
+.icon-box.seal-v5 .pixel-symbol{clip-path:polygon(18% 0,82% 0,82% 12%,94% 12%,94% 30%,100% 30%,100% 70%,88% 70%,88% 88%,70% 88%,70% 100%,30% 100%,30% 88%,12% 88%,12% 70%,0 70%,0 30%,12% 30%,12% 12%,18% 12%);box-shadow:none!important}
+.icon-box.seal-v6 .pixel-symbol{clip-path:polygon(35% 0,65% 0,65% 14%,86% 14%,86% 35%,100% 35%,100% 65%,86% 65%,86% 86%,65% 86%,65% 100%,35% 100%,35% 86%,14% 86%,14% 65%,0 65%,0 35%,14% 35%,14% 14%,35% 14%);box-shadow:none!important}
+.icon-box.seal-v7 .pixel-symbol{clip-path:polygon(28% 0,72% 0,72% 18%,88% 18%,88% 34%,100% 34%,100% 66%,82% 66%,82% 82%,66% 82%,66% 100%,34% 100%,34% 82%,18% 82%,18% 66%,0 66%,0 34%,12% 34%,12% 18%,28% 18%);box-shadow:none!important}
+.icon-box.seal-v8 .pixel-symbol{clip-path:polygon(20% 0,80% 0,80% 20%,100% 20%,100% 80%,80% 80%,80% 100%,20% 100%,20% 80%,0 80%,0 20%,20% 20%);box-shadow:none!important}
+.icon-box.seal-v1:after,.icon-box.seal-v5:after{border-style:dashed;}
+.icon-box.seal-v2:after,.icon-box.seal-v6:after{inset:11px;border-width:2px;}
+.icon-box.seal-v3:after,.icon-box.seal-v7:after{inset:5px;border-width:4px;}
+.icon-box.seal-v4:after,.icon-box.seal-v8:after{border-style:double;border-width:5px;}
+.icon-box.seal-v1{box-shadow:5px 5px 0 #c5aa61,2px 2px 0 #fff9e7;}
+.icon-box.seal-v2{box-shadow:6px 4px 0 #b9a6cf,2px 2px 0 #fff9e7;}
+.icon-box.seal-v3{box-shadow:4px 6px 0 #b5a16a,2px 2px 0 #fff9e7;}
+.icon-box.seal-v4{box-shadow:6px 6px 0 #b88b75,2px 2px 0 #fff9e7;}
+.icon-box.seal-v5{box-shadow:4px 5px 0 #9eafa0,2px 2px 0 #fff9e7;}
+.icon-box.seal-v6{box-shadow:6px 3px 0 #a6b9c6,2px 2px 0 #fff9e7;}
+.icon-box.seal-v7{box-shadow:5px 6px 0 #c2a3a3,2px 2px 0 #fff9e7;}
+.icon-box.seal-v8{box-shadow:4px 4px 0 #c9b98d,2px 2px 0 #fff9e7;}
+
 /* labels */
 .label{
   width:100%;
@@ -780,6 +804,251 @@ body{
  .tab{min-width:0;padding:0 5px;font-size:6px;}
 }
 
+
+/* ===== ACABAMENTO V3: capa, abas físicas e leitura ===== */
+.book{
+  filter: drop-shadow(12px 15px 0 rgba(28,25,35,.42));
+  transform: perspective(1500px) rotateX(1deg);
+}
+.cover{
+  background:
+    repeating-linear-gradient(0deg,rgba(34,67,31,.045) 0 4px,transparent 4px 8px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.045) 0 4px,transparent 4px 8px),
+    linear-gradient(135deg,#a5d96d 0%,#8fc65b 45%,#659b47 100%);
+  box-shadow: inset 0 0 0 5px #507c40, inset 0 0 0 10px #b8e47c,
+    inset 15px 0 0 rgba(38,70,35,.23), inset 0 -16px 0 rgba(40,67,34,.2),
+    7px 0 0 #30402e, 11px 4px 0 rgba(37,32,44,.28);
+}
+.cover::after{
+  inset:11px;
+  border:3px solid rgba(49,79,42,.55);
+  background:
+    linear-gradient(#d8b96c,#d8b96c) left top/24px 5px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) left top/5px 24px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) right top/24px 5px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) right top/5px 24px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) left bottom/24px 5px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) left bottom/5px 24px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) right bottom/24px 5px no-repeat,
+    linear-gradient(#d8b96c,#d8b96c) right bottom/5px 24px no-repeat;
+  box-shadow:inset 0 0 0 4px rgba(206,239,157,.3), 0 0 0 1px rgba(42,60,34,.22);
+}
+/* Abas como separadores de cartolina encaixados entre as folhas */
+.tabs{top:-41px;left:34px;gap:7px;align-items:flex-end;}
+.tab{
+  position:relative;
+  height:42px;
+  min-width:92px;
+  padding:0 10px 3px;
+  border:5px solid var(--ink);
+  border-bottom:0;
+  box-shadow:5px -3px 0 rgba(37,32,44,.45), inset 0 4px 0 rgba(255,255,255,.25);
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+  transition:height .16s ease, filter .16s ease, transform .16s ease;
+}
+.tab:not(.active){height:34px;filter:saturate(.55) brightness(.86);}
+.tab.active{
+  height:46px;
+  transform:translateY(1px);
+  filter:none;
+  box-shadow:5px -3px 0 rgba(37,32,44,.5),inset 0 4px 0 rgba(255,255,255,.35);
+}
+.tab::after{
+  content:"";position:absolute;left:5px;right:5px;bottom:0;height:4px;
+  background:rgba(37,32,44,.18);pointer-events:none;
+}
+.tab:focus-visible,.page-arrow:focus-visible,.card:focus-visible{
+  outline:4px dashed #f1c457;outline-offset:4px;
+}
+/* Papel envelhecido, sem cabeçalhos extras para preservar espaço útil */
+.spread{
+  background:linear-gradient(90deg,#bfa263 0%,#f0dfa7 2%,#e4cc8a 50%,#f0dfa7 98%,#bfa263 100%);
+  box-shadow:0 6px 0 rgba(55,41,27,.28),inset 0 0 0 4px #c9ae68,inset 0 0 0 8px rgba(255,255,255,.42),inset 0 12px 0 rgba(255,255,255,.14);
+}
+.page{
+  position:relative;
+  background-color:#fff3bd;
+  background-image:
+    repeating-linear-gradient(0deg,transparent 0 31px,rgba(139,111,55,.075) 31px 32px),
+    linear-gradient(90deg,rgba(179,145,73,.12),transparent 12%,transparent 88%,rgba(179,145,73,.10));
+}
+.page.left::before,.page.right::before{content:none;display:none;}
+.card{transition:transform .14s ease,filter .14s ease;}
+.card:hover{transform:translate(-2px,-3px);filter:brightness(1.035);}
+.card:hover .icon-box{box-shadow:8px 8px 0 #c5aa61,2px 2px 0 #fff9e7;}
+.card .label{
+  text-shadow:1px 1px 0 rgba(255,255,255,.45);
+}
+.icon-box{transition:box-shadow .14s ease;}
+.page-arrow{transition:transform .12s ease,filter .12s ease;}
+.page-arrow:hover{filter:brightness(1.12);}
+.page-arrow.left:hover{transform:translateY(-50%) translateX(-2px);}
+.page-arrow.right:hover{transform:translateY(-50%) translateX(2px);}
+@media(max-width:900px){
+ .tabs{left:25px;gap:4px;}
+ .tab{min-width:76px;padding-left:6px;padding-right:6px;font-size:7px;}
+ .page.left::before,.page.right::before{font-size:6px;letter-spacing:0;}
+}
+@media(max-width:650px){
+ .book{transform:none;}
+ .tabs{top:-35px;left:4px;gap:2px;}
+ .tab,.tab:not(.active){height:29px;min-width:0;padding:0 4px;font-size:5px;border-width:3px;}
+ .tab.active{height:34px;}
+ .page.left::before,.page.right::before{font-size:6px;margin-bottom:12px;padding-bottom:9px;}
+}
+
+
+/* Acabamento final: livro e páginas ganham vida sem ocupar espaço extra */
+@keyframes book-settle{
+  from{opacity:.82;transform:perspective(1500px) rotateX(2deg) translateY(8px);}
+  to{opacity:1;transform:perspective(1500px) rotateX(1deg) translateY(0);}
+}
+@keyframes page-turn-in{
+  from{opacity:.72;transform:translateX(5px);}
+  to{opacity:1;transform:translateX(0);}
+}
+.book{animation:book-settle .42s ease-out both;}
+.spread.page-turn .page.left{animation:page-turn-in .18s ease-out both;}
+.spread.page-turn .page.right{animation:page-turn-in .22s ease-out both;}
+.tab:hover:not(.active){filter:saturate(.85) brightness(1.04);transform:translateY(-2px);}
+.cover,.spread,.page{backface-visibility:hidden;}
+@media(prefers-reduced-motion:reduce){
+  .book,.spread.page-turn .page.left,.spread.page-turn .page.right{animation:none!important;}
+  .tab,.card,.page-arrow{transition:none!important;}
+}
+
+
+/* V7: melhorar legibilidade sem aumentar muito as abas */
+.tab, .tab:not(.active){
+  font-size:8px !important;
+  font-weight:900 !important;
+  letter-spacing:-.35px !important;
+  color:#211a20 !important;
+  text-shadow:1px 1px 0 rgba(255,255,255,.30) !important;
+  filter:saturate(.78) brightness(1.02) !important;
+  opacity:1 !important;
+}
+.tab:nth-child(1){background:#d99b99 !important}
+.tab:nth-child(2){background:#d8bd7d !important}
+.tab:nth-child(3){background:#9ebbc9 !important}
+.tab:nth-child(4){background:#acd17e !important}
+.tab:nth-child(5){background:#e9aa7e !important}
+.tab:nth-child(6){background:#c0addd !important}
+.tab.active{color:#17131a !important;filter:none !important;}
+.label{font-size:9px;line-height:1.5;}
+@media(max-width:900px){
+  .tab,.tab:not(.active){font-size:7px !important;}
+  .label{font-size:8px;}
+}
+@media(max-width:650px){
+  .tab,.tab:not(.active){font-size:6px !important;letter-spacing:-.4px !important;}
+  .label{font-size:7px;}
+}
+
+
+/* ===== V10: camadas de folhas pixeladas sob a capa ===== */
+.book::before{
+  top:12px !important; right:-27px !important; bottom:-25px !important; left:18px !important;
+  border:0 !important;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 5px, rgba(113,83,42,.28) 5px 7px),
+    repeating-linear-gradient(90deg, #fff7d9 0 7px, #e8d6a6 7px 10px) !important;
+  clip-path:polygon(0 0,97% 0,97% 2%,100% 2%,100% 96%,98% 96%,98% 98%,95% 98%,95% 100%,3% 100%,3% 98%,0 98%);
+  box-shadow:6px 6px 0 #38352e, 10px 10px 0 #b9a16b, 14px 14px 0 #f6e8bb, 18px 18px 0 #6e563b;
+}
+.book::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  top:7px; right:-18px; bottom:-17px; left:10px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 6px, rgba(104,76,40,.20) 6px 8px),
+    linear-gradient(180deg,#fff9e4 0%,#e9d8ad 70%,#d4bd87 100%);
+  clip-path:polygon(0 0,98% 0,98% 2%,100% 2%,100% 97%,97% 97%,97% 100%,2% 100%,2% 98%,0 98%);
+  box-shadow:inset -5px 0 0 rgba(115,83,43,.35);
+}
+.cover{z-index:2 !important;}
+.spread{z-index:4 !important;}
+@media(max-width:650px){
+  .book::before{right:-10px !important;bottom:-13px !important;left:10px !important;box-shadow:4px 4px 0 #38352e,7px 7px 0 #b9a16b,10px 10px 0 #f6e8bb !important;}
+  .book::after{right:-7px;bottom:-9px;left:6px;}
+}
+
+
+/* ===== FOLHAGEM PIXEL ART: folhas de árvore ao redor do livro ===== */
+.stage{isolation:isolate;}
+.book{z-index:2;}
+.botanical-frame{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;}
+.pixel-leaf{position:absolute;width:clamp(58px,8vw,126px);height:clamp(42px,6vw,94px);background:var(--leaf,#71952e);border:0;image-rendering:pixelated;clip-path:polygon(0 45%,8% 45%,8% 32%,18% 32%,18% 20%,31% 20%,31% 10%,47% 10%,47% 0,58% 0,58% 9%,72% 9%,72% 20%,86% 20%,86% 33%,100% 33%,100% 49%,88% 49%,88% 64%,74% 64%,74% 78%,58% 78%,58% 91%,42% 91%,42% 100%,30% 100%,30% 86%,17% 86%,17% 70%,7% 70%,7% 57%,0 57%);box-shadow:inset -8px -7px 0 rgba(32,47,18,.30),inset 7px 5px 0 rgba(213,218,92,.26),4px 5px 0 #3b3328;}
+/* Silhuetas distintas: folhas largas, pontudas e ramos com folíolos */
+.pixel-leaf.shape-point{clip-path:polygon(0 45%,10% 37%,18% 25%,30% 17%,42% 8%,54% 0,58% 13%,69% 17%,82% 20%,100% 25%,88% 36%,75% 45%,63% 56%,51% 68%,39% 80%,24% 91%,10% 100%,13% 82%,8% 64%);}
+.pixel-leaf.shape-round{clip-path:polygon(0 37%,12% 37%,12% 22%,28% 22%,28% 10%,48% 10%,48% 0,64% 0,64% 12%,82% 12%,82% 27%,100% 27%,100% 57%,85% 57%,85% 75%,67% 75%,67% 90%,42% 90%,42% 100%,25% 100%,25% 82%,10% 82%,10% 62%,0 62%);}
+.pixel-leaf.shape-long{clip-path:polygon(0 52%,12% 42%,22% 29%,35% 17%,48% 7%,62% 0,65% 13%,76% 22%,88% 30%,100% 35%,88% 46%,75% 55%,63% 66%,50% 78%,36% 88%,20% 100%,22% 81%,12% 65%);}
+.pixel-leaf.shape-sprig{clip-path:polygon(0 82%,12% 72%,22% 58%,31% 42%,42% 28%,55% 15%,68% 7%,78% 0,83% 8%,74% 20%,67% 31%,77% 26%,89% 25%,100% 29%,92% 39%,78% 43%,65% 45%,58% 57%,70% 52%,84% 52%,96% 58%,85% 67%,68% 69%,52% 73%,38% 86%,24% 96%,10% 100%);}
+.pixel-leaf.shape-split{clip-path:polygon(0 52%,12% 43%,18% 30%,30% 20%,44% 9%,54% 0,59% 15%,71% 17%,83% 24%,100% 27%,88% 39%,73% 45%,64% 54%,78% 58%,92% 68%,100% 81%,83% 79%,69% 73%,58% 65%,46% 77%,31% 89%,15% 100%,19% 81%,8% 66%);}
+.pixel-leaf:after{content:"";position:absolute;left:10%;top:49%;width:78%;height:5px;background:#3d5525;box-shadow:10px -5px 0 -1px rgba(226,230,94,.85),22px -10px 0 -2px rgba(226,230,94,.55);transform:rotate(-22deg);image-rendering:pixelated;}
+.pixel-leaf:after{content:"";position:absolute;left:12%;top:45%;width:76%;height:5px;background:#3d5525;box-shadow:10px -5px 0 -1px rgba(226,210,94,.65);transform:rotate(-14deg);}
+.leaf-a{--leaf:#7f9f2d;left:calc(50% - min(44vw,640px));top:28%;transform:rotate(-32deg) scale(1.15);}
+.leaf-b{--leaf:#a1ad32;left:calc(50% - min(46vw,660px));top:43%;transform:rotate(24deg) scale(1.02);}
+.leaf-c{--leaf:#547c29;left:calc(50% - min(44vw,640px));top:59%;transform:rotate(-18deg) scale(1.2);}
+.leaf-d{--leaf:#b2a936;left:calc(50% - min(37vw,540px));bottom:7%;transform:rotate(28deg) scale(1.02);}
+.leaf-e{--leaf:#829d2b;right:calc(50% - min(44vw,640px));top:29%;transform:rotate(26deg) scaleX(-1) scale(1.15);}
+.leaf-f{--leaf:#a1ad32;right:calc(50% - min(46vw,660px));top:46%;transform:rotate(-25deg) scaleX(-1) scale(1.04);}
+.leaf-g{--leaf:#587b2b;right:calc(50% - min(44vw,640px));top:61%;transform:rotate(18deg) scaleX(-1) scale(1.2);}
+.leaf-h{--leaf:#b2a936;right:calc(50% - min(37vw,540px));bottom:7%;transform:rotate(-25deg) scaleX(-1) scale(1.02);}
+.leaf-i{--leaf:#75952b;left:calc(50% - 19vw);bottom:1%;transform:rotate(35deg) scale(1.05);}
+.leaf-j{--leaf:#d0b23e;left:calc(50% + 10vw);bottom:0%;transform:rotate(-25deg) scale(1.2);}
+.leaf-k{--leaf:#547b2a;left:calc(50% - 5vw);bottom:-1%;transform:rotate(8deg) scale(.9);}
+@media(max-width:650px){.pixel-leaf{width:clamp(42px,12vw,72px);height:clamp(32px,9vw,58px)}.leaf-a,.leaf-b,.leaf-c{left:1px}.leaf-e,.leaf-f,.leaf-g{right:1px}.leaf-d,.leaf-h{display:none}.leaf-i{left:28%;bottom:0}.leaf-j{left:62%;bottom:0}.leaf-k{display:none}}
+
+
+/* V14: silhuetas botânicas mais coerentes, com nervura acompanhando a folha */
+.pixel-leaf{
+  width:clamp(66px,8.8vw,138px);height:clamp(48px,6.8vw,104px);
+  background:linear-gradient(145deg,rgba(198,226,83,.32) 0 24%,transparent 25% 100%),
+             linear-gradient(325deg,rgba(27,75,25,.36) 0 22%,transparent 23% 100%),var(--leaf,#71952e);
+  box-shadow:inset -7px -6px 0 rgba(28,61,22,.22),inset 5px 4px 0 rgba(221,239,104,.20),3px 4px 0 #3b3328;
+  image-rendering:pixelated;
+}
+/* Cada contorno usa degraus consistentes, sem pontas acidentais ou recortes abruptos. */
+.pixel-leaf.shape-point{
+ clip-path:polygon(0 50%,7% 43%,14% 36%,21% 29%,29% 22%,37% 15%,45% 8%,54% 2%,62% 0,63% 10%,72% 13%,81% 18%,90% 24%,100% 31%,91% 38%,82% 44%,72% 51%,63% 58%,54% 65%,45% 72%,36% 79%,27% 86%,18% 93%,9% 100%,11% 86%,9% 72%,5% 61%);
+}
+.pixel-leaf.shape-round{
+ clip-path:polygon(0 49%,7% 49%,7% 37%,16% 37%,16% 25%,28% 25%,28% 14%,42% 14%,42% 5%,56% 5%,56% 0,68% 0,68% 9%,80% 9%,80% 20%,91% 20%,91% 34%,100% 34%,100% 55%,91% 55%,91% 69%,79% 69%,79% 81%,65% 81%,65% 91%,49% 91%,49% 100%,35% 100%,35% 90%,22% 90%,22% 77%,11% 77%,11% 64%,0 64%);
+}
+.pixel-leaf.shape-long{
+ clip-path:polygon(0 69%,8% 61%,16% 53%,24% 44%,32% 35%,40% 26%,48% 17%,56% 8%,64% 0,70% 5%,72% 16%,81% 20%,90% 26%,100% 32%,91% 39%,82% 44%,73% 50%,64% 57%,55% 64%,46% 71%,37% 78%,28% 85%,19% 92%,10% 100%,12% 87%,8% 77%);
+}
+.pixel-leaf.shape-split{
+ clip-path:polygon(0 59%,8% 51%,16% 43%,24% 34%,32% 26%,41% 17%,50% 8%,59% 0,65% 8%,66% 20%,77% 22%,89% 27%,100% 34%,91% 41%,80% 45%,70% 51%,79% 57%,90% 64%,100% 74%,88% 76%,76% 72%,65% 66%,56% 72%,47% 79%,37% 86%,27% 93%,17% 100%,19% 86%,13% 73%,6% 66%);
+}
+.pixel-leaf.shape-sprig{
+ clip-path:polygon(0 91%,9% 83%,18% 73%,27% 62%,35% 50%,43% 39%,51% 28%,59% 18%,67% 9%,76% 0,82% 5%,77% 17%,69% 26%,62% 34%,70% 29%,80% 27%,91% 29%,100% 34%,92% 41%,82% 45%,71% 46%,62% 52%,70% 49%,81% 50%,92% 55%,100% 61%,90% 67%,78% 68%,66% 65%,56% 70%,47% 79%,37% 87%,26% 94%,15% 100%);
+}
+/* Nervura pixelada mais fina e alinhada ao eixo comprido da folha. */
+.pixel-leaf:after{
+ content:"";position:absolute;left:9%;top:48%;width:80%;height:3px;
+ background:#355b22;box-shadow:12px -5px 0 -1px rgba(225,238,105,.82),24px -10px 0 -1px rgba(225,238,105,.62),36px -15px 0 -2px rgba(225,238,105,.45);
+ transform:rotate(-30deg);transform-origin:left center;image-rendering:pixelated;opacity:.9;
+}
+.leaf-a{transform:rotate(-27deg) scale(1.12)}
+.leaf-b{transform:rotate(16deg) scale(1.04)}
+.leaf-c{transform:rotate(-12deg) scale(1.12)}
+.leaf-d{transform:rotate(24deg) scale(.94)}
+.leaf-e{transform:rotate(22deg) scaleX(-1) scale(1.12)}
+.leaf-f{transform:rotate(-18deg) scaleX(-1) scale(1.04)}
+.leaf-g{transform:rotate(13deg) scaleX(-1) scale(1.12)}
+.leaf-h{transform:rotate(-20deg) scaleX(-1) scale(.94)}
+.leaf-i{transform:rotate(29deg) scale(1.0)}
+.leaf-j{transform:rotate(-20deg) scale(1.08)}
+.leaf-k{transform:rotate(5deg) scale(.92)}
+@media(max-width:650px){.pixel-leaf{width:clamp(46px,12vw,78px);height:clamp(36px,9vw,62px)}}
+
+
+/* V16: removida a folhagem decorativa; preservado o livro e a navegação. */
+.botanical-frame, .pixel-leaf { display:none !important; }
 </style>
 </head>
 
@@ -795,8 +1064,7 @@ body{
 <div class="floor"></div>
 
 <main class="stage">
-
-  <div class="book">
+<div class="book">
 
     <div class="book-shadow"></div>
 
@@ -811,13 +1079,6 @@ body{
         <button class="tab" data-index="4">THCP</button>
         <button class="tab" data-index="5">OUTROS</button>
       </nav>
-
-      <!-- Side menu -->
-      <div class="side-menu">
-        <div class="side-button">♧</div>
-        <div class="side-button">▣</div>
-        <div class="side-button">⚙</div>
-      </div>
 
       <!-- Navigation -->
       <button class="page-arrow left" id="prev">◀</button>
@@ -1200,7 +1461,13 @@ let current = 0;
 
 function render(){
   spreads.forEach((spread,index)=>{
+    const becomesActive = index === current && !spread.classList.contains('active');
     spread.classList.toggle('active',index === current);
+    if(becomesActive){
+      spread.classList.remove('page-turn');
+      void spread.offsetWidth;
+      spread.classList.add('page-turn');
+    }
   });
 
   tabs.forEach((tab,index)=>{
@@ -1240,7 +1507,284 @@ document.addEventListener('keydown',event=>{
 });
 
 render();
+
+// Cada selo recebe uma combinação aleatória de forma, cor e inclinação ao abrir o livro.
+(function randomizeSeals(){
+  const variants = ['seal-v1','seal-v2','seal-v3','seal-v4','seal-v5','seal-v6','seal-v7','seal-v8','seal-v9','seal-v10','seal-v11','seal-v12'];
+  const palettes = {
+    red: ['#a83e5b','#c45b66','#a44d43','#b65d78','#8f3e50'],
+    blue: ['#365c83','#4d718d','#476c75','#5b628f','#315b70'],
+    green: ['#4e8854','#66834a','#477b67','#78834a','#3f7256']
+  };
+  const boxes = [...document.querySelectorAll('.card:not(.add) .icon-box')];
+  // Embaralha as formas sem repetição até esgotar as 12 silhuetas.
+  let deck = [];
+  let previous = '';
+  const nextVariant = () => {
+    if (!deck.length) {
+      deck = [...variants].sort(() => Math.random() - 0.5);
+      if (deck.length > 1 && deck[deck.length - 1] === previous) {
+        [deck[0], deck[deck.length - 1]] = [deck[deck.length - 1], deck[0]];
+      }
+    }
+    previous = deck.pop();
+    return previous;
+  };
+  boxes.forEach(box=>{
+    const card = box.closest('.card');
+    const symbol = box.querySelector('.pixel-symbol');
+    const variant = nextVariant();
+    box.classList.add(variant);
+    if(symbol){
+      const family = card.classList.contains('red') ? 'red' : card.classList.contains('blue') ? 'blue' : 'green';
+      const colors = palettes[family];
+      symbol.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+      symbol.style.transform = `rotate(${Math.round((Math.random()*26)-13)}deg) scale(${(0.88+Math.random()*0.16).toFixed(2)})`;
+    }
+    box.style.transform = `rotate(${Math.round((Math.random()*8)-4)}deg)`;
+  });
+})();
+
 </script>
+
+<style>
+
+
+/* V8 — acabamento pixel art: cera em relevo, papel e abas físicas */
+.icon-box:not(.card.add .icon-box){
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  max-width:125px;
+  overflow:visible !important;
+}
+.icon-box:not(.card.add .icon-box)::after{
+  content:none !important;
+  display:none !important;
+}
+.icon-box .pixel-symbol{
+  width:70% !important;
+  height:70% !important;
+  flex:none;
+  position:relative;
+  isolation:isolate;
+  filter:drop-shadow(3px 4px 0 rgba(47,29,26,.24)) drop-shadow(1px 1px 0 rgba(255,255,255,.38));
+  background-image:linear-gradient(135deg,rgba(255,255,255,.28) 0 13%,transparent 13% 60%,rgba(30,12,20,.18) 60% 100%);
+}
+/* Reflexo irregular discreto, como cera moldada */
+.icon-box .pixel-symbol::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  left:20%; top:14%; width:24%; height:9%;
+  background:rgba(255,241,209,.62);
+  box-shadow:3px 3px 0 rgba(255,241,209,.20), 0 7px 0 rgba(255,241,209,.12);
+  clip-path:polygon(0 0,100% 0,75% 100%,0 100%);
+  pointer-events:none;
+}
+.icon-box .pixel-symbol.symbol-red,
+.icon-box .pixel-symbol.seal-v1,
+.icon-box .pixel-symbol.seal-v3,
+.icon-box .pixel-symbol.seal-v5,
+.icon-box .pixel-symbol.seal-v7{
+  background-color:#a62f45 !important;
+  background-image:linear-gradient(135deg,#e36a70 0%,#c34250 32%,#92283f 72%,#681d32 100%) !important;
+}
+.icon-box .pixel-symbol.symbol-blue,
+.icon-box .pixel-symbol.seal-v2,
+.icon-box .pixel-symbol.seal-v6{
+  background-color:#356e83 !important;
+  background-image:linear-gradient(135deg,#86b7c4 0%,#4d8da0 32%,#306a80 70%,#21495e 100%) !important;
+}
+.icon-box .pixel-symbol.symbol-green,
+.icon-box .pixel-symbol.seal-v4,
+.icon-box .pixel-symbol.seal-v8{
+  background-color:#527e49 !important;
+  background-image:linear-gradient(135deg,#a3c578 0%,#719b56 32%,#4e7846 70%,#34553b 100%) !important;
+}
+/* A moldura não deve ficar dentro do selo: o relevo vem da própria silhueta */
+.icon-box.seal-v1 .pixel-symbol,
+.icon-box.seal-v2 .pixel-symbol,
+.icon-box.seal-v3 .pixel-symbol,
+.icon-box.seal-v4 .pixel-symbol,
+.icon-box.seal-v5 .pixel-symbol,
+.icon-box.seal-v6 .pixel-symbol,
+.icon-box.seal-v7 .pixel-symbol,
+.icon-box.seal-v8 .pixel-symbol{
+  box-shadow:inset 2px 2px 0 rgba(255,255,255,.20), inset -3px -3px 0 rgba(38,12,20,.22) !important;
+}
+/* Folhas com bordas em camadas e textura quase imperceptível */
+.page{
+  background-color:#f4e8c9 !important;
+  background-image:
+    linear-gradient(90deg,rgba(104,72,43,.09),transparent 5%,transparent 95%,rgba(104,72,43,.08)),
+    repeating-linear-gradient(0deg,rgba(115,87,50,.025) 0 1px,transparent 1px 5px) !important;
+  box-shadow:inset 0 0 0 2px rgba(121,88,47,.12), inset 0 0 18px rgba(89,58,32,.07), 0 3px 0 #d5c29a, 0 6px 0 #c7b187 !important;
+}
+.page.left{border-right:1px solid rgba(90,65,39,.18) !important;}
+.page.right{border-left:1px solid rgba(90,65,39,.18) !important;}
+/* Marcadores: curtos, com pequena espessura lateral e texto legível */
+.tab,.tab:not(.active){
+  border-radius:2px 2px 0 0 !important;
+  border-right-width:4px !important;
+  box-shadow:3px -2px 0 rgba(37,32,44,.30), inset 0 2px 0 rgba(255,255,255,.28) !important;
+  transform-origin:bottom center;
+}
+.tab:not(.active):hover{transform:translateY(-2px) !important;filter:brightness(1.06) saturate(.85) !important;}
+.tab.active{box-shadow:3px -2px 0 rgba(37,32,44,.32), inset 0 2px 0 rgba(255,255,255,.35) !important;}
+.card .label{letter-spacing:-.2px;}
+@media(prefers-reduced-motion:reduce){
+  .card,.card:hover .icon-box,.tab,.tab:hover{transition:none !important;animation:none !important;}
+}
+
+</style>
+
+<style>
+/* V9 — silhuetas realmente distintas: formas alternadas e sem repetição imediata */
+.icon-box.seal-v1 .pixel-symbol{clip-path:polygon(28% 0,72% 0,72% 12%,88% 12%,88% 28%,100% 28%,100% 72%,88% 72%,88% 88%,72% 88%,72% 100%,28% 100%,28% 88%,12% 88%,12% 72%,0 72%,0 28%,12% 28%,12% 12%,28% 12%)!important}
+.icon-box.seal-v2 .pixel-symbol{clip-path:polygon(50% 0,61% 22%,84% 12%,79% 36%,100% 50%,79% 64%,84% 88%,61% 78%,50% 100%,39% 78%,16% 88%,21% 64%,0 50%,21% 36%,16% 12%,39% 22%)!important}
+.icon-box.seal-v3 .pixel-symbol{clip-path:polygon(25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%,0 25%)!important}
+.icon-box.seal-v4 .pixel-symbol{clip-path:polygon(50% 0,68% 18%,88% 12%,82% 34%,100% 50%,82% 66%,88% 88%,66% 82%,50% 100%,34% 82%,12% 88%,18% 66%,0 50%,18% 34%,12% 12%,34% 18%)!important}
+.icon-box.seal-v5 .pixel-symbol{clip-path:polygon(20% 0,80% 0,80% 14%,92% 14%,92% 30%,100% 30%,100% 70%,88% 70%,88% 86%,70% 86%,70% 100%,30% 100%,30% 86%,12% 86%,12% 70%,0 70%,0 30%,12% 30%,12% 14%,20% 14%)!important}
+.icon-box.seal-v6 .pixel-symbol{clip-path:polygon(50% 0,84% 18%,100% 50%,84% 82%,50% 100%,16% 82%,0 50%,16% 18%)!important}
+.icon-box.seal-v7 .pixel-symbol{clip-path:polygon(32% 0,68% 0,68% 10%,82% 10%,82% 22%,92% 22%,92% 38%,100% 38%,100% 62%,88% 62%,88% 78%,72% 78%,72% 92%,58% 92%,58% 100%,42% 100%,42% 90%,26% 90%,26% 78%,12% 78%,12% 62%,0 62%,0 38%,10% 38%,10% 22%,24% 22%,24% 10%,32% 10%)!important}
+.icon-box.seal-v8 .pixel-symbol{clip-path:polygon(22% 0,78% 0,78% 12%,100% 12%,100% 88%,78% 88%,78% 100%,22% 100%,22% 88%,0 88%,0 12%,22% 12%)!important}
+.icon-box.seal-v9 .pixel-symbol{clip-path:polygon(35% 0,65% 0,65% 12%,80% 12%,80% 25%,92% 25%,92% 40%,100% 40%,100% 60%,92% 60%,92% 75%,80% 75%,80% 88%,65% 88%,65% 100%,35% 100%,35% 88%,20% 88%,20% 75%,8% 75%,8% 60%,0 60%,0 40%,8% 40%,8% 25%,20% 25%,20% 12%,35% 12%)!important}
+.icon-box.seal-v10 .pixel-symbol{clip-path:polygon(50% 0,64% 16%,84% 16%,84% 36%,100% 50%,84% 64%,84% 84%,64% 84%,50% 100%,36% 84%,16% 84%,16% 64%,0 50%,16% 36%,16% 16%,36% 16%)!important}
+.icon-box.seal-v11 .pixel-symbol{clip-path:polygon(28% 0,72% 0,72% 18%,90% 18%,90% 32%,100% 32%,100% 68%,90% 68%,90% 82%,72% 82%,72% 100%,28% 100%,28% 82%,10% 82%,10% 68%,0 68%,0 32%,10% 32%,10% 18%,28% 18%)!important; transform:rotate(45deg) scale(.88)!important}
+.icon-box.seal-v12 .pixel-symbol{clip-path:polygon(18% 0,82% 0,82% 18%,100% 18%,100% 82%,82% 82%,82% 100%,18% 100%,18% 82%,0 82%,0 18%,18% 18%)!important; transform:scale(.82)!important}
+/* Cores por formato, não apenas por família, para quebrar a repetição visual */
+.icon-box.seal-v1 .pixel-symbol{background-image:linear-gradient(135deg,#f08b8a,#b73550 52%,#6c1f36)!important}
+.icon-box.seal-v2 .pixel-symbol{background-image:linear-gradient(135deg,#f2c16d,#c8753d 52%,#773d2c)!important}
+.icon-box.seal-v3 .pixel-symbol{background-image:linear-gradient(135deg,#a6d5cb,#4c938b 52%,#285a5a)!important}
+.icon-box.seal-v4 .pixel-symbol{background-image:linear-gradient(135deg,#d2b9ed,#8767b0 52%,#4a376c)!important}
+.icon-box.seal-v5 .pixel-symbol{background-image:linear-gradient(135deg,#efaaa9,#d65d71 52%,#8c2e4b)!important}
+.icon-box.seal-v6 .pixel-symbol{background-image:linear-gradient(135deg,#a9d4ef,#528eb9 52%,#2d527f)!important}
+.icon-box.seal-v7 .pixel-symbol{background-image:linear-gradient(135deg,#d6df8a,#8a9c4d 52%,#485b35)!important}
+.icon-box.seal-v8 .pixel-symbol{background-image:linear-gradient(135deg,#f0d9a1,#bd9950 52%,#765c2c)!important}
+.icon-box.seal-v9 .pixel-symbol{background-image:linear-gradient(135deg,#edb2d2,#b95d91 52%,#71395f)!important}
+.icon-box.seal-v10 .pixel-symbol{background-image:linear-gradient(135deg,#b7c4ef,#697fbd 52%,#39476f)!important}
+.icon-box.seal-v11 .pixel-symbol{background-image:linear-gradient(135deg,#c9b59c,#92765d 52%,#594538)!important}
+.icon-box.seal-v12 .pixel-symbol{background-image:linear-gradient(135deg,#b4d9a4,#659a5b 52%,#355c3a)!important}
+</style>
 
 </body>
 </html>
+<style>
+
+/* Marcadores compactos: abas curtas, como separadores de um livro físico */
+.tabs{
+  top:-29px !important;
+  left:32px !important;
+  gap:5px !important;
+  align-items:flex-end !important;
+}
+.tab,
+.tab:not(.active){
+  height:25px !important;
+  min-width:0 !important;
+  width:auto !important;
+  padding:0 6px 2px !important;
+  font-size:6px !important;
+  line-height:1 !important;
+  border-width:3px !important;
+  border-bottom:0 !important;
+  box-shadow:3px -2px 0 rgba(37,32,44,.36), inset 0 3px 0 rgba(255,255,255,.20) !important;
+}
+.tab.active{
+  height:32px !important;
+  padding-bottom:3px !important;
+  transform:translateY(1px) !important;
+  box-shadow:3px -2px 0 rgba(37,32,44,.42), inset 0 3px 0 rgba(255,255,255,.30) !important;
+}
+.tab::before{left:4px !important;top:4px !important;width:6px !important;height:3px !important;}
+.tab::after{left:3px !important;right:3px !important;height:3px !important;}
+@media(max-width:900px){
+  .tabs{left:20px !important;gap:4px !important;}
+  .tab,.tab:not(.active){padding-left:4px !important;padding-right:4px !important;font-size:5px !important;}
+}
+@media(max-width:650px){
+  .tabs{top:-25px !important;left:4px !important;gap:2px !important;}
+  .tab,.tab:not(.active){height:21px !important;padding:0 3px 1px !important;font-size:4px !important;border-width:2px !important;}
+  .tab.active{height:26px !important;}
+}
+
+
+/* V7: melhorar legibilidade sem aumentar muito as abas */
+.tab, .tab:not(.active){
+  font-size:8px !important;
+  font-weight:900 !important;
+  letter-spacing:-.35px !important;
+  color:#211a20 !important;
+  text-shadow:1px 1px 0 rgba(255,255,255,.30) !important;
+  filter:saturate(.78) brightness(1.02) !important;
+  opacity:1 !important;
+}
+.tab:nth-child(1){background:#d99b99 !important}
+.tab:nth-child(2){background:#d8bd7d !important}
+.tab:nth-child(3){background:#9ebbc9 !important}
+.tab:nth-child(4){background:#acd17e !important}
+.tab:nth-child(5){background:#e9aa7e !important}
+.tab:nth-child(6){background:#c0addd !important}
+.tab.active{color:#17131a !important;filter:none !important;}
+.label{font-size:9px;line-height:1.5;}
+@media(max-width:900px){
+  .tab,.tab:not(.active){font-size:7px !important;}
+  .label{font-size:8px;}
+}
+@media(max-width:650px){
+  .tab,.tab:not(.active){font-size:6px !important;letter-spacing:-.4px !important;}
+  .label{font-size:7px;}
+}
+
+
+
+/* V15: folhagem mais orgânica, com nervuras simples e contornos consistentes */
+.pixel-leaf{
+  border:0;
+  background:linear-gradient(145deg,rgba(220,244,117,.45) 0 18%,transparent 19% 100%),
+             linear-gradient(325deg,rgba(25,70,24,.36) 0 23%,transparent 24% 100%),var(--leaf,#71952e);
+  box-shadow:inset -5px -5px 0 rgba(28,61,22,.18),inset 4px 3px 0 rgba(225,239,114,.20),2px 3px 0 rgba(42,53,25,.72);
+  overflow:hidden;
+}
+/* Folha oval larga: base estreita, corpo arredondado em degraus e ponta definida. */
+.pixel-leaf.shape-round{
+ clip-path:polygon(0 50%,7% 43%,13% 31%,22% 21%,34% 12%,46% 6%,58% 2%,70% 5%,82% 13%,92% 25%,100% 39%,94% 48%,83% 60%,70% 72%,56% 83%,42% 91%,27% 96%,13% 100%,16% 86%,12% 73%,6% 62%);
+}
+/* Folha lanceolada, mais fina e pontuda. */
+.pixel-leaf.shape-point{
+ clip-path:polygon(0 63%,9% 53%,18% 43%,27% 33%,36% 24%,46% 15%,57% 7%,69% 0,74% 10%,81% 19%,90% 27%,100% 34%,91% 43%,81% 51%,70% 60%,59% 69%,48% 78%,37% 86%,25% 94%,12% 100%,16% 87%,10% 76%);
+}
+/* Folha longa com curvatura visual discreta. */
+.pixel-leaf.shape-long{
+ clip-path:polygon(0 72%,8% 62%,17% 51%,26% 40%,36% 29%,46% 19%,56% 10%,67% 2%,75% 0,77% 11%,84% 19%,92% 26%,100% 33%,91% 42%,82% 50%,72% 58%,62% 66%,52% 74%,41% 82%,30% 89%,18% 96%,8% 100%,12% 87%,6% 79%);
+}
+/* Folha recortada, semelhante a uma folha lobada, mas sem pontas aleatórias. */
+.pixel-leaf.shape-split{
+ clip-path:polygon(0 56%,8% 48%,15% 38%,24% 29%,34% 19%,45% 10%,56% 2%,66% 0,70% 10%,81% 15%,92% 24%,100% 34%,91% 42%,81% 47%,73% 52%,82% 60%,93% 69%,100% 80%,87% 78%,76% 72%,66% 64%,57% 69%,47% 77%,37% 85%,26% 92%,15% 100%,18% 86%,11% 72%,4% 64%);
+}
+/* Ramos pequenos: silhueta leve, para preencher sem competir com as folhas grandes. */
+.pixel-leaf.shape-sprig{
+ clip-path:polygon(0 92%,10% 81%,20% 69%,30% 57%,39% 45%,49% 33%,59% 22%,69% 12%,79% 3%,87% 0,84% 12%,77% 22%,69% 31%,78% 26%,89% 25%,100% 29%,93% 38%,82% 43%,70% 44%,63% 53%,73% 49%,84% 51%,95% 56%,100% 63%,89% 68%,77% 67%,65% 64%,56% 72%,46% 81%,35% 89%,23% 96%,11% 100%);
+}
+/* Nervura curta, alinhada ao comprimento da folha; sem linhas repetidas que deformem a silhueta. */
+.pixel-leaf:after{
+ content:"";position:absolute;left:10%;top:53%;width:72%;height:3px;
+ background:rgba(38,78,29,.82);
+ box-shadow:12px -6px 0 -1px rgba(220,239,111,.80),24px -12px 0 -1px rgba(220,239,111,.58);
+ transform:rotate(-31deg);transform-origin:left center;opacity:.82;
+}
+/* Posicionamento com sobreposição moderada: folhas parcialmente escondidas atrás do livro. */
+.leaf-a{left:calc(50% - min(44vw,640px));top:28%;transform:rotate(-25deg) scale(1.12)}
+.leaf-b{left:calc(50% - min(46vw,660px));top:43%;transform:rotate(18deg) scale(1.02)}
+.leaf-c{left:calc(50% - min(44vw,640px));top:59%;transform:rotate(-15deg) scale(1.12)}
+.leaf-d{left:calc(50% - min(37vw,540px));bottom:7%;transform:rotate(22deg) scale(.94)}
+.leaf-e{right:calc(50% - min(44vw,640px));top:29%;transform:rotate(23deg) scaleX(-1) scale(1.12)}
+.leaf-f{right:calc(50% - min(46vw,660px));top:46%;transform:rotate(-17deg) scaleX(-1) scale(1.02)}
+.leaf-g{right:calc(50% - min(44vw,640px));top:61%;transform:rotate(14deg) scaleX(-1) scale(1.12)}
+.leaf-h{right:calc(50% - min(37vw,540px));bottom:7%;transform:rotate(-22deg) scaleX(-1) scale(.94)}
+.leaf-i{left:calc(50% - 19vw);bottom:1%;transform:rotate(25deg) scale(1.0)}
+.leaf-j{left:calc(50% + 10vw);bottom:0%;transform:rotate(-19deg) scale(1.08)}
+.leaf-k{left:calc(50% - 5vw);bottom:-1%;transform:rotate(5deg) scale(.92)}
+
+</style>
