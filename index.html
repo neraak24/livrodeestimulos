@@ -660,6 +660,126 @@ body{
     font-size:6px;
   }
 }
+
+
+/* ===== REDESIGN V2: livro físico mais evidente, mantendo pixel art ===== */
+.stage{ perspective:1800px; padding:0 3vw 3vh; }
+.book{
+  width:min(80vw,1180px);
+  height:min(76vh,760px);
+  min-height:510px;
+  transform:rotateX(1deg) rotateY(-1deg);
+  transform-style:preserve-3d;
+  filter:drop-shadow(18px 22px 0 rgba(28,25,35,.30));
+}
+/* bloco de folhas aparecendo para além da capa */
+.book::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:13px; right:-25px; bottom:-22px; left:19px;
+  border:5px solid var(--ink);
+  background:
+    repeating-linear-gradient(0deg, rgba(74,55,29,.15) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(90deg, #fff8d9 0 8px, #e7d8a8 8px 10px);
+  box-shadow:9px 8px 0 rgba(37,32,44,.55);
+}
+.book-shadow{ inset:14px -31px -29px 20px; z-index:-2; }
+.cover{
+  inset:0;
+  z-index:2;
+  border:9px solid var(--ink);
+  background:
+    repeating-linear-gradient(0deg, rgba(35,75,32,.055) 0 5px, transparent 5px 10px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.055) 0 5px, transparent 5px 10px),
+    linear-gradient(135deg,#a0d86a 0%,#83bd51 55%,#6ea34a 100%);
+  box-shadow:
+    inset 0 0 0 5px #5d9147,
+    inset 0 0 0 9px #b4e27b,
+    inset 15px 0 0 rgba(50,89,43,.22),
+    inset 0 -15px 0 rgba(51,83,41,.17),
+    5px 0 0 #30402e;
+}
+/* faixa lateral da capa para sugerir a encadernação */
+.cover::before{
+  content:"";
+  position:absolute;
+  z-index:5;
+  top:0; bottom:0; left:0;
+  width:25px;
+  pointer-events:none;
+  border-right:5px solid rgba(37,32,44,.55);
+  background:linear-gradient(90deg,rgba(38,72,35,.45),rgba(255,255,255,.12) 45%,rgba(38,72,35,.22));
+  box-shadow:5px 0 0 rgba(80,121,56,.6);
+}
+/* cantos e relevo da capa */
+.cover::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:2;
+  inset:12px;
+  border:3px dashed rgba(44,69,37,.55);
+  box-shadow:inset 0 0 0 4px rgba(196,231,142,.3);
+}
+.spread{
+  z-index:4;
+  left:29px; right:22px; top:22px; bottom:22px;
+  grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);
+  border:7px solid var(--ink);
+  background:#e4cc8a;
+  box-shadow:
+    0 5px 0 rgba(55,41,27,.22),
+    inset 0 0 0 4px #c9ae68,
+    inset 0 0 0 8px rgba(255,255,255,.38);
+}
+.page{
+  padding:clamp(28px,3.2vw,48px) clamp(17px,2.5vw,36px) 28px;
+  background-image:repeating-linear-gradient(0deg, transparent 0 31px, rgba(139,111,55,.10) 31px 32px);
+}
+.page.left{
+  box-shadow:inset -13px 0 17px -15px rgba(52,37,23,.8), inset 0 0 0 3px rgba(255,255,255,.28);
+}
+.page.right{
+  box-shadow:inset 13px 0 17px -15px rgba(52,37,23,.8), inset 0 0 0 3px rgba(255,255,255,.23);
+}
+.spine{
+  z-index:8;
+  background:
+    linear-gradient(90deg,#3d6137 0 5px,#22202a 5px 9px,#6c9f4e 9px 15px,#a8d56d 15px 21px,#22202a 21px 27px,#568348 27px 37px,#314f30 37px 42px);
+  box-shadow:inset 5px 0 8px rgba(0,0,0,.24),inset -5px 0 8px rgba(0,0,0,.22);
+}
+.ring{
+  width:62px; height:25px;
+  border-width:5px;
+  background:linear-gradient(180deg,#ff9ab0,#d95778 65%,#a83e5b);
+  box-shadow:4px 4px 0 var(--ink), inset 0 3px 0 rgba(255,255,255,.5);
+}
+.tabs{top:-39px; left:36px; gap:7px;}
+.tab{height:39px; min-width:95px; border-bottom:0;}
+.page-arrow{box-shadow:6px 6px 0 var(--ink);}
+.page-arrow.left{left:-35px}
+.page-arrow.right{right:-35px}
+@media(max-width:900px){
+ .book{width:84vw;height:68vh;min-height:440px;}
+ .spread{left:23px;right:17px;top:18px;bottom:18px;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr);}
+ .cover::before{width:19px;}
+ .book::before{right:-18px;bottom:-17px;}
+ .page{padding-left:16px;padding-right:16px;}
+}
+@media(max-width:650px){
+ .stage{padding:70px 12px 90px;perspective:none;}
+ .book{width:94vw;height:auto;min-height:520px;transform:none;}
+ .book::before{right:-9px;bottom:-12px;left:10px;top:9px;}
+ .cover::before{display:none;}
+ .cover::after{inset:8px;}
+ .spread{left:12px;right:12px;top:12px;bottom:12px;grid-template-columns:1fr;}
+ .spine{display:none;}
+ .page{min-height:250px;}
+ .tabs{left:5px;gap:3px;}
+ .tab{min-width:0;padding:0 5px;font-size:6px;}
+}
+
 </style>
 </head>
 
