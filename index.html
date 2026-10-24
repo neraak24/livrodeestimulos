@@ -6,7 +6,12 @@
 <title>Livro de Estímulos — Pixel Art</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+/* ===== bloco 1 ===== */
+/* fontes hospedadas no próprio site (OFL) — antes vinham do Google Fonts via @import */
+@font-face{font-family:'Press Start 2P';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/press-start-2p-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Press Start 2P';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/press-start-2p-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/vt323-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/vt323-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 
 :root{
   --ink:#25202c;
@@ -1049,699 +1054,8 @@ body{
 
 /* V16: removida a folhagem decorativa; preservado o livro e a navegação. */
 .botanical-frame, .pixel-leaf { display:none !important; }
-</style>
-</head>
 
-<body>
-
-<div class="background-cross cross1"></div>
-<div class="background-cross cross2"></div>
-<div class="background-cross cross3"></div>
-<div class="background-cross cross4"></div>
-<div class="background-cross cross5"></div>
-<div class="background-cross cross6"></div>
-
-<div class="floor"></div>
-
-<main class="stage">
-<div class="book">
-
-    <div class="book-shadow"></div>
-
-    <div class="cover">
-
-      <!-- Tabs -->
-      <nav class="tabs">
-        <button class="tab active" data-index="0">WISC</button>
-        <button class="tab" data-index="1">NEPSY</button>
-        <button class="tab" data-index="2">NEUPSILIN</button>
-        <button class="tab" data-index="3">ANELE</button>
-        <button class="tab" data-index="4">THCP</button>
-        <button class="tab" data-index="5">PROLEC</button>
-        <button class="tab" data-index="6">PROLEC-SE-R</button>
-        <button class="tab" data-index="7">TDE</button>
-        <button class="tab" data-index="8">OUTROS</button>
-      </nav>
-
-      <!-- Navigation -->
-      <button class="page-arrow left" id="prev" aria-label="Categoria anterior">◀</button>
-      <button class="page-arrow right" id="next" aria-label="Próxima categoria">▶</button>
-
-      <!-- ===================================================
-           WISC
-      ==================================================== -->
-      <section class="spread active">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="completarfiguras.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-red"></div>
-              </div>
-              <div class="label">COMPLETAR<br>FIGURAS</div>
-            </a>
-
-            <a class="card blue" href="raciociniomat.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-blue"></div>
-              </div>
-              <div class="label">RACIOCÍNIO<br>MATRICIAL</div>
-            </a>
-
-            <a class="card green" href="conceitosfig.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-green"></div>
-              </div>
-              <div class="label">CONCEITOS<br>FIGURATIVOS</div>
-            </a>
-
-            <a class="card red" href="wisccodigos.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-red"></div>
-              </div>
-              <div class="label">CÓDIGOS</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card blue" href="wiscprocurarsimbolos.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-blue"></div>
-              </div>
-              <div class="label">PROCURAR<br>SÍMBOLOS</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           NEPSY
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="nepsyqcgeometrico.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">QC<br>GEOMÉTRICO</div>
-            </a>
-
-            <a class="card blue" href="nepsyrecemocoes.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">REC.<br>EMOÇÕES</div>
-            </a>
-
-            <a class="card green" href="nepsyteoriadamente.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">TEORIA<br>DA MENTE</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card red" href="nepsyinibindorespostas.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">INIBINDO<br>RESPOSTAS</div>
-            </a>
-
-            <a class="card blue" href="nepsymemfaces.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">MEM.<br>FACES</div>
-            </a>
-
-            <a class="card green" href="nepsymemfacestardio.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">MEM. FACES<br>TARDIO</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           NEUPSILIN
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="neupsilincopiafiguras.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">CÓPIA DE<br>FIGURAS</div>
-            </a>
-
-            <a class="card blue" href="neupsilincompreensaooral.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">COMPREENSÃO<br>ORAL</div>
-            </a>
-
-            <a class="card green" href="neupsilincompreensaoescrita.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">COMPREENSÃO<br>ESCRITA</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card red" href="neupsilinescritacopiada.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">ESCRITA<br>COPIADA</div>
-            </a>
-
-            <a class="card blue" href="neupsilinmemoriavisuoverbal.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">MEMÓRIA<br>VISUOVERBAL</div>
-            </a>
-
-            <a class="card green" href="neupsilinpercepcaovisual.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">PERCEPÇÃO<br>VISUAL</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           ANELE
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="anelelpi.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">LPI</div>
-            </a>
-
-            <a class="card blue" href="anelelpp.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">TLPP</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           THCP
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="thcppercepto.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">PERCEPTO-<br>MOTORAS</div>
-            </a>
-
-            <a class="card blue" href="thcplinguagem.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">LINGUAGEM</div>
-            </a>
-
-            <a class="card green" href="thcpmemoria.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">MEMÓRIA</div>
-            </a>
-
-            <a class="card red" href="thcpquantitativo.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">PENSAMENTO<br>QUANTITATIVO</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           PROLEC
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="prolecletras.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">NOME OU SOM<br>DAS LETRAS</div>
-            </a>
-
-            <a class="card blue" href="prolecigualdiferente.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">IGUAL OU<br>DIFERENTE</div>
-            </a>
-
-            <a class="card green" href="prolecleitpalavras.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">LEITURA DE<br>PALAVRAS</div>
-            </a>
-
-            <a class="card red" href="prolecleitpseudo.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">LEITURA DE<br>PSEUDOPALAVRAS</div>
-            </a>
-
-            <a class="card blue" href="prolecleitmista.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">LEITURA PALAVRAS<br>E PSEUDOPAL.</div>
-            </a>
-
-            <a class="card green" href="prolecdecisaolexica.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">DECISÃO<br>LEXICAL</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card red" href="prolecestruturas.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">ESTRUTURAS<br>GRAMATICAIS</div>
-            </a>
-
-            <a class="card blue" href="prolecoracoes.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">COMPREENSÃO<br>DE ORAÇÕES</div>
-            </a>
-
-            <a class="card green" href="prolectextos.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">COMPREENSÃO<br>DE TEXTOS</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           PROLEC-SE-R
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="prolecseranimal.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">ANIMAL<br>OU NÃO</div>
-            </a>
-
-            <a class="card blue" href="prolecserexpositiva.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">COMPREENSÃO<br>EXPOSITIVA</div>
-            </a>
-
-            <a class="card green" href="prolecsernarrativa.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">COMPREENSÃO<br>NARRATIVA</div>
-            </a>
-
-            <a class="card red" href="prolecserestruturas.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">ESTRUTURAS<br>GRAMATICAIS</div>
-            </a>
-
-            <a class="card blue" href="prolecserjulgamento.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">JULGAMENTO<br>GRAMATICAL</div>
-            </a>
-
-            <a class="card green" href="prolecserreal.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">REAL OU<br>INVENTADA</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           TDE
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="tdeleitura.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">LEITURA</div>
-            </a>
-
-            <a class="card blue" href="tdearitmetica.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">ARITMÉTICA</div>
-            </a>
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card add" href="#">
-              <div class="icon-box"><div class="plus"></div></div>
-              <div class="label">+ NOVA</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           OUTROS
-      ==================================================== -->
-      <section class="spread">
-
-        <div class="page left">
-          <div class="card-grid">
-
-            <a class="card red" href="fdt.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
-              <div class="label">FDT</div>
-            </a>
-
-            <a class="card blue" href="hooper.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
-              <div class="label">HOOPER</div>
-            </a>
-
-            <a class="card green" href="boston.html">
-              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
-              <div class="label">NOMEAÇÃO<br>DE BOSTON</div>
-            </a>
-
-            <a class="card red" href="bpa.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-red"></div>
-              </div>
-              <div class="label">BPA</div>
-            </a>
-
-          </div>
-        </div>
-
-        <div class="spine">
-          <span class="ring r1"></span>
-          <span class="ring r2"></span>
-          <span class="ring r3"></span>
-          <span class="ring r4"></span>
-        </div>
-
-        <div class="page right">
-          <div class="card-grid">
-
-            <a class="card blue" href="d2r.html">
-              <div class="icon-box">
-                <div class="pixel-symbol symbol-blue"></div>
-              </div>
-              <div class="label">D2-R</div>
-            </a>
-
-          </div>
-        </div>
-
-      </section>
-
-    </div>
-  </div>
-
-</main>
-
-<script>
-const spreads = [...document.querySelectorAll('.spread')];
-const tabs = [...document.querySelectorAll('.tab')];
-
-let current = 0;
-
-function render(){
-  spreads.forEach((spread,index)=>{
-    const becomesActive = index === current && !spread.classList.contains('active');
-    spread.classList.toggle('active',index === current);
-    if(becomesActive){
-      spread.classList.remove('page-turn');
-      void spread.offsetWidth;
-      spread.classList.add('page-turn');
-    }
-  });
-
-  tabs.forEach((tab,index)=>{
-    tab.classList.toggle('active',index === current);
-  });
-}
-
-document.getElementById('prev').addEventListener('click',()=>{
-  if(current > 0){
-    current--;
-    render();
-  }
-});
-
-document.getElementById('next').addEventListener('click',()=>{
-  if(current < spreads.length - 1){
-    current++;
-    render();
-  }
-});
-
-tabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    current = Number(tab.dataset.index);
-    render();
-  });
-});
-
-document.addEventListener('keydown',event=>{
-  if(event.key === 'ArrowLeft'){
-    document.getElementById('prev').click();
-  }
-
-  if(event.key === 'ArrowRight'){
-    document.getElementById('next').click();
-  }
-});
-
-render();
-
-// Cada selo recebe uma combinação aleatória de forma, cor e inclinação ao abrir o livro.
-(function randomizeSeals(){
-  const variants = ['seal-v1','seal-v2','seal-v3','seal-v4','seal-v5','seal-v6','seal-v7','seal-v8','seal-v9','seal-v10','seal-v11','seal-v12'];
-  const palettes = {
-    red: ['#a83e5b','#c45b66','#a44d43','#b65d78','#8f3e50'],
-    blue: ['#365c83','#4d718d','#476c75','#5b628f','#315b70'],
-    green: ['#4e8854','#66834a','#477b67','#78834a','#3f7256']
-  };
-  const boxes = [...document.querySelectorAll('.card:not(.add) .icon-box')];
-  // Embaralha as formas sem repetição até esgotar as 12 silhuetas.
-  let deck = [];
-  let previous = '';
-  const nextVariant = () => {
-    if (!deck.length) {
-      deck = [...variants].sort(() => Math.random() - 0.5);
-      if (deck.length > 1 && deck[deck.length - 1] === previous) {
-        [deck[0], deck[deck.length - 1]] = [deck[deck.length - 1], deck[0]];
-      }
-    }
-    previous = deck.pop();
-    return previous;
-  };
-  boxes.forEach(box=>{
-    const card = box.closest('.card');
-    const symbol = box.querySelector('.pixel-symbol');
-    const variant = nextVariant();
-    box.classList.add(variant);
-    if(symbol){
-      const family = card.classList.contains('red') ? 'red' : card.classList.contains('blue') ? 'blue' : 'green';
-      const colors = palettes[family];
-      symbol.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-      symbol.style.transform = `rotate(${Math.round((Math.random()*26)-13)}deg) scale(${(0.88+Math.random()*0.16).toFixed(2)})`;
-    }
-    box.style.transform = `rotate(${Math.round((Math.random()*8)-4)}deg)`;
-  });
-})();
-
-</script>
-
-<style>
-
-
+/* ===== bloco 2 ===== */
 /* V8 — acabamento pixel art: cera em relevo, papel e abas físicas */
 .icon-box:not(.card.add .icon-box){
   background:transparent !important;
@@ -1829,9 +1143,7 @@ render();
   .card,.card:hover .icon-box,.tab,.tab:hover{transition:none !important;animation:none !important;}
 }
 
-</style>
-
-<style>
+/* ===== bloco 3 ===== */
 /* V9 — silhuetas realmente distintas: formas alternadas e sem repetição imediata */
 .icon-box.seal-v1 .pixel-symbol{clip-path:polygon(28% 0,72% 0,72% 12%,88% 12%,88% 28%,100% 28%,100% 72%,88% 72%,88% 88%,72% 88%,72% 100%,28% 100%,28% 88%,12% 88%,12% 72%,0 72%,0 28%,12% 28%,12% 12%,28% 12%)!important}
 .icon-box.seal-v2 .pixel-symbol{clip-path:polygon(50% 0,61% 22%,84% 12%,79% 36%,100% 50%,79% 64%,84% 88%,61% 78%,50% 100%,39% 78%,16% 88%,21% 64%,0 50%,21% 36%,16% 12%,39% 22%)!important}
@@ -1858,12 +1170,8 @@ render();
 .icon-box.seal-v10 .pixel-symbol{background-image:linear-gradient(135deg,#b7c4ef,#697fbd 52%,#39476f)!important}
 .icon-box.seal-v11 .pixel-symbol{background-image:linear-gradient(135deg,#c9b59c,#92765d 52%,#594538)!important}
 .icon-box.seal-v12 .pixel-symbol{background-image:linear-gradient(135deg,#b4d9a4,#659a5b 52%,#355c3a)!important}
-</style>
 
-</body>
-</html>
-<style>
-
+/* ===== bloco 4 ===== */
 /* Marcadores compactos: abas curtas, como separadores de um livro físico */
 .tabs{
   top:-29px !important;
@@ -1979,9 +1287,7 @@ render();
 .leaf-j{left:calc(50% + 10vw);bottom:0%;transform:rotate(-19deg) scale(1.08)}
 .leaf-k{left:calc(50% - 5vw);bottom:-1%;transform:rotate(5deg) scale(.92)}
 
-</style>
-
-<style id="final-polish-v17">
+/* ===== bloco 5 ===== */
 /* Acabamento final: leitura, foco e navegação */
 .card-grid{column-gap:clamp(8px,1.15vw,18px);row-gap:clamp(14px,1.8vh,25px)}
 .card .label{max-width:100%;min-height:2.5em;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.55;overflow-wrap:anywhere;padding:7px 5px;font-size:clamp(6px,.55vw,9px)}
@@ -1992,7 +1298,709 @@ render();
 @media(max-width:900px){.card .label{font-size:7px}.card-grid{column-gap:9px;row-gap:15px}}
 @media(max-width:650px){.card-grid{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:8px;row-gap:14px}.card .label{font-size:7px;min-height:2.8em}.icon-box{border-width:3px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* ===== bloco 6 ===== */
+/* abas novas: PROLEC (6), PROLEC-SE-R (7), TDE (8); OUTROS passa a ser a 9ª */
+.tab:nth-child(6){background:#9fd6c8 !important}
+.tab:nth-child(7){background:#e6a3a3 !important}
+.tab:nth-child(8){background:#dccb9c !important}
+.tab:nth-child(9){background:#c0addd !important}
+.tab:nth-child(6).active{background:#6fc7b0 !important}
+.tab:nth-child(7).active{background:#e58585 !important}
+.tab:nth-child(8).active{background:#d4b96a !important}
+.tab:nth-child(9).active{background:#a78bd0 !important}
 </style>
+</head>
+
+<body>
+
+<div class="background-cross cross1"></div>
+<div class="background-cross cross2"></div>
+<div class="background-cross cross3"></div>
+<div class="background-cross cross4"></div>
+<div class="background-cross cross5"></div>
+<div class="background-cross cross6"></div>
+
+<div class="floor"></div>
+
+<main class="stage">
+<div class="book">
+
+    <div class="book-shadow"></div>
+
+    <div class="cover">
+
+      <!-- Tabs -->
+      <nav class="tabs">
+        <button class="tab active" data-index="0">WISC</button>
+        <button class="tab" data-index="1">NEPSY</button>
+        <button class="tab" data-index="2">NEUPSILIN</button>
+        <button class="tab" data-index="3">ANELE</button>
+        <button class="tab" data-index="4">THCP</button>
+        <button class="tab" data-index="5">PROLEC</button>
+        <button class="tab" data-index="6">PROLEC-SE-R</button>
+        <button class="tab" data-index="7">TDE</button>
+        <button class="tab" data-index="8">OUTROS</button>
+      </nav>
+
+      <!-- Navigation -->
+      <button class="page-arrow left" id="prev" aria-label="Categoria anterior">◀</button>
+      <button class="page-arrow right" id="next" aria-label="Próxima categoria">▶</button>
+
+      <!-- ===================================================
+           WISC
+      ==================================================== -->
+      <section class="spread active">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=completarfiguras">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-red"></div>
+              </div>
+              <div class="label">COMPLETAR<br>FIGURAS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=raciociniomat">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-blue"></div>
+              </div>
+              <div class="label">RACIOCÍNIO<br>MATRICIAL</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=conceitosfig">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-green"></div>
+              </div>
+              <div class="label">CONCEITOS<br>FIGURATIVOS</div>
+            </a>
+
+            <a class="card red" href="estimulo.html?t=wisccodigos">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-red"></div>
+              </div>
+              <div class="label">CÓDIGOS</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card blue" href="estimulo.html?t=wiscprocurarsimbolos">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-blue"></div>
+              </div>
+              <div class="label">PROCURAR<br>SÍMBOLOS</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           NEPSY
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=nepsyqcgeometrico">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">QC<br>GEOMÉTRICO</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=nepsyrecemocoes">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">REC.<br>EMOÇÕES</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=nepsyteoriadamente">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">TEORIA<br>DA MENTE</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=nepsyinibindorespostas">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">INIBINDO<br>RESPOSTAS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=nepsymemfaces">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">MEM.<br>FACES</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=nepsymemfacestardio">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">MEM. FACES<br>TARDIO</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           NEUPSILIN
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=neupsilincopiafiguras">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">CÓPIA DE<br>FIGURAS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=neupsilincompreensaooral">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">COMPREENSÃO<br>ORAL</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=neupsilincompreensaoescrita">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">COMPREENSÃO<br>ESCRITA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=neupsilinescritacopiada">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">ESCRITA<br>COPIADA</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=neupsilinmemoriavisuoverbal">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">MEMÓRIA<br>VISUOVERBAL</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=neupsilinpercepcaovisual">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">PERCEPÇÃO<br>VISUAL</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           ANELE
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=anelelpi">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">LPI</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=anelelpp">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">TLPP</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           THCP
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=thcppercepto">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">PERCEPTO-<br>MOTORAS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=thcplinguagem">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">LINGUAGEM</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=thcpmemoria">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">MEMÓRIA</div>
+            </a>
+
+            <a class="card red" href="estimulo.html?t=thcpquantitativo">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">PENSAMENTO<br>QUANTITATIVO</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           PROLEC
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=prolecletras">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">NOME OU SOM<br>DAS LETRAS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=prolecigualdiferente">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">IGUAL OU<br>DIFERENTE</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=prolecleitpalavras">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">LEITURA DE<br>PALAVRAS</div>
+            </a>
+
+            <a class="card red" href="estimulo.html?t=prolecleitpseudo">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">LEITURA DE<br>PSEUDOPALAVRAS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=prolecleitmista">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">LEITURA PALAVRAS<br>E PSEUDOPAL.</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=prolecdecisaolexica">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">DECISÃO<br>LEXICAL</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=prolecestruturas">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">ESTRUTURAS<br>GRAMATICAIS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=prolecoracoes">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">COMPREENSÃO<br>DE ORAÇÕES</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=prolectextos">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">COMPREENSÃO<br>DE TEXTOS</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           PROLEC-SE-R
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=prolecseranimal">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">ANIMAL<br>OU NÃO</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=prolecserexpositiva">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">COMPREENSÃO<br>EXPOSITIVA</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=prolecsernarrativa">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">COMPREENSÃO<br>NARRATIVA</div>
+            </a>
+
+            <a class="card red" href="estimulo.html?t=prolecserestruturas">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">ESTRUTURAS<br>GRAMATICAIS</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=prolecserjulgamento">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">JULGAMENTO<br>GRAMATICAL</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=prolecserreal">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">REAL OU<br>INVENTADA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           TDE
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=tdeleitura">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">LEITURA</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=tdearitmetica">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">ARITMÉTICA</div>
+            </a>
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card add" href="#">
+              <div class="icon-box"><div class="plus"></div></div>
+              <div class="label">+ NOVA</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           OUTROS
+      ==================================================== -->
+      <section class="spread">
+
+        <div class="page left">
+          <div class="card-grid">
+
+            <a class="card red" href="estimulo.html?t=fdt">
+              <div class="icon-box"><div class="pixel-symbol symbol-red"></div></div>
+              <div class="label">FDT</div>
+            </a>
+
+            <a class="card blue" href="estimulo.html?t=hooper">
+              <div class="icon-box"><div class="pixel-symbol symbol-blue"></div></div>
+              <div class="label">HOOPER</div>
+            </a>
+
+            <a class="card green" href="estimulo.html?t=boston">
+              <div class="icon-box"><div class="pixel-symbol symbol-green"></div></div>
+              <div class="label">NOMEAÇÃO<br>DE BOSTON</div>
+            </a>
+
+            <a class="card red" href="estimulo.html?t=bpa">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-red"></div>
+              </div>
+              <div class="label">BPA</div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="spine">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+          <span class="ring r4"></span>
+        </div>
+
+        <div class="page right">
+          <div class="card-grid">
+
+            <a class="card blue" href="estimulo.html?t=d2r">
+              <div class="icon-box">
+                <div class="pixel-symbol symbol-blue"></div>
+              </div>
+              <div class="label">D2-R</div>
+            </a>
+
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+const spreads = [...document.querySelectorAll('.spread')];
+const tabs = [...document.querySelectorAll('.tab')];
+
+let current = 0;
+
+function render(){
+  spreads.forEach((spread,index)=>{
+    const becomesActive = index === current && !spread.classList.contains('active');
+    spread.classList.toggle('active',index === current);
+    if(becomesActive){
+      spread.classList.remove('page-turn');
+      void spread.offsetWidth;
+      spread.classList.add('page-turn');
+    }
+  });
+
+  tabs.forEach((tab,index)=>{
+    tab.classList.toggle('active',index === current);
+  });
+}
+
+document.getElementById('prev').addEventListener('click',()=>{
+  if(current > 0){
+    current--;
+    render();
+  }
+});
+
+document.getElementById('next').addEventListener('click',()=>{
+  if(current < spreads.length - 1){
+    current++;
+    render();
+  }
+});
+
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    current = Number(tab.dataset.index);
+    render();
+  });
+});
+
+document.addEventListener('keydown',event=>{
+  if(event.key === 'ArrowLeft'){
+    document.getElementById('prev').click();
+  }
+
+  if(event.key === 'ArrowRight'){
+    document.getElementById('next').click();
+  }
+});
+
+render();
+
+// Cada selo recebe uma combinação aleatória de forma, cor e inclinação ao abrir o livro.
+(function randomizeSeals(){
+  const variants = ['seal-v1','seal-v2','seal-v3','seal-v4','seal-v5','seal-v6','seal-v7','seal-v8','seal-v9','seal-v10','seal-v11','seal-v12'];
+  const palettes = {
+    red: ['#a83e5b','#c45b66','#a44d43','#b65d78','#8f3e50'],
+    blue: ['#365c83','#4d718d','#476c75','#5b628f','#315b70'],
+    green: ['#4e8854','#66834a','#477b67','#78834a','#3f7256']
+  };
+  const boxes = [...document.querySelectorAll('.card:not(.add) .icon-box')];
+  // Embaralha as formas sem repetição até esgotar as 12 silhuetas.
+  let deck = [];
+  let previous = '';
+  const nextVariant = () => {
+    if (!deck.length) {
+      deck = [...variants].sort(() => Math.random() - 0.5);
+      if (deck.length > 1 && deck[deck.length - 1] === previous) {
+        [deck[0], deck[deck.length - 1]] = [deck[deck.length - 1], deck[0]];
+      }
+    }
+    previous = deck.pop();
+    return previous;
+  };
+  boxes.forEach(box=>{
+    const card = box.closest('.card');
+    const symbol = box.querySelector('.pixel-symbol');
+    const variant = nextVariant();
+    box.classList.add(variant);
+    if(symbol){
+      const family = card.classList.contains('red') ? 'red' : card.classList.contains('blue') ? 'blue' : 'green';
+      const colors = palettes[family];
+      symbol.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+      symbol.style.transform = `rotate(${Math.round((Math.random()*26)-13)}deg) scale(${(0.88+Math.random()*0.16).toFixed(2)})`;
+    }
+    box.style.transform = `rotate(${Math.round((Math.random()*8)-4)}deg)`;
+  });
+})();
+
+</script>
+
+</body>
+</html>
 <script id="final-polish-js-v17">
 (() => {
   const spreads = [...document.querySelectorAll('.spread')];
@@ -2064,14 +2072,3 @@ render();
   updateNavigation();
 })();
 </script>
-<style id="tabs-extra">
-/* abas novas: PROLEC (6), PROLEC-SE-R (7), TDE (8); OUTROS passa a ser a 9ª */
-.tab:nth-child(6){background:#9fd6c8 !important}
-.tab:nth-child(7){background:#e6a3a3 !important}
-.tab:nth-child(8){background:#dccb9c !important}
-.tab:nth-child(9){background:#c0addd !important}
-.tab:nth-child(6).active{background:#6fc7b0 !important}
-.tab:nth-child(7).active{background:#e58585 !important}
-.tab:nth-child(8).active{background:#d4b96a !important}
-.tab:nth-child(9).active{background:#a78bd0 !important}
-</style>

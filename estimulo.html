@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estímulo</title>
+<style>
+:root{
+  --bg:#e6e5e1;
+  --btn:#d3d1cb;
+  --btn-hover:#c6c4bd;
+  --btn-on:#8b8880;
+  --line:#bdbab2;
+  --text:#5d5a54;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{width:100%;height:100dvh;overflow:hidden}
+
+body{
+  background:var(--bg);
+  font-family:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  color:var(--text);
+}
+
+.screen{
+  position:absolute;
+  inset:.8dvh .8vw;
+  display:flex;
+  flex-direction:column;
+  gap:.8dvh;
+}
+
+/* barra superior discreta */
+.top{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  opacity:.85;
+}
+.top:hover{opacity:1}
+
+.btn{
+  font:inherit;
+  font-size:clamp(12px,1.7dvh,14px);
+  color:var(--text);
+  background:var(--btn);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:.7dvh 12px;
+  cursor:pointer;
+  text-decoration:none;
+  white-space:nowrap;
+  line-height:1.2;
+}
+.btn:hover{background:var(--btn-hover)}
+.btn.on{background:var(--btn-on);color:#fff;border-color:var(--btn-on)}
+.btn[hidden]{display:none}
+.btn.sm{font-size:clamp(11px,1.5dvh,13px);padding:.7dvh 9px}
+
+.jumps{display:flex;gap:6px;flex:0 0 auto}
+.jumps:empty{display:none}
+
+.title{
+  flex:1;
+  min-width:0;
+  text-align:center;
+  font-size:clamp(11px,1.7dvh,14px);
+  font-weight:500;
+  letter-spacing:.04em;
+  color:var(--text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* número da página (sem total) — dá para digitar um número e dar Enter */
+.pagenum{
+  width:54px;
+  font:inherit;
+  font-size:clamp(12px,1.7dvh,14px);
+  text-align:center;
+  color:var(--text);
+  background:#f3f2ef;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:.7dvh 4px;
+  -moz-appearance:textfield;
+}
+.pagenum::-webkit-outer-spin-button,
+.pagenum::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.pagenum:focus{outline:2px solid var(--btn-on);background:#fff}
+
+/* miolo: seta | folha | seta */
+.row{
+  flex:1;
+  min-height:0;
+  display:flex;
+  align-items:stretch;
+  gap:.6vw;
+}
+.arrow{
+  flex:0 0 auto;
+  align-self:center;
+  width:clamp(30px,3vw,44px);
+  height:clamp(64px,12dvh,110px);
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--btn);
+  color:var(--text);
+  font-size:clamp(14px,2dvh,20px);
+  cursor:pointer;
+}
+.arrow:hover{background:var(--btn-hover)}
+.arrow:disabled{opacity:.3;cursor:default;background:var(--btn)}
+
+.paper{
+  flex:1;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:4px;
+}
+#stage{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#fff;
+}
+
+@media(max-width:650px){
+  .btn.hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <div class="top">
+    <a class="btn" href="index.html">‹ voltar</a>
+    <div class="jumps" id="jumps"></div>
+    <h1 class="title" id="title"></h1>
+    <button class="btn" id="extra-btn" hidden></button>
+    <input class="pagenum" id="pagenum" type="number" min="1" inputmode="numeric" title="Digite o número da página e aperte Enter">
+    <button class="btn hide-sm" id="crop-btn" title="Cortar a margem branca (tecla Z)">zoom</button>
+    <button class="btn hide-sm" id="full-btn" title="Tela cheia (tecla F)">tela cheia</button>
+  </div>
+
+  <div class="row">
+    <button class="arrow" id="prev-btn" aria-label="anterior">◀</button>
+    <div class="paper"><canvas id="stage"></canvas></div>
+    <button class="arrow" id="next-btn" aria-label="próxima">▶</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const TESTES = {"anelelpi":{"n":"ANELE — LPI","f":["Anele/LPI/01.webp","Anele/LPI/02.webp","Anele/LPI/03.webp","Anele/LPI/04.webp","Anele/LPI/05.webp","Anele/LPI/06.webp","Anele/LPI/07.webp","Anele/LPI/08.webp","Anele/LPI/09.webp","Anele/LPI/10.webp","Anele/LPI/11.webp","Anele/LPI/12.webp","Anele/LPI/13.webp","Anele/LPI/14.webp","Anele/LPI/15.webp","Anele/LPI/16.webp","Anele/LPI/17.webp","Anele/LPI/18.webp","Anele/LPI/19.webp","Anele/LPI/20.webp","Anele/LPI/21.webp","Anele/LPI/22.webp","Anele/LPI/23.webp","Anele/LPI/24.webp","Anele/LPI/25.webp","Anele/LPI/26.webp","Anele/LPI/27.webp","Anele/LPI/28.webp","Anele/LPI/29.webp","Anele/LPI/30.webp","Anele/LPI/31.webp","Anele/LPI/32.webp","Anele/LPI/33.webp","Anele/LPI/34.webp","Anele/LPI/35.webp","Anele/LPI/36.webp","Anele/LPI/37.webp","Anele/LPI/38.webp","Anele/LPI/39.webp","Anele/LPI/40.webp","Anele/LPI/41.webp","Anele/LPI/42.webp","Anele/LPI/43.webp","Anele/LPI/44.webp","Anele/LPI/45.webp","Anele/LPI/46.webp","Anele/LPI/47.webp","Anele/LPI/48.webp","Anele/LPI/49.webp","Anele/LPI/50.webp","Anele/LPI/51.webp","Anele/LPI/52.webp","Anele/LPI/53.webp","Anele/LPI/54.webp","Anele/LPI/55.webp","Anele/LPI/56.webp","Anele/LPI/57.webp","Anele/LPI/58.webp","Anele/LPI/59.webp","Anele/LPI/60.webp","Anele/LPI/61.webp","Anele/LPI/62.webp","Anele/LPI/63.webp","Anele/LPI/64.webp","Anele/LPI/65.webp","Anele/LPI/66.webp","Anele/LPI/67.webp","Anele/LPI/68.webp","Anele/LPI/69.webp"]},"anelelpp":{"n":"ANELE — TLPP","f":["Anele/TLPP/01.webp","Anele/TLPP/02.webp","Anele/TLPP/03.webp","Anele/TLPP/04.webp","Anele/TLPP/05.webp","Anele/TLPP/06.webp","Anele/TLPP/07.webp","Anele/TLPP/08.webp","Anele/TLPP/09.webp","Anele/TLPP/10.webp","Anele/TLPP/11.webp","Anele/TLPP/12.webp","Anele/TLPP/13.webp","Anele/TLPP/14.webp","Anele/TLPP/15.webp","Anele/TLPP/16.webp","Anele/TLPP/17.webp","Anele/TLPP/18.webp","Anele/TLPP/19.webp","Anele/TLPP/20.webp","Anele/TLPP/21.webp","Anele/TLPP/22.webp","Anele/TLPP/23.webp","Anele/TLPP/24.webp","Anele/TLPP/25.webp","Anele/TLPP/26.webp","Anele/TLPP/27.webp","Anele/TLPP/28.webp","Anele/TLPP/29.webp","Anele/TLPP/30.webp","Anele/TLPP/31.webp","Anele/TLPP/32.webp","Anele/TLPP/33.webp","Anele/TLPP/34.webp","Anele/TLPP/35.webp","Anele/TLPP/36.webp","Anele/TLPP/37.webp","Anele/TLPP/38.webp","Anele/TLPP/39.webp","Anele/TLPP/40.webp","Anele/TLPP/41.webp","Anele/TLPP/42.webp","Anele/TLPP/43.webp","Anele/TLPP/44.webp","Anele/TLPP/45.webp","Anele/TLPP/46.webp","Anele/TLPP/47.webp","Anele/TLPP/48.webp","Anele/TLPP/49.webp","Anele/TLPP/50.webp","Anele/TLPP/51.webp","Anele/TLPP/52.webp","Anele/TLPP/53.webp","Anele/TLPP/54.webp","Anele/TLPP/55.webp","Anele/TLPP/56.webp","Anele/TLPP/57.webp","Anele/TLPP/58.webp","Anele/TLPP/59.webp","Anele/TLPP/60.webp","Anele/TLPP/61.webp","Anele/TLPP/62.webp","Anele/TLPP/63.webp","Anele/TLPP/64.webp","Anele/TLPP/65.webp","Anele/TLPP/66.webp","Anele/TLPP/67.webp","Anele/TLPP/68.webp","Anele/TLPP/69.webp","Anele/TLPP/70.webp","Anele/TLPP/71.webp","Anele/TLPP/72.webp","Anele/TLPP/73.webp","Anele/TLPP/74.webp","Anele/TLPP/75.webp"]},"boston":{"n":"NOMEAÇÃO DE BOSTON","f":["Nomeacao_de_Boston/01.webp","Nomeacao_de_Boston/02.webp","Nomeacao_de_Boston/03.webp","Nomeacao_de_Boston/04.webp","Nomeacao_de_Boston/05.webp","Nomeacao_de_Boston/06.webp","Nomeacao_de_Boston/07.webp","Nomeacao_de_Boston/08.webp","Nomeacao_de_Boston/09.webp","Nomeacao_de_Boston/10.webp","Nomeacao_de_Boston/11.webp","Nomeacao_de_Boston/12.webp","Nomeacao_de_Boston/13.webp","Nomeacao_de_Boston/14.webp","Nomeacao_de_Boston/15.webp","Nomeacao_de_Boston/16.webp","Nomeacao_de_Boston/17.webp","Nomeacao_de_Boston/18.webp","Nomeacao_de_Boston/19.webp","Nomeacao_de_Boston/20.webp","Nomeacao_de_Boston/21.webp","Nomeacao_de_Boston/22.webp","Nomeacao_de_Boston/23.webp","Nomeacao_de_Boston/24.webp","Nomeacao_de_Boston/25.webp","Nomeacao_de_Boston/26.webp","Nomeacao_de_Boston/27.webp","Nomeacao_de_Boston/28.webp","Nomeacao_de_Boston/29.webp","Nomeacao_de_Boston/30.webp","Nomeacao_de_Boston/31.webp","Nomeacao_de_Boston/32.webp","Nomeacao_de_Boston/33.webp","Nomeacao_de_Boston/34.webp","Nomeacao_de_Boston/35.webp","Nomeacao_de_Boston/36.webp","Nomeacao_de_Boston/37.webp","Nomeacao_de_Boston/38.webp","Nomeacao_de_Boston/39.webp","Nomeacao_de_Boston/40.webp","Nomeacao_de_Boston/41.webp","Nomeacao_de_Boston/42.webp","Nomeacao_de_Boston/43.webp","Nomeacao_de_Boston/44.webp","Nomeacao_de_Boston/45.webp","Nomeacao_de_Boston/46.webp","Nomeacao_de_Boston/47.webp","Nomeacao_de_Boston/48.webp","Nomeacao_de_Boston/49.webp","Nomeacao_de_Boston/50.webp","Nomeacao_de_Boston/51.webp","Nomeacao_de_Boston/52.webp","Nomeacao_de_Boston/53.webp","Nomeacao_de_Boston/54.webp","Nomeacao_de_Boston/55.webp","Nomeacao_de_Boston/56.webp","Nomeacao_de_Boston/57.webp","Nomeacao_de_Boston/58.webp","Nomeacao_de_Boston/59.webp","Nomeacao_de_Boston/60.webp","Nomeacao_de_Boston/61.webp","Nomeacao_de_Boston/62.webp"]},"bpa":{"n":"BPA","f":["BPA/BPA-1.webp","BPA/BPA-2.webp","BPA/BPA-3.webp","BPA/BPA-4.webp","BPA/BPA-5.webp","BPA/BPA-6.webp","BPA/BPA-7.webp","BPA/BPA-8.webp","BPA/BPA-9.webp","BPA/BPA-10.webp","BPA/BPA-11.webp","BPA/BPA-12.webp"]},"completarfiguras":{"n":"WISC — COMPLETAR FIGURAS","f":["WISC Completar figuras-2/pagina_100.webp","WISC Completar figuras-2/pagina_101.webp","WISC Completar figuras-2/pagina_102.webp","WISC Completar figuras-2/pagina_103.webp","WISC Completar figuras-2/pagina_104.webp","WISC Completar figuras-2/pagina_105.webp","WISC Completar figuras-2/pagina_106.webp","WISC Completar figuras-2/pagina_107.webp","WISC Completar figuras-2/pagina_108.webp","WISC Completar figuras-2/pagina_109.webp","WISC Completar figuras-2/pagina_110.webp","WISC Completar figuras-2/pagina_111.webp","WISC Completar figuras-2/pagina_112.webp","WISC Completar figuras-2/pagina_113.webp","WISC Completar figuras-2/pagina_114.webp","WISC Completar figuras-2/pagina_115.webp","WISC Completar figuras-2/pagina_116.webp","WISC Completar figuras-2/pagina_117.webp","WISC Completar figuras-2/pagina_118.webp","WISC Completar figuras-2/pagina_119.webp","WISC Completar figuras-2/pagina_120.webp","WISC Completar figuras-2/pagina_121.webp","WISC Completar figuras-2/pagina_122.webp","WISC Completar figuras-2/pagina_123.webp","WISC Completar figuras-2/pagina_124.webp","WISC Completar figuras-2/pagina_125.webp","WISC Completar figuras-2/pagina_126.webp","WISC Completar figuras-2/pagina_127.webp","WISC Completar figuras-2/pagina_128.webp","WISC Completar figuras-2/pagina_129.webp","WISC Completar figuras-2/pagina_130.webp","WISC Completar figuras-2/pagina_131.webp","WISC Completar figuras-2/pagina_132.webp","WISC Completar figuras-2/pagina_133.webp","WISC Completar figuras-2/pagina_134.webp","WISC Completar figuras-2/pagina_135.webp","WISC Completar figuras-2/pagina_136.webp","WISC Completar figuras-2/pagina_137.webp","WISC Completar figuras-2/pagina_138.webp"],"j":[{"label":"exemplo","page":1},{"label":"6–7 anos","page":2},{"label":"8–16 anos","page":4}]},"conceitosfig":{"n":"WISC — CONCEITOS FIGURATIVOS","f":["Wisc Conceitos figurativos/pagina_16.webp","Wisc Conceitos figurativos/pagina_17.webp","Wisc Conceitos figurativos/pagina_18.webp","Wisc Conceitos figurativos/pagina_19.webp","Wisc Conceitos figurativos/pagina_20.webp","Wisc Conceitos figurativos/pagina_21.webp","Wisc Conceitos figurativos/pagina_22.webp","Wisc Conceitos figurativos/pagina_23.webp","Wisc Conceitos figurativos/pagina_24.webp","Wisc Conceitos figurativos/pagina_25.webp","Wisc Conceitos figurativos/pagina_26.webp","Wisc Conceitos figurativos/pagina_27.webp","Wisc Conceitos figurativos/pagina_28.webp","Wisc Conceitos figurativos/pagina_29.webp","Wisc Conceitos figurativos/pagina_30.webp","Wisc Conceitos figurativos/pagina_31.webp","Wisc Conceitos figurativos/pagina_32.webp","Wisc Conceitos figurativos/pagina_33.webp","Wisc Conceitos figurativos/pagina_34.webp","Wisc Conceitos figurativos/pagina_35.webp","Wisc Conceitos figurativos/pagina_36.webp","Wisc Conceitos figurativos/pagina_37.webp","Wisc Conceitos figurativos/pagina_38.webp","Wisc Conceitos figurativos/pagina_39.webp","Wisc Conceitos figurativos/pagina_40.webp","Wisc Conceitos figurativos/pagina_41.webp","Wisc Conceitos figurativos/pagina_42.webp","Wisc Conceitos figurativos/pagina_43.webp","Wisc Conceitos figurativos/pagina_44.webp","Wisc Conceitos figurativos/pagina_45.webp"],"j":[{"label":"exemplo","page":1},{"label":"6–8 anos","page":3},{"label":"9–11 anos","page":7},{"label":"12–16 anos","page":9}]},"d2r":{"n":"D2-R","f":["D2R/D2R-1.webp","D2R/D2R-2.webp","D2R/D2R-3.webp","D2R/D2R-4.webp","D2R/D2R-5.webp","D2R/D2R-6.webp"]},"fdt":{"n":"FDT","f":["FDT/1.webp","FDT/2.webp","FDT/3.webp","FDT/4.webp","FDT/5.webp","FDT/6.webp","FDT/7.webp","FDT/8.webp"]},"hooper":{"n":"HOOPER","f":["Hooper/01.webp","Hooper/02.webp","Hooper/03.webp","Hooper/04.webp","Hooper/05.webp","Hooper/06.webp","Hooper/07.webp","Hooper/08.webp","Hooper/09.webp","Hooper/10.webp","Hooper/11.webp","Hooper/12.webp","Hooper/13.webp","Hooper/14.webp","Hooper/15.webp","Hooper/16.webp","Hooper/17.webp","Hooper/18.webp","Hooper/19.webp","Hooper/20.webp","Hooper/21.webp","Hooper/22.webp","Hooper/23.webp","Hooper/24.webp","Hooper/25.webp","Hooper/26.webp","Hooper/27.webp","Hooper/28.webp","Hooper/29.webp","Hooper/30.webp","Hooper/31.webp"]},"nepsyinibindorespostas":{"n":"NEPSY — INIBINDO RESPOSTAS","f":["Nepsy/inibindo respostas/pagina_124.webp","Nepsy/inibindo respostas/pagina_125.webp","Nepsy/inibindo respostas/pagina_126.webp","Nepsy/inibindo respostas/pagina_127.webp","Nepsy/inibindo respostas/pagina_128.webp","Nepsy/inibindo respostas/pagina_129.webp","Nepsy/inibindo respostas/pagina_130.webp"],"r":{"left":[1,3,5,7],"right":[2,4,6]}},"nepsymemfaces":{"n":"NEPSY — MEM. FACES","f":["Nepsy/mem para faces/pagina_134.webp","Nepsy/mem para faces/pagina_136.webp","Nepsy/mem para faces/pagina_138.webp","Nepsy/mem para faces/pagina_140.webp","Nepsy/mem para faces/pagina_142.webp","Nepsy/mem para faces/pagina_144.webp","Nepsy/mem para faces/pagina_146.webp","Nepsy/mem para faces/pagina_148.webp","Nepsy/mem para faces/pagina_150.webp","Nepsy/mem para faces/pagina_152.webp","Nepsy/mem para faces/pagina_154.webp","Nepsy/mem para faces/pagina_156.webp","Nepsy/mem para faces/pagina_158.webp","Nepsy/mem para faces/pagina_160.webp","Nepsy/mem para faces/pagina_162.webp","Nepsy/mem para faces/pagina_164.webp","Nepsy/mem para faces/pagina_166.webp","Nepsy/mem para faces/pagina_168.webp","Nepsy/mem para faces/pagina_170.webp","Nepsy/mem para faces/pagina_172.webp","Nepsy/mem para faces/pagina_174.webp","Nepsy/mem para faces/pagina_176.webp","Nepsy/mem para faces/pagina_178.webp","Nepsy/mem para faces/pagina_180.webp","Nepsy/mem para faces/pagina_182.webp","Nepsy/mem para faces/pagina_184.webp","Nepsy/mem para faces/pagina_186.webp","Nepsy/mem para faces/pagina_188.webp","Nepsy/mem para faces/pagina_190.webp","Nepsy/mem para faces/pagina_192.webp","Nepsy/mem para faces/pagina_194.webp","Nepsy/mem para faces/pagina_196.webp","Nepsy/mem para faces/pagina_198.webp"],"r":{"left":"all"}},"nepsymemfacestardio":{"n":"NEPSY — MEM. FACES TARDIO","f":["Nepsy/mem para faces tardio/pagina_202.webp","Nepsy/mem para faces tardio/pagina_204.webp","Nepsy/mem para faces tardio/pagina_206.webp","Nepsy/mem para faces tardio/pagina_208.webp","Nepsy/mem para faces tardio/pagina_210.webp","Nepsy/mem para faces tardio/pagina_212.webp","Nepsy/mem para faces tardio/pagina_214.webp","Nepsy/mem para faces tardio/pagina_216.webp","Nepsy/mem para faces tardio/pagina_218.webp","Nepsy/mem para faces tardio/pagina_220.webp","Nepsy/mem para faces tardio/pagina_222.webp","Nepsy/mem para faces tardio/pagina_224.webp","Nepsy/mem para faces tardio/pagina_226.webp","Nepsy/mem para faces tardio/pagina_228.webp","Nepsy/mem para faces tardio/pagina_230.webp","Nepsy/mem para faces tardio/pagina_232.webp"],"r":{"left":"all"}},"nepsyqcgeometrico":{"n":"NEPSY — QC GEOMÉTRICO","f":["Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_113.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_114.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_115.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_116.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_117.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_118.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_119.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_120.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_121.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_122.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_123.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_124.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_125.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_126.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_127.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_128.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_129.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_130.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_131.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_132.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_133.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_134.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_135.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_136.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_137.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_138.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_139.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_140.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_141.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_142.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_143.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_144.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_145.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_146.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_147.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_148.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_149.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_150.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_151.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_152.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_153.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_154.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_155.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_156.webp","Nepsy/QC geométrico/estimulos_paginas_113_157_melhorados/pagina_157.webp"],"j":[{"label":"exemplo 5–8 anos","page":1},{"label":"exemplo 9–16 anos","page":8}]},"nepsyrecemocoes":{"n":"NEPSY — REC. EMOÇÕES","f":["Nepsy/Rec Emoções/pagina_163.webp","Nepsy/Rec Emoções/pagina_165.webp","Nepsy/Rec Emoções/pagina_167.webp","Nepsy/Rec Emoções/pagina_169.webp","Nepsy/Rec Emoções/pagina_171.webp","Nepsy/Rec Emoções/pagina_173.webp","Nepsy/Rec Emoções/pagina_175.webp","Nepsy/Rec Emoções/pagina_177.webp","Nepsy/Rec Emoções/pagina_179.webp","Nepsy/Rec Emoções/pagina_181.webp","Nepsy/Rec Emoções/pagina_183.webp","Nepsy/Rec Emoções/pagina_185.webp","Nepsy/Rec Emoções/pagina_187.webp","Nepsy/Rec Emoções/pagina_189.webp","Nepsy/Rec Emoções/pagina_191.webp","Nepsy/Rec Emoções/pagina_193.webp","Nepsy/Rec Emoções/pagina_195.webp","Nepsy/Rec Emoções/pagina_197.webp","Nepsy/Rec Emoções/pagina_199.webp","Nepsy/Rec Emoções/pagina_201.webp","Nepsy/Rec Emoções/pagina_203.webp","Nepsy/Rec Emoções/pagina_205.webp","Nepsy/Rec Emoções/pagina_207.webp","Nepsy/Rec Emoções/pagina_209.webp","Nepsy/Rec Emoções/pagina_211.webp","Nepsy/Rec Emoções/pagina_213.webp","Nepsy/Rec Emoções/pagina_215.webp","Nepsy/Rec Emoções/pagina_217.webp","Nepsy/Rec Emoções/pagina_219.webp","Nepsy/Rec Emoções/pagina_221.webp","Nepsy/Rec Emoções/pagina_223.webp","Nepsy/Rec Emoções/pagina_225.webp","Nepsy/Rec Emoções/pagina_227.webp","Nepsy/Rec Emoções/pagina_229.webp","Nepsy/Rec Emoções/pagina_231.webp","Nepsy/Rec Emoções/pagina_233.webp","Nepsy/Rec Emoções/pagina_235.webp","Nepsy/Rec Emoções/pagina_237.webp"],"j":[{"label":"5–6 anos","page":9},{"label":"7–16 anos","page":17}]},"nepsyteoriadamente":{"n":"NEPSY — TEORIA DA MENTE","f":["Nepsy/Teoria da Mente/pagina_255.webp","Nepsy/Teoria da Mente/pagina_257.webp","Nepsy/Teoria da Mente/pagina_259.webp","Nepsy/Teoria da Mente/pagina_261.webp","Nepsy/Teoria da Mente/pagina_263.webp","Nepsy/Teoria da Mente/pagina_265.webp","Nepsy/Teoria da Mente/pagina_267.webp","Nepsy/Teoria da Mente/pagina_269.webp","Nepsy/Teoria da Mente/pagina_271.webp","Nepsy/Teoria da Mente/pagina_273.webp","Nepsy/Teoria da Mente/pagina_275.webp","Nepsy/Teoria da Mente/pagina_277.webp","Nepsy/Teoria da Mente/pagina_279.webp","Nepsy/Teoria da Mente/pagina_281.webp","Nepsy/Teoria da Mente/pagina_283.webp","Nepsy/Teoria da Mente/pagina_285.webp","Nepsy/Teoria da Mente/pagina_287.webp","Nepsy/Teoria da Mente/pagina_289.webp","Nepsy/Teoria da Mente/pagina_291.webp","Nepsy/Teoria da Mente/pagina_293.webp","Nepsy/Teoria da Mente/pagina_295.webp","Nepsy/Teoria da Mente/pagina_297.webp","Nepsy/Teoria da Mente/pagina_299.webp"],"j":[{"label":"5–6 anos","page":1},{"label":"7–8 anos","page":4},{"label":"9–16 anos","page":6}],"e":{"label":"tardio ››","page":16,"from":4}},"neupsilincompreensaoescrita":{"n":"NEUPSILIN — COMPREENSÃO ESCRITA","f":["Neupsilin Compreensão escrita/1.webp","Neupsilin Compreensão escrita/2.webp","Neupsilin Compreensão escrita/3.webp","Neupsilin Compreensão escrita/4.webp","Neupsilin Compreensão escrita/5.webp"]},"neupsilincompreensaooral":{"n":"NEUPSILIN — COMPREENSÃO ORAL","f":["Neupsilin Compreensão Oral/1.webp","Neupsilin Compreensão Oral/2.webp","Neupsilin Compreensão Oral/3.webp","Neupsilin Compreensão Oral/4.webp","Neupsilin Compreensão Oral/5.webp"]},"neupsilincopiafiguras":{"n":"NEUPSILIN — CÓPIA DE FIGURAS","f":["Neupsilin Cópia de Figuras/1.webp","Neupsilin Cópia de Figuras/2.webp","Neupsilin Cópia de Figuras/3.webp","Neupsilin Cópia de Figuras/4.webp"]},"neupsilinescritacopiada":{"n":"NEUPSILIN — ESCRITA COPIADA","f":["Neupsilin Escrita Copiada/1.webp"]},"neupsilinmemoriavisuoverbal":{"n":"NEUPSILIN — MEMÓRIA VISUOVERBAL","f":["Neupsilin Memória Visuoverbal/pagina_16.webp","Neupsilin Memória Visuoverbal/pagina_17.webp","Neupsilin Memória Visuoverbal/pagina_18.webp","Neupsilin Memória Visuoverbal/pagina_19.webp","Neupsilin Memória Visuoverbal/pagina_20.webp","Neupsilin Memória Visuoverbal/pagina_21.webp","Neupsilin Memória Visuoverbal/pagina_22.webp","Neupsilin Memória Visuoverbal/pagina_23.webp","Neupsilin Memória Visuoverbal/pagina_24.webp"]},"neupsilinpercepcaovisual":{"n":"NEUPSILIN — PERCEPÇÃO VISUAL","f":["Neupsilin Percepção Visual/1.webp","Neupsilin Percepção Visual/2.webp","Neupsilin Percepção Visual/3.webp","Neupsilin Percepção Visual/4.webp"]},"prolecdecisaolexica":{"n":"PROLEC — DECISÃO LEXICAL","f":["prolec/decisaolexica.webp"]},"prolecestruturas":{"n":"PROLEC — ESTRUTURAS GRAMATICAIS","f":["prolec/estruturasgramaticais/pagina_21.webp","prolec/estruturasgramaticais/pagina_23.webp","prolec/estruturasgramaticais/pagina_25.webp","prolec/estruturasgramaticais/pagina_27.webp","prolec/estruturasgramaticais/pagina_29.webp","prolec/estruturasgramaticais/pagina_31.webp","prolec/estruturasgramaticais/pagina_33.webp","prolec/estruturasgramaticais/pagina_35.webp","prolec/estruturasgramaticais/pagina_37.webp"]},"prolecigualdiferente":{"n":"PROLEC — IGUAL OU DIFERENTE","f":["prolec/igualdiferente.webp"]},"prolecleitmista":{"n":"PROLEC — LEITURA DE PALAVRAS E PSEUDOPALAVRAS","f":["prolec/leitdepalavrasepseudopalavras.webp","prolec/leitdepalavrasepseudopalavras2.webp"]},"prolecleitpalavras":{"n":"PROLEC — LEITURA DE PALAVRAS","f":["prolec/leituradepalavras.webp"]},"prolecleitpseudo":{"n":"PROLEC — LEITURA DE PSEUDOPALAVRAS","f":["prolec/leitpseudopalavras.webp"]},"prolecletras":{"n":"PROLEC — NOME OU SOM DAS LETRAS","f":["prolec/nomeousomdasletras.webp"]},"prolecoracoes":{"n":"PROLEC — COMPREENSÃO DE ORAÇÕES","f":["prolec/compreensaodeoracoes/pagina_42.webp","prolec/compreensaodeoracoes/pagina_45.webp","prolec/compreensaodeoracoes/pagina_46.webp","prolec/compreensaodeoracoes/pagina_47.webp","prolec/compreensaodeoracoes/pagina_48.webp","prolec/compreensaodeoracoes/pagina_49.webp"]},"prolecseranimal":{"n":"PROLEC-SE-R — ANIMAL OU NÃO","f":["prolecser/animalounaoex.webp","prolecser/animalounao.webp"],"j":[{"label":"exemplo","page":1},{"label":"itens","page":2}]},"prolecserestruturas":{"n":"PROLEC-SE-R — ESTRUTURAS GRAMATICAIS","f":["prolecser/estruturasgramaticas1ex.webp","prolecser/estruturasgramaticas11.webp","prolecser/estruturasgramaticas12.webp","prolecser/estruturasgramaticas13.webp","prolecser/estruturasgramaticas14.webp","prolecser/estruturasgramaticas15.webp"],"j":[{"label":"exemplo","page":1},{"label":"itens","page":2}]},"prolecserexpositiva":{"n":"PROLEC-SE-R — COMPREENSÃO EXPOSITIVA","f":["prolecser/compreensaoexpositiva.webp","prolecser/compreensaoexpositiva1.webp","prolecser/compreensaoexpositiva2.webp"]},"prolecserjulgamento":{"n":"PROLEC-SE-R — JULGAMENTO GRAMATICAL","f":["prolecser/julgamentogramaticalex.webp","prolecser/julgamentogramatical1.webp"],"j":[{"label":"exemplo","page":1},{"label":"itens","page":2}]},"prolecsernarrativa":{"n":"PROLEC-SE-R — COMPREENSÃO NARRATIVA","f":["prolecser/compreensaonarrativa.webp","prolecser/compreensaonarrativa1.webp","prolecser/compreensaonarrativa2.webp"]},"prolecserreal":{"n":"PROLEC-SE-R — REAL OU INVENTADA (SELEÇÃO LEXICAL)","f":["prolecser/realinventadaex.webp","prolecser/realinventada.webp"],"j":[{"label":"exemplo","page":1},{"label":"itens","page":2}]},"prolectextos":{"n":"PROLEC — COMPREENSÃO DE TEXTOS","f":["prolec/compreensaodetextos/pagina_52.webp","prolec/compreensaodetextos/pagina_54.webp","prolec/compreensaodetextos/pagina_56.webp","prolec/compreensaodetextos/pagina_58.webp","prolec/compreensaodetextos/pagina_60.webp","prolec/compreensaodetextos/pagina_62.webp","prolec/compreensaodetextos/pagina_64.webp","prolec/compreensaodetextos/pagina_66.webp"]},"raciociniomat":{"n":"WISC — RACIOCÍNIO MATRICIAL","f":["WISC Raciocínio matricial/pagina_61.webp","WISC Raciocínio matricial/pagina_62.webp","WISC Raciocínio matricial/pagina_63.webp","WISC Raciocínio matricial/pagina_64.webp","WISC Raciocínio matricial/pagina_65.webp","WISC Raciocínio matricial/pagina_66.webp","WISC Raciocínio matricial/pagina_67.webp","WISC Raciocínio matricial/pagina_68.webp","WISC Raciocínio matricial/pagina_69.webp","WISC Raciocínio matricial/pagina_70.webp","WISC Raciocínio matricial/pagina_71.webp","WISC Raciocínio matricial/pagina_72.webp","WISC Raciocínio matricial/pagina_73.webp","WISC Raciocínio matricial/pagina_74.webp","WISC Raciocínio matricial/pagina_75.webp","WISC Raciocínio matricial/pagina_76.webp","WISC Raciocínio matricial/pagina_77.webp","WISC Raciocínio matricial/pagina_78.webp","WISC Raciocínio matricial/pagina_79.webp","WISC Raciocínio matricial/pagina_80.webp","WISC Raciocínio matricial/pagina_81.webp","WISC Raciocínio matricial/pagina_82.webp","WISC Raciocínio matricial/pagina_83.webp","WISC Raciocínio matricial/pagina_84.webp","WISC Raciocínio matricial/pagina_85.webp","WISC Raciocínio matricial/pagina_86.webp","WISC Raciocínio matricial/pagina_87.webp","WISC Raciocínio matricial/pagina_88.webp","WISC Raciocínio matricial/pagina_89.webp","WISC Raciocínio matricial/pagina_90.webp","WISC Raciocínio matricial/pagina_91.webp","WISC Raciocínio matricial/pagina_92.webp","WISC Raciocínio matricial/pagina_93.webp","WISC Raciocínio matricial/pagina_94.webp","WISC Raciocínio matricial/pagina_95.webp","WISC Raciocínio matricial/pagina_96.webp","WISC Raciocínio matricial/pagina_97.webp","WISC Raciocínio matricial/pagina_98.webp"],"j":[{"label":"exemplo","page":1},{"label":"6–8 anos","page":7},{"label":"9–11 anos","page":10},{"label":"12–16 anos","page":14}]},"tdearitmetica":{"n":"TDE — ARITMÉTICA","f":["tde/aritmetica/pagina_1.webp","tde/aritmetica/pagina_2.webp","tde/aritmetica/pagina_3.webp"]},"tdeleitura":{"n":"TDE — LEITURA","f":["tde/leituratde1a4.webp","tde/leituratde5a9.webp"],"j":[{"label":"1º–4º ano","page":1},{"label":"5º–9º ano","page":2}]},"thcplinguagem":{"n":"THCP — LINGUAGEM","f":["THCP/Linguagem/01.webp","THCP/Linguagem/02.webp","THCP/Linguagem/03.webp","THCP/Linguagem/04.webp","THCP/Linguagem/05.webp","THCP/Linguagem/06.webp","THCP/Linguagem/07.webp","THCP/Linguagem/08.webp","THCP/Linguagem/09.webp","THCP/Linguagem/10.webp","THCP/Linguagem/11.webp","THCP/Linguagem/12.webp","THCP/Linguagem/13.webp","THCP/Linguagem/14.webp","THCP/Linguagem/15.webp","THCP/Linguagem/16.webp","THCP/Linguagem/17.webp","THCP/Linguagem/18.webp","THCP/Linguagem/19.webp","THCP/Linguagem/20.webp","THCP/Linguagem/21.webp","THCP/Linguagem/22.webp","THCP/Linguagem/23.webp","THCP/Linguagem/24.webp"]},"thcpmemoria":{"n":"THCP — MEMÓRIA","f":["THCP/Memoria/01.webp","THCP/Memoria/02.webp","THCP/Memoria/03.webp","THCP/Memoria/04.webp","THCP/Memoria/05.webp","THCP/Memoria/06.webp"]},"thcppercepto":{"n":"THCP — HABILIDADES PERCEPTO-MOTORAS","f":["THCP/Habilidades_Percepto_motoras/01.webp","THCP/Habilidades_Percepto_motoras/02.webp","THCP/Habilidades_Percepto_motoras/03.webp","THCP/Habilidades_Percepto_motoras/04.webp","THCP/Habilidades_Percepto_motoras/05.webp","THCP/Habilidades_Percepto_motoras/06.webp"]},"thcpquantitativo":{"n":"THCP — PENSAMENTO QUANTITATIVO","f":["THCP/Pensamento_Quantitativo/01.webp","THCP/Pensamento_Quantitativo/02.webp","THCP/Pensamento_Quantitativo/03.webp","THCP/Pensamento_Quantitativo/04.webp","THCP/Pensamento_Quantitativo/05.webp","THCP/Pensamento_Quantitativo/06.webp","THCP/Pensamento_Quantitativo/07.webp","THCP/Pensamento_Quantitativo/08.webp","THCP/Pensamento_Quantitativo/09.webp","THCP/Pensamento_Quantitativo/10.webp","THCP/Pensamento_Quantitativo/11.webp","THCP/Pensamento_Quantitativo/12.webp"]},"wisccodigos":{"n":"WISC — CÓDIGOS","f":["WISCcodigos/Códigos_Wisc-1.webp","WISCcodigos/Códigos_Wisc-2.webp","WISCcodigos/Códigos_Wisc-3.webp","WISCcodigos/Códigos_Wisc-4.webp","WISCcodigos/Códigos_Wisc-5.webp","WISCcodigos/Códigos_Wisc-6.webp","WISCcodigos/Códigos_Wisc-7.webp","WISCcodigos/Códigos_Wisc-8.webp"]},"wiscprocurarsimbolos":{"n":"WISC — PROCURAR SÍMBOLOS","f":["WISCprocurarsimbolos/Procurar_Símbolos_Wisc-1.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-2.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-3.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-4.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-5.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-6.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-7.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-8.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-9.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-10.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-11.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-12.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-13.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-14.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-15.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-16.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-17.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-18.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-19.webp","WISCprocurarsimbolos/Procurar_Símbolos_Wisc-20.webp"]}};
+
+  const params = new URLSearchParams(location.search);
+  const T = TESTES[params.get('t')];
+  if(!T){ location.replace('index.html'); return; }
+  document.title = T.n;
+  document.getElementById('title').textContent = T.n;
+
+  const images = T.f, JUMPS = T.j || [], EXTRA = T.e || null, ROTATE = T.r || null;
+  const src = i => images[i].split('/').map(encodeURIComponent).join('/');
+
+  let current = Math.min(images.length - 1, Math.max(0, (parseInt(params.get('p'), 10) || 1) - 1));
+  let crop = false;                     // zoom: corta a margem branca (começa desligado)
+  const canvas  = document.getElementById('stage');
+  const ctx     = canvas.getContext('2d');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const pageNum = document.getElementById('pagenum');
+  const cropBtn = document.getElementById('crop-btn');
+  const fullBtn = document.getElementById('full-btn');
+  const jumpsEl = document.getElementById('jumps');
+  const extraBtn = document.getElementById('extra-btn');
+
+  JUMPS.forEach(function(j){
+    if(j.page < 1 || j.page > images.length) return;
+    const b = document.createElement('button');
+    b.className = 'btn sm';
+    b.textContent = j.label;
+    b.title = 'Ir para a página ' + j.page;
+    b.addEventListener('click', function(){ go(j.page - 1); });
+    jumpsEl.appendChild(b);
+  });
+  if(EXTRA){
+    extraBtn.textContent = EXTRA.label;
+    extraBtn.classList.add('sm');
+    extraBtn.title = 'Ir para a página ' + EXTRA.page;
+    extraBtn.addEventListener('click', function(){ go(EXTRA.page - 1); });
+  }
+
+  function rotFor(idx){
+    if(!ROTATE) return null;
+    const p = idx + 1;
+    if(ROTATE.left === 'all' || (Array.isArray(ROTATE.left) && ROTATE.left.indexOf(p) !== -1)) return 'left';
+    if(ROTATE.right === 'all' || (Array.isArray(ROTATE.right) && ROTATE.right.indexOf(p) !== -1)) return 'right';
+    return null;
+  }
+  // gira 90° (esquerda = anti-horário, direita = horário) e devolve um canvas
+  function rotate90(img, dir){
+    const w = img.naturalWidth, h = img.naturalHeight;
+    const c = document.createElement('canvas');
+    c.width = h; c.height = w;
+    const x = c.getContext('2d');
+    if(dir === 'left'){ x.translate(0, w); x.rotate(-Math.PI / 2); }
+    else               { x.translate(h, 0); x.rotate(Math.PI / 2); }
+    x.drawImage(img, 0, 0);
+    return c;
+  }
+
+  // Memória: guarda só a página atual e as vizinhas (iPad/iPhone derrubam a aba se acumular dezenas de imagens grandes)
+  const cache = {};                     // índice -> Promise<{img,w,h,box?}|null>
+  function trimCache(){
+    Object.keys(cache).forEach(function(k){ if(Math.abs(k - current) > 1) delete cache[k]; });
+  }
+
+  // Acha o retângulo com conteúdo analisando uma cópia reduzida (~600 px): 10x mais rápido e o resultado é o mesmo
+  function findBox(item, skipTop){
+    const img = item.img, W = item.w, H = item.h;
+    try{
+      const s = Math.min(1, 600 / Math.max(W, H));
+      const w = Math.max(1, Math.round(W * s)), h = Math.max(1, Math.round(H * s));
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      const x = c.getContext('2d', {willReadFrequently:true});
+      x.fillStyle = '#fff'; x.fillRect(0, 0, w, h);
+      x.drawImage(img, 0, 0, w, h);
+      const d = x.getImageData(0, 0, w, h).data;
+      const rows = new Uint16Array(h), cols = new Uint16Array(w);
+      const y0 = Math.round(h * (skipTop || 0));   // ignora a faixa dos furos do espiral
+      for(let y=y0; y<h; y++){
+        for(let xx=0; xx<w; xx++){
+          const i = (y*w + xx) * 4;
+          if(d[i] < 170 || d[i+1] < 170 || d[i+2] < 170){ rows[y]++; cols[xx]++; }
+        }
+      }
+      const MIN = Math.max(2, Math.round(20 * s));  // ignora pontinhos/ruído de escaneamento
+      let t=y0, b=h-1, l=0, r=w-1;
+      while(t<h && rows[t]<MIN) t++;
+      while(b>t && rows[b]<MIN) b--;
+      while(l<w && cols[l]<MIN) l++;
+      while(r>l && cols[r]<MIN) r--;
+      if(r<=l || b<=t) return {x:0,y:0,w:W,h:H};
+      const pad = Math.round(Math.max(r-l, b-t) * 0.03);
+      l = Math.max(0, l-pad); t = Math.max(y0, t-pad);
+      r = Math.min(w-1, r+pad); b = Math.min(h-1, b+pad);
+      const X = Math.floor(l / s), Y = Math.floor(t / s);
+      return {x:X, y:Y, w:Math.min(W, Math.ceil((r+1) / s)) - X, h:Math.min(H, Math.ceil((b+1) / s)) - Y};
+    }catch(e){
+      return {x:0,y:0,w:W,h:H};         // sem acesso aos pixels: mostra inteira
+    }
+  }
+
+  function load(idx){
+    if(idx < 0 || idx >= images.length) return Promise.resolve(null);
+    if(cache[idx]) return cache[idx];
+    cache[idx] = new Promise(function(resolve){
+      const img = new Image();
+      img.onload = function(){
+        const dir = rotFor(idx);
+        const s = dir ? rotate90(img, dir) : img;
+        resolve({img:s, w:s.naturalWidth || s.width, h:s.naturalHeight || s.height, dir:dir, box:null});
+      };
+      img.onerror = function(){ delete cache[idx]; resolve(null); };
+      img.src = src(idx);
+    });
+    return cache[idx];
+  }
+
+  // Imagem ausente: mostra aviso em vez de deixar na tela o estímulo da página anterior
+  function drawMissing(){
+    canvas.width = 900; canvas.height = 600;
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, 900, 600);
+    ctx.fillStyle = '#8b8880'; ctx.font = '28px system-ui, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Imagem não encontrada (página ' + (current + 1) + ')', 450, 300);
+  }
+
+  async function render(){
+    const idx = current;
+    pageNum.value = current + 1;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === images.length - 1;
+    extraBtn.hidden = !(EXTRA && current + 1 >= EXTRA.from);
+    try{
+      const u = new URL(location.href); u.searchParams.set('p', current + 1); history.replaceState(null, '', u);
+    }catch(e){}
+
+    const item = await load(idx);
+    if(idx !== current) return;              // usuário já mudou de página
+    if(!item){ drawMissing(); trimCache(); return; }
+
+    if(crop && !item.box) item.box = findBox(item, item.dir === 'left' ? 0.07 : 0);
+    const b = crop ? item.box : {x:0,y:0,w:item.w,h:item.h};
+    canvas.width = b.w; canvas.height = b.h;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, b.w, b.h);
+    ctx.drawImage(item.img, b.x, b.y, b.w, b.h, 0, 0, b.w, b.h);
+
+    trimCache();
+    load(idx + 1); load(idx - 1);            // pré-carrega as vizinhas (só decodifica; a margem só é calculada se o zoom estiver ligado)
+  }
+
+  function go(n){
+    if(n < 0 || n >= images.length) { pageNum.value = current + 1; return; }
+    current = n;
+    render();
+  }
+
+  function toggleCrop(){
+    crop = !crop;
+    cropBtn.classList.toggle('on', crop);
+    render();
+  }
+
+  function toggleFull(){
+    if(document.fullscreenElement){ document.exitFullscreen(); }
+    else if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen(); }
+  }
+
+  prevBtn.addEventListener('click', function(){ go(current-1); });
+  nextBtn.addEventListener('click', function(){ go(current+1); });
+  cropBtn.addEventListener('click', toggleCrop);
+  fullBtn.addEventListener('click', toggleFull);
+
+  pageNum.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      const n = parseInt(pageNum.value, 10);
+      if(!isNaN(n)) go(n - 1); else pageNum.value = current + 1;
+      pageNum.blur();
+    }
+    if(e.key === 'Escape'){ pageNum.value = current + 1; pageNum.blur(); }
+  });
+  pageNum.addEventListener('focus', function(){ pageNum.select(); });
+  pageNum.addEventListener('blur',  function(){ pageNum.value = current + 1; });
+
+  document.addEventListener('keydown', function(e){
+    if(e.target === pageNum) return;          // digitando o número da página
+    if(e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(current+1); }
+    if(e.key === 'ArrowLeft')  go(current-1);
+    if(e.key === 'z' || e.key === 'Z') toggleCrop();
+    if(e.key === 'f' || e.key === 'F') toggleFull();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
